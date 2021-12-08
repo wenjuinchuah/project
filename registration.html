@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            display: border-box;
+        }
+
+        /* Body */
+        body {
+            background-color: #364150;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        /* Form */
+        form {
+            width: 340px;
+            margin: 100px auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        /* Title */
+        h2 {
+            text-align: center;
+            padding: 10px;
+        }
+
+        div{
+            margin: 15px 10px;
+            padding-bottom: 10px;
+        }
+
+        label {
+            padding: 10px 0;
+        }
+
+        small {
+            font-size: 12px;
+            padding-left: 5px;
+            color: red;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        input, select {
+            display: block;
+            width: 93%;
+            height: 30px;
+            padding: 0 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid lightgray;
+        }
+
+        /* Mobile */
+        .mobile-container {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-container label {
+            display: block;
+        }
+
+        #code {
+            display: inline-block;
+            width: 25px;
+            pointer-events: none;
+        }
+
+        #mobile {
+            display: inline-block;
+            width: 246px;
+        }
+
+        #mobileError {
+            display: block;
+        }
+
+        /* Password */
+        .password-container {
+            padding: 0;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        #i-password1, #i-password2, #i-password1-slash, #i-password2-slash {
+            position: relative;
+            top: 34px;
+            color: gray;
+        }
+
+        #i-password1 {
+            left: 220px;
+        }
+
+        #i-password1-slash {
+            left: 200px;
+        } 
+
+        #i-password2 {
+            left: 158px;
+        } 
+        
+        #i-password2-slash {
+            left: 138px;
+        }
+
+        #i-password1:hover, #i-password2:hover, #i-password1-slash:hover, #i-password2-slash:hover {
+            cursor: pointer;
+            color: #000;
+        }
+
+        #i-password1-slash, #i-password2-slash{
+            visibility: hidden;
+        }
+
+        /* Gender */
+        .gender-container {
+            margin: 0;
+            padding: 0;
+        }
+
+        .gender-container input {
+            display: inline-block;
+            width: 15px;
+        }
+
+        .gender-container label, .checkbox-container label {
+            position: relative;
+            bottom: 9px;
+            margin-right: 10px;
+        }
+
+        /* State */
+        select {
+            width: 100%;
+            height: 32px;
+
+            /* Removes the default <select> styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* Positions background arrow image */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
+            background-repeat: no-repeat;
+            background-position: 295px center;
+        }
+
+        /* t&c */
+        .checkbox-container {
+           margin-top: 0;
+        }
+
+        .checkbox-container input{
+            display: inline-block;
+            width: 15px;
+        }
+
+        .checkbox-container label {
+            font-size: 15px;
+        }
+
+        .checkbox-container u {
+            cursor: pointer;
+            color: purple;
+        }
+
+        .checkbox-container small {
+            display: block;
+        }
+
+        /* Button*/
+        .button {
+            margin: 15px 10px;
+        }
+
+        .button input {
+            display: inline-block;
+            height: 32px;
+        }
+
+        #reset {
+            width: 20%;
+        }
+
+        #reset:hover {
+            background-color: rgb(255, 194, 194);
+            cursor: pointer;
+        }
+
+        #submit {
+            width: 78.6%;
+            background-color: #2b323d;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        #submit:hover {
+            opacity: 70%;
+            cursor: pointer;
+        }
+
+        /* The message box is shown when the user clicks on the password field */
+        #message {
+            background: #f1f1f1;
+            color: #000;
+            border-radius: 10px;
+            margin: 10px 0 0 0;
+            padding: 10px 0 0 10px;
+            display: none;
+        }
+
+        #message p {
+            padding: 5px 35px;
+            font-size: 13px;
+        }
+
+        /* Add a green text color and a checkmark when the requirements are right */
+        .valid {
+            color: green;
+        }
+
+        .valid:before {
+            position: relative;
+            left: -35px;
+            content: "✔";
+        }
+
+        /* Add a red text color and an "x" when the requirements are wrong */
+        .invalid {
+            color: red;
+        }
+
+        .invalid:before {
+            position: relative;
+            left: -35px;
+            content: "✖";
+        }
+    </style>
+</head>
+<body>
+    <form class="form" id="form" action="formValidation.php" method="POST" onsubmit="return formValidation()">
+        <h2>User Account Registration</h2>
+        <div>
+            <label>First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="First Name"/>
+            <small id="fnameError">Error message</small>
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Last Name"/>
+            <small id="lnameError">Error message</small>
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" id="email" name="email" placeholder="Email Address"/>
+            <small id="emailError">Error message</small>
+        </div>
+        <div>
+            <label >Mobile</label>
+            <div class="mobile-container">
+                <input type="text" id="code" name="code" value="+60" disabled/>  
+                <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number"/>
+                <small id="mobileError">Error message</small>
+            </div>
+        </div>
+        <div>
+            <label>Password</label>
+            <i id="i-password1" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+            <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+            <div class="password-container">
+                <input type="password" id="password1" name="password1" placeholder="Password"/>
+                <small id="password1Error"></small>
+                <div id="message">
+                    <h5>Password must contain the following:</h5>
+                    <p id="capital" class="invalid">At least one <b>Uppercase [A-Z]</b></p>
+                    <p id="letter" class="invalid">At least one <b>Lowercase [a-z]</b></p>
+                    <p id="number" class="invalid">At least one <b>Number [0-9]</b></p>
+                    <p id="specialChar" class="invalid">At least one <b>Special Character</b></p>
+                    <p id="length" class="invalid">Minimum <b>Length of 6</b></p>
+                    <p id="space" class="valid">No <b>space</b></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <i id="i-password2" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+            <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+            <input type="password" id="password2" name="password2" placeholder="Confirm Password"/>
+            <small id="password2Error">Error message</small>
+        </div>
+        <div>
+            <label>Gender</label>
+            <div class="gender-container">
+                <input type="radio" id="male" name="gender" value="Male" checked="true"/>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="Female"/>
+                <label for="female">Female</label>
+            </div>
+        </div>
+        <div>
+            <label>State</label>
+            <select name="state" id="state">
+                <option value="state" disabled>- Select Your State-</option>
+                <option value="Johor">Johor</option>
+                <option value="Kedah">Kedah</option>
+                <option value="Kelantan">Kelantan</option>
+                <option value="Melaka">Melaka</option>
+                <option value="Negeri Sembilan">Negeri Sembilan</option>
+                <option value="Pahang">Pahang</option>
+                <option value="Perak">Perak</option>
+                <option value="Perlis">Perlis</option>
+                <option value="Pulau Pinang">Pulau Pinang</option>
+                <option value="Sabah">Sabah</option>
+                <option value="Sarawak">Sarawak</option>
+                <option value="Selangor">Selangor</option>
+                <option value="Terengganu">Terengganu</option>
+                <option value="federal" disabled>-Federal Territories-</option>
+                <option value="Kuala Lumpur">Kuala Lumpur</option>
+                <option value="Labuan">Labuan</option>
+                <option value="Putrajaya">Putrajaya</option>
+            </select>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="t&c" name="t&c" value="value1"/>
+            <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
+            <small id="t&cError">Error message</small>
+        </div>
+        <div class="button">
+            <input type="reset" id="reset" value="Clear"></input>
+            <input type="submit" id="submit" name="submit" value="Register" onclick="return  confirm('Do you want to register?')"></input>
+        </div>
+    </form>
+
+    <script src="formValidation.js"></script>
+</body>
+</html>
