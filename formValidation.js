@@ -11,14 +11,14 @@ function formValidation() {
     function errorHandle(idName, message) {
         document.getElementById(idName).style.borderColor = "red";
         document.getElementById(idName + "Error").innerHTML = message;
-        document.getElementById(idName + "Error").style.visibility = "visible";
+        document.getElementById(idName + "Error").style.display = "block";
         document.getElementById(idName).focus();
     }
 
     /* CorrectHandle */
     function correctHandle(idName) {
         document.getElementById(idName).style.borderColor = "green";
-        document.getElementById(idName + "Error").style.visibility = "hidden";
+        document.getElementById(idName + "Error").style.display = "none";
     }
 
     /* EmailHandle */
