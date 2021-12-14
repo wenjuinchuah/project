@@ -1,3 +1,25 @@
+<?php
+    //Hide Error Message and Success View by Default
+    $showError = 'hidden';
+
+    if (isset($_POST['submit'])) {
+        if (empty($_POST['username'])) {
+            $nameError = "Username cannot be blank!";
+            $showError = 'visible';
+        }
+        if (empty($_POST['password'])) {
+            $passwordError = "Password cannot be blank!";
+            $showError = 'visible';
+        }
+    } else {
+        $showError = 'hidden';
+    }
+
+    if (empty($nameError) && empty($passwordError)) {
+
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +33,14 @@
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
+        <style>
+            small {
+                font-size: 12px;
+                color: red;
+                visibility: <?=$showError?>;
+            }
+        </style>
     </head>
 
     <body>
@@ -46,13 +75,22 @@
                     <div class = "signIn"> <!--testing-->
                         <button class="dropbtn">Sign In</button>
                         <div class="dropdown-signIn">
-                            <form>
-                                <label>Username: </label>
-                                <input type="text" />
-                                <br><br>
-                                <label>Password: </label>
-                                <input type="password" />
-                                <br><br>
+                            <form id="loginValidation" action="#" method="POST">
+                                <div>
+                                    <label>Username:</label>
+                                    <input type="text" name="username" placeholder="Username"/>
+                                    <?php if (isset($nameError)) {?>
+                                        <small id="nameError"><?php echo $nameError ?></small>
+                                    <?php } ?>
+                                </div>
+                                <div>
+                                    <label>Password:</label>
+                                    <input type="password" name="password" placeholder="Password"/>
+                                    <?php if (isset($passwordError)) {?>
+                                        <small id="passwordError"><?php echo $passwordError ?></small>
+                                    <?php } ?>
+                                </div>
+                                <input type="submit" name="submit" id="signInButton" value="Login"/>
                                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
                                     <p>Don't have an account? <a href="registration.html">Sign Up</a> now!</p>
                                 </div>

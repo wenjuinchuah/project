@@ -1,7 +1,6 @@
 <?php
     //Hide Undefine Message
     error_reporting(0);
-    session_start();
 
     //Hide Error Message and Success View by Default
     $showError = $successVisibility = 'hidden';
@@ -167,18 +166,40 @@
 
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
-        $successVisibility = 'visible';
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbName = "userinfo";
+
+        // Create connection
+        $conn = mysqli_connect($servername, $username, $password, $dbName);
+
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
+                VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
+
+        if ($conn->query($sql) === TRUE) {
+            $successVisibility = 'visible';
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
     };
 
     //Passing Variables to results.php
-    $_SESSION['fname'] = $fname;
-    $_SESSION['lname'] = $lname;
-    $_SESSION['email'] = $email;
-    $_SESSION['mobile'] = $mobile;
-    $_SESSION['password1'] = $password1;
-    $_SESSION['password2'] = $password2;
-    $_SESSION['state'] = $state;
-    $_SESSION['gender'] = $gender;
+    //$_SESSION['fname'] = $fname;
+    //$_SESSION['lname'] = $lname;
+    //$_SESSION['email'] = $email;
+    //$_SESSION['mobile'] = $mobile;
+    //$_SESSION['password1'] = $password1;
+    //$_SESSION['password2'] = $password2;
+    //$_SESSION['state'] = $state;
+    //$_SESSION['gender'] = $gender;
 ?>
 
 <!DOCTYPE html>
@@ -560,7 +581,7 @@
             <h2>Registration Successful!</h2>
             <i id="i-success" class="fa fa-check fa-5x" aria-hidden="true"></i>
             <div class="btn">
-                <a href="results.php"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
+                <a href="./index.html"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
             </div>
         </div>
     </div>

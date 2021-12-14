@@ -11,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         /* Form */
@@ -286,7 +287,7 @@
         </nav>
     </header>
 
-    <form class="RegForm" id="RegForm" action="formValidation.php" method="POST" onsubmit="return formValidation()">
+    <form class="RegForm" id="RegForm" action="validation/formValidation.php" method="POST" onsubmit="return formValidation()">
         <h2>User Account Registration</h2>
         <div>
             <label>First Name</label>
@@ -384,8 +385,6 @@
         </div>
     </form>
 
-    <script src="formValidation.js"></script>
-
     <footer>
         <div class="footer-container">
             <div class="icon" id="contactus">
@@ -429,6 +428,8 @@
                     href="#">PRIVACY</a></p>
         </div>
     </footer>
+
+    <script src="validation/formValidation.js"></script>
 </body>
 
 </html>

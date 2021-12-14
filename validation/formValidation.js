@@ -185,13 +185,11 @@ var space = document.getElementById("space");
 // When the user clicks on the password field, show the message box
 myInput.onfocus = function() {
     message.style.display = "block";
-    error.style.visibility = "hidden";
 }
 
 // When the user clicks outside of the password field, hide the message box
 myInput.onblur = function() {
     message.style.display = "none";
-    error.style.visibility = "visible";
 }
 
 // When the user starts to type something inside the password field
