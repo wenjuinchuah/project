@@ -166,28 +166,17 @@
 
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbName = "userinfo";
-
-        // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $dbName);
-
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+        include_once 'connectSQL.php';
 
         $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
-                VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
+            VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
 
         if ($conn->query($sql) === TRUE) {
             $successVisibility = 'visible';
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
+        
         $conn->close();
     };
 

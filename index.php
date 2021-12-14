@@ -1,22 +1,34 @@
 <?php
-    //Hide Error Message and Success View by Default
+    //Hide Error Message by Default
     $showError = 'hidden';
-
     if (isset($_POST['submit'])) {
-        if (empty($_POST['username'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if (empty($username)) {
             $nameError = "Username cannot be blank!";
             $showError = 'visible';
         }
-        if (empty($_POST['password'])) {
+        if (empty($password)) {
             $passwordError = "Password cannot be blank!";
             $showError = 'visible';
         }
+        if (empty($nameError) && empty($passwordData)) {
+            include_once 'validation/connectSQL.php';
+            
+            /*if ($username != '' || $password != '') {
+                $usernameData = "SELECT * FROM user WHERE Email = $username";
+                $passwordData = "SELECT * FROM user WHERE Password = $password";
+                echo $usernameData.$passwordData;
+                if ($usernameData === $username && $passwordData === $password) {
+                    echo 'success';
+                } else {
+                    echo 'fail';
+                }
+            }*/
+        }
     } else {
         $showError = 'hidden';
-    }
-
-    if (empty($nameError) && empty($passwordError)) {
-
     }
 ?>
 
