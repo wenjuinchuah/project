@@ -15,17 +15,8 @@
         }
         if (empty($nameError) && empty($passwordData)) {
             include_once 'validation/connectSQL.php';
+            include 'validation/signIn.php';
             
-            /*if ($username != '' || $password != '') {
-                $usernameData = "SELECT * FROM user WHERE Email = $username";
-                $passwordData = "SELECT * FROM user WHERE Password = $password";
-                echo $usernameData.$passwordData;
-                if ($usernameData === $username && $passwordData === $password) {
-                    echo 'success';
-                } else {
-                    echo 'fail';
-                }
-            }*/
         }
     } else {
         $showError = 'hidden';
@@ -67,7 +58,7 @@
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li class="home"><a href="index.html">Home</a></li>
+                    <li class="home"><a href="index.php">Home</a></li>
                     <li class="about-us"><a href="aboutus.html">About Us</a></li>
                     <li class="product"><a href="products.html">Products</a></li>
                     <div class = "dropdown">

@@ -167,7 +167,7 @@
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
         include_once 'connectSQL.php';
-
+        //insert data into mySQL
         $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
             VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
 
@@ -176,7 +176,7 @@
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        
+
         $conn->close();
     };
 
@@ -570,7 +570,7 @@
             <h2>Registration Successful!</h2>
             <i id="i-success" class="fa fa-check fa-5x" aria-hidden="true"></i>
             <div class="btn">
-                <a href="./index.html"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
+                <a href="./index.php"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
             </div>
         </div>
     </div>
