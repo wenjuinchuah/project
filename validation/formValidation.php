@@ -167,6 +167,8 @@
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
         include_once 'connectSQL.php';
+        //Hash Password
+        $password1 = password_hash($password1, PASSWORD_DEFAULT);
         //insert data into mySQL
         $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
             VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
@@ -179,16 +181,6 @@
 
         $conn->close();
     };
-
-    //Passing Variables to results.php
-    //$_SESSION['fname'] = $fname;
-    //$_SESSION['lname'] = $lname;
-    //$_SESSION['email'] = $email;
-    //$_SESSION['mobile'] = $mobile;
-    //$_SESSION['password1'] = $password1;
-    //$_SESSION['password2'] = $password2;
-    //$_SESSION['state'] = $state;
-    //$_SESSION['gender'] = $gender;
 ?>
 
 <!DOCTYPE html>

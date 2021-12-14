@@ -1,14 +1,14 @@
-*{
+* {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Balsamiq Sans', cursive;
 }
 
-header{
+header {
     background: linear-gradient(
         #CE0101 5%, white 5%, white 10%, #110971 10%, #110971 15%, white 15%);
     border-bottom: 5px solid rgb(207, 207, 207);
@@ -17,37 +17,37 @@ header{
     box-shadow: 0px 0px 10px rgb(65, 65, 65);
 }
 
-.logo{
+.logo {
     display: flex;
     flex: 1;
 }
 
-.logo-container{
+.logo-container {
     margin: 20px;
 }
 
-.logo-container img{
+.logo-container img {
     position: relative;
     top: 15px;
 }
 
-nav{
+nav {
     display: flex;
     margin: 20px;
 }
 
-.nav-links{
+.nav-links {
     list-style-type: none;
     display: flex;
     font-size: large;
     font-weight: bold;
 }
 
-.nav-links li{
+.nav-links li {
     margin: auto;
 }
 
-.nav-links a, .nav-links .dropbtn{
+.nav-links a, .nav-links .dropbtn {
     font-family: 'Balsamiq Sans', cursive;
     text-decoration: none;
     color: #000;
@@ -55,18 +55,18 @@ nav{
     margin: auto;
 }
 
-.nav-links li a:hover, .dropbtn:hover, .dropdown-content a:hover, .dropdown-language a:hover{
+.nav-links li a:hover, .dropbtn:hover, .dropdown-content a:hover, .dropdown-language a:hover, .dropdown-userInfo a:hover{
     color:#CE0101;
 }
 
-.dropbtn{
+.dropbtn {
     border: none;
     background: white;
     font-size: large;
     font-weight: bold;
 }
 
-.dropbtn img{
+.dropbtn img {
     width: 22%;
     right: 30px;
     top: 2px;
@@ -74,17 +74,17 @@ nav{
     padding: 20px 0;
 }
 
-.dropdown, .language, .signIn{
+.dropdown, .language, .signIn {
     margin: auto;
 }
 
-.language a{
+.language a {
     font-size: large;
     font-weight: bold;
     color: #000;
 }
 
-.dropdown-content, .dropdown-language, .dropdown-signIn{
+.dropdown-content, .dropdown-language, .dropdown-signIn, .dropdown-userInfo {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -95,14 +95,9 @@ nav{
     border: 2px solid gray;
 }
 
-.dropdown-language{
+.dropdown-language {
     min-width: auto;
     top: 105px;
-    
-}
-
-.dropdown-signIn {
-    display: block;
 }
 
 .dropdown-signIn form {
@@ -137,19 +132,19 @@ nav{
     cursor: pointer;
 }
 
-.dropdown-signIn a{
+.dropdown-signIn a {
     padding: 0;
     text-decoration-line: underline;
     color: blue;
 }
 
-.dropdown-content a, .dropdown-language a{
+.dropdown-content a, .dropdown-language a, .dropdown-userInfo a {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
 
-.dropdown:hover .dropdown-content, .language:hover .dropdown-language, .signIn:hover .dropdown-signIn{
+.dropdown:hover .dropdown-content, .language:hover .dropdown-language, .signIn:hover .dropdown-signIn, .signIn:hover .dropdown-userInfo{
     display: block;
 }
 

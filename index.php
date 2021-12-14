@@ -1,6 +1,12 @@
 <?php
+    ob_start();
+    session_start();
     //Hide Error Message by Default
     $showError = 'hidden';
+    $dropdownLoginView = 'visible';
+    $dropdownUserInfoView = 'hidden';
+    $isLogin = false;
+
     if (isset($_POST['submit'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -13,13 +19,24 @@
             $passwordError = "Password cannot be blank!";
             $showError = 'visible';
         }
-        if (empty($nameError) && empty($passwordData)) {
-            include_once 'validation/connectSQL.php';
-            include 'validation/signIn.php';
-            
+        if (empty($nameError) && empty($passwordError)) {
+            include 'validation/login.php';
+            $username = $password = '';
+            if ($count == 1) {
+                $loginUsername = $_SESSION['loginUser'];
+                $isLogin = true;
+                $dropdownLoginView = 'hidden';
+                $dropdownUserInfoView = 'visible';
+            }
         }
     } else {
-        $showError = 'hidden';
+        $username = $password = '';
+        if (isset($_SESSION['loginUser'])) {
+            $loginUsername = $_SESSION['loginUser'];
+            $isLogin = true;
+            $dropdownLoginView = 'hidden';
+            $dropdownUserInfoView = 'visible';
+        }
     }
 ?>
 
@@ -43,6 +60,14 @@
                 color: red;
                 visibility: <?=$showError?>;
             }
+
+            .dropdown-signIn {
+                visibility: <?=$dropdownLoginView?>
+            }
+
+            .dropdown-userInfo {
+                visibility: <?=$dropdownUserInfoView?>
+            }
         </style>
     </head>
 
@@ -60,7 +85,7 @@
                 <ul class="nav-links">
                     <li class="home"><a href="index.php">Home</a></li>
                     <li class="about-us"><a href="aboutus.html">About Us</a></li>
-                    <li class="product"><a href="products.html">Products</a></li>
+                    <li class="product"><a href="products.php">Products</a></li>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
                         <div class="dropdown-content">
@@ -76,19 +101,23 @@
                         </div>
                     </div>
                     <div class = "signIn"> <!--testing-->
-                        <button class="dropbtn">Sign In</button>
+                        <button class="dropbtn">
+                            <?php if ($isLogin == true) { ?>
+                                <p>Hi, <?php echo $loginUsername ?></p>
+                            <?php } else { ?><p>Sign In</p><?php } ?>
+                        </button>
                         <div class="dropdown-signIn">
-                            <form id="loginValidation" action="#" method="POST">
+                            <form id="loginValidation" action="" method="POST">
                                 <div>
                                     <label>Username:</label>
-                                    <input type="text" name="username" placeholder="Username"/>
+                                    <input type="text" name="username" placeholder="Username" value="<?php echo $username ?>"/>
                                     <?php if (isset($nameError)) {?>
                                         <small id="nameError"><?php echo $nameError ?></small>
                                     <?php } ?>
                                 </div>
                                 <div>
                                     <label>Password:</label>
-                                    <input type="password" name="password" placeholder="Password"/>
+                                    <input type="password" name="password" placeholder="Password" value="<?php echo $password ?>"/>
                                     <?php if (isset($passwordError)) {?>
                                         <small id="passwordError"><?php echo $passwordError ?></small>
                                     <?php } ?>
@@ -98,6 +127,9 @@
                                     <p>Don't have an account? <a href="registration.html">Sign Up</a> now!</p>
                                 </div>
                             </form>
+                        </div>
+                        <div class="dropdown-userInfo">
+                            <a href="validation/logout.php">Logout</a>
                         </div>
                     </div>
                 </ul>

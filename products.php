@@ -11,11 +11,35 @@
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
+        <style>
+            main{
+                background: linear-gradient( to top , rgb(241, 241, 241)90%, rgb(196, 196, 196));
+            }
+
+            .product-div{
+                background-color: gray; 
+                width: 70%; 
+                position: relative; 
+                left: 50%; 
+                transform: translateX(-50%);
+                border-radius: 12px;
+            }
+
+            main div{
+                display: inline-block;
+                padding: 20px 5%;
+                width: 30%;
+                text-align: center;
+                background-color: white;
+                margin: 10px;
+                border-radius: 5px;
+            }
+        </style>
+
     </head>
 
     <body>
-
         <header>
             <div class="logo">
                 <div class="logo-container">
@@ -56,9 +80,36 @@
             </nav>
         </header>
 
-        <div class="productlist">
-            
-        </div>
+        <main>
+            <div class= "product-div">
+                <?php
+                    $host = "";
+                    $user = "Admin_Project";
+                    $pass = "!-CI@-eSxzI.bhD(";
+
+                    $conn = mysqli_connect($host, $user, $pass, 'Gardenia');
+                    if(!$conn){
+                        echo "Could not connect to server\n";
+                        trigger_error(mysqli_error(), E_USER_ERROR);
+                    }else{
+                        //echo "Connected\n";
+                    }
+                    //echo mysqli_get_server_info($conn). "\n"; //testing
+
+                    $query = "SELECT * FROM products";
+                    $result = mysqli_query($conn, $query);
+                    while($row = mysqli_fetch_row($result)){
+                        echo "<div>";
+                        echo "<p>ID: $row[0]</p>";
+                        echo "<p>Name: $row[1]</p>";
+                        echo "<p>Price: RM $row[2]</p>";
+                        echo "</div>";
+                    }
+
+                    mysqli_close($conn);
+                ?>
+            </div>
+        </main>
 
         <footer>
             <div class="footer-container">
