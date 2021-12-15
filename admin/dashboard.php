@@ -12,9 +12,40 @@
         header('Location: ../index.php');
     }
 
+    //Connect to products database
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
+
     $productsql = "SELECT * FROM products ORDER BY ID";
-    $products = mysqli_query($conn, $productsql);
+    $productList = mysqli_query($conn, $productsql);
+    
+    if (isset($_POST['submit'])) {
+        $product = mysqli_fetch_assoc($productList);
+
+        $productName = $_POST['productName'];
+        $productPrice = $_POST['productPrice'];
+
+        if (empty($_POST['productName'])) {
+            $productNameError = "Product Name cannot be blank!";
+            $showError = 'visible';
+        }
+        if (empty($_POST['productPrice'])) {
+            $productPriceError = "Price cannot be blank!";
+            $showError = 'visible';
+        }
+        if (empty($productNameError) && empty($productPriceError)) {
+            if ($product['Name'] != $_POST['productName']) {
+                $_SESSION['productName'] = $_POST['productName'];
+                $_SESSION['productPrice'] = $_POST['productPrice'];
+                header("Location: addProduct.php");
+            }
+        } else {
+            $productView = "block";
+            $productList = mysqli_query($conn, $productsql);
+        }
+    } else {
+        $productName = $productPrice = "";
+        $productList = mysqli_query($conn, $productsql);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -23,10 +54,21 @@
         <title>My Dashboard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="src/dashboardStyle.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="src/dashboardStyle.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            #addProductView {
+                display: <?=$productView?>
+            }
+            small {
+                font-size: 12px;
+                color: red;
+                font-weight: bold;
+                visibility: <?=$showError?>;
+            }
+        </style>
     </head>
 
     <body class="w3-light-grey">
@@ -107,7 +149,7 @@
                     <th>Name</th>
                     <th>Price</th>
                 </tr>
-                <?php while ($column = mysqli_fetch_array($products)) { ?>
+                <?php while ($column = mysqli_fetch_array($productList)) { ?>
                     <?php 
                         $price = number_format($column[2], 2, '.', '');
                         echo "<tr>";
@@ -127,6 +169,34 @@
         </footer>
     
     <!--End of Page-->
+    </div>
+
+    <!--Add Product View-->
+    <div id="addProductView">
+        <div class="addProductView-container">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i>
+            <form action="" method="POST">
+                <h2>Add New Product</h2>
+                <div>
+                    <label>Product Name</label>
+                    <input type="text" name="productName" placeholder="Product Name" value="<?php echo $productName ?>"/>
+                    <?php if (isset($productNameError)) {?>
+                        <small id="productNameError"><?php echo $productNameError ?></small>
+                    <?php } ?>
+                 </div>
+                <div style="margin-top: 10px">
+                    <label class="priceLabel">Price</label>
+                    <input type="text" id="currency" name="currency" value="RM" disabled/>
+                    <input type="text" id="productPrice" name="productPrice" placeholder="10" value="<?php echo $productPrice ?>"/>
+                    <?php if (isset($productPriceError)) {?>
+                        <small id="productPriceError"><?php echo $productPriceError ?></small>
+                    <?php } ?>
+                </div>
+                <div class="button">
+                    <input type="submit" id="submit" name="submit" value="Add Product"></input>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="dashboardScript.js"></script>

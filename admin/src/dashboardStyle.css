@@ -36,3 +36,90 @@ table td {
     font-size: medium;
     text-align: center;
 }
+
+/*Add Product*/
+#addProductView {
+    background-color: #d3d3d3a0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    justify-items: center;
+    display: none;
+}
+
+.addProductView-container {
+    background-color: rgb(168, 168, 168);
+    margin: 200px auto;
+    padding: 10px 20px;
+    height: 350px;
+    max-width: 400px;
+    min-width: 400px;
+    border-radius: 10px;
+}
+
+.addProductView-container h2 {
+    padding: 10px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.addProductView-container input {
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+    margin: 5px auto;
+    padding-left: 5px;
+    width: 100%;
+    height: 30px;
+}
+
+.addProductView-container input::placeholder {
+    color: darkgray;
+    font-weight: normal;
+}
+
+.addProductView-container label {
+    font-weight: bold;
+}
+
+.addProductView-container .priceLabel {
+    display: block;
+}
+
+.addProductView-container #currency, .addProductView-container #productPrice {
+    display: inline-block;
+    width: 35px;
+    background-color: #fff;
+    border-radius: 5px 0 0 5px;
+}
+
+.addProductView-container #productPrice {
+    width: calc(100% - 39px);
+    border-radius: 0 5px 5px 0;
+}
+
+.addProductView-container .button {
+    margin: 12px 0;
+}
+
+.addProductView-container #submit {
+    height: 40px;
+    color: #fff;
+    background-color: #000;
+}
+
+.addProductView-container #submit:hover, .addProductView-container i:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.addProductView-container i:hover {
+    color: #fff;
+}
+
+
