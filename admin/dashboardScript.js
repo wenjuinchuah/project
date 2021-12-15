@@ -1,0 +1,4 @@
+//addProduct View
+function addProduct() {
+
+}

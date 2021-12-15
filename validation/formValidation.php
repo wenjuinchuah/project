@@ -167,18 +167,29 @@
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
         include_once 'connectSQL.php';
-        //Hash Password
-        $password1 = password_hash($password1, PASSWORD_DEFAULT);
-        //insert data into mySQL
-        $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
-            VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
 
-        if ($conn->query($sql) === TRUE) {
-            $successVisibility = 'visible';
+        //Check database
+        $dbCheck = "SELECT EMAIL FROM user WHERE EMAIL = '$email'";
+        $result = mysqli_query($conn, $dbCheck);
+        
+        $count = mysqli_num_rows($result);
+        //If not found
+        if ($count == 0) {
+            //Hash Password
+            $password1 = password_hash($password1, PASSWORD_DEFAULT);
+            //insert data into mySQL
+            $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
+                VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
+
+            if ($conn->query($sql) === TRUE) {
+                $successVisibility = 'visible';
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Username exists!";
         }
-
+        
         $conn->close();
     };
 ?>
@@ -562,7 +573,7 @@
             <h2>Registration Successful!</h2>
             <i id="i-success" class="fa fa-check fa-5x" aria-hidden="true"></i>
             <div class="btn">
-                <a href="./index.php"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
+                <a href="../index.php"><input type="submit" id="successBtn" name="successBtn" value="OK"></input></a>
             </div>
         </div>
     </div>
