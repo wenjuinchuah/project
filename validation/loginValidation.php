@@ -30,14 +30,17 @@
                 $showError = 'visible';
             }
             if (empty($nameError) && empty($passwordError)) {
-                include 'validation/login.php';
+                include 'login.php';
                 $username = $password = '';
+                //If found, $count == 1
                 if ($count == 1) {
                     $loginUsername = $_SESSION['loginUser'];
                     $isLogin = true;
                     $dropdownLoginView = 'hidden';
                     $dropdownUserInfoView = 'visible';
-                    include 'shoppingCart/shoppingCart.php';
+
+                    //Create shoppingCart db
+                    include 'createCartDb.php';
                 }
             }
         } else {

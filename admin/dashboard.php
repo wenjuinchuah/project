@@ -50,6 +50,7 @@
         $productName = $productPrice = $productStock = "";
         $productList = mysqli_query($conn, $productsql);
     }
+    mysqli_free_result($result);
 ?>
 
 <!DOCTYPE html>

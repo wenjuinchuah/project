@@ -14,5 +14,4 @@
             echo 'Error creating database: ' . mysqli_error($conn) . "\n";
         }
     }
-    
 ?>

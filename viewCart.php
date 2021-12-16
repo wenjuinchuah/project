@@ -2,8 +2,35 @@
     include 'validation/loginValidation.php';
     include 'validation/connectSQL.php';
 
-    $query = "SELECT * FROM products";
-    $result = mysqli_query($conn, $query);
+    //Select UserID from user
+    $loginUsername = $_SESSION['loginUser'];
+    $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
+
+    if ($result = mysqli_query($conn, $sql)) {
+        $userDetails = mysqli_fetch_object($result);
+        $UserID = $userDetails->UserID;
+        $userType = $userDetails->UserType;
+    }
+    if ($userType == 'user') {
+        //Select shoppingCart database
+        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingCart');
+
+        if ($conn) {
+            $sql = "CREATE TABLE user_$UserID (
+                        ProductID INT(11) NOT NULL,
+                        ProductName VARCHAR(100) NOT NULL,
+                        Price FLOAT NOT NULL,
+                        Quantity INT(11) NOT NULL
+                    )";
+
+            $result = mysqli_query($conn, $sql);
+        } else {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+    }
+
+    mysqli_free_result($result);
+    //header("location: ../index.php");
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +40,7 @@
         <link rel="stylesheet" href="src/style.css">
         <link rel="icon" href="src/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -32,11 +59,6 @@
                 left: 50%; 
                 transform: translateX(-50%);
                 border-radius: 12px;
-            }
-
-            .product-div button{
-                margin-top: 5px;
-                padding: 3px;
             }
 
             main div {
@@ -61,10 +83,6 @@
 
             .dropdown-userInfo {
                 visibility: <?=$dropdownUserInfoView?>
-            }
-
-            #addtoCart {
-                display: none;
             }
         </style>
 
@@ -146,13 +164,14 @@
         <main>
             <div class= "product-div">
                 <?php
+                    $sql = "SELECT * FROM user_$UserID";
+                    $result = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_row($result)){
                         echo "<div>";
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
                         echo "<p>Price: RM $row[2]</p>";
                         echo "<p>Stock: $row[3]</p>";
-                        echo "<button type='button' onclick='addtoCart()'>Add to Cart</button>";
                         echo "</div>";
                     }
 
@@ -199,27 +218,5 @@
                 <p>Copyright &copy (2004-2018) Gardenia Bakeries (KL) Sdn. Bhd (139386X) All Rights Reserved. | <a href="#">PRIVACY</a></p>
             </div>
         </footer>
-
-        <!--Add to Cart View-->
-        <div id="addtoCart">
-            <div class="addtoCart-container">
-                <i class="fa fa-times" onclick="turnOff()"></i>
-                <form action="" method="POST">
-                    <h2>Add to Cart</h2>
-                    <div>
-                        <label>Quantity</label>
-                        <input type="number" name="quantity" value="1" min="1" max="<?php $row['stock'] ?>"/>
-                        <?php if (isset($productNameError)) {?>
-                            <small id="productNameError"><?php echo $productNameError ?></small>
-                        <?php } ?>
-                    </div>
-                    <div class="button">
-                        <input type="submit" id="submit" name="submit" value="Add Product"></input>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <style src="script.js"></style>
     </body>
 </html>
