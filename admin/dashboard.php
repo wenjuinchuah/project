@@ -12,9 +12,7 @@
         header('Location: ../index.php');
     }
 
-    //Connect to products database
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
-
+    //Get products database
     $productsql = "SELECT * FROM products ORDER BY ID";
     $productList = mysqli_query($conn, $productsql);
     
@@ -23,6 +21,7 @@
 
         $productName = $_POST['productName'];
         $productPrice = $_POST['productPrice'];
+        $productStock = $_POST['productStock'];
 
         if (empty($_POST['productName'])) {
             $productNameError = "Product Name cannot be blank!";
@@ -32,10 +31,15 @@
             $productPriceError = "Price cannot be blank!";
             $showError = 'visible';
         }
-        if (empty($productNameError) && empty($productPriceError)) {
+        if (empty($_POST['productPrice'])){
+            $productStockError = "Stock cannot be blank!";
+            $showError = 'visible';
+        }
+        if (empty($productNameError) && empty($productPriceError) && empty($productStockError)) {
             if ($product['Name'] != $_POST['productName']) {
                 $_SESSION['productName'] = $_POST['productName'];
                 $_SESSION['productPrice'] = $_POST['productPrice'];
+                $_SESSION['productStock'] = $_POST['productStock'];
                 header("Location: addProduct.php");
             }
         } else {
@@ -43,7 +47,7 @@
             $productList = mysqli_query($conn, $productsql);
         }
     } else {
-        $productName = $productPrice = "";
+        $productName = $productPrice = $productStock = "";
         $productList = mysqli_query($conn, $productsql);
     }
 ?>
@@ -74,7 +78,7 @@
     <body class="w3-light-grey">
 
     <!-- Top container -->
-    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4; display: flex; height: 60px; padding-top: 5px;">
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4; display: flex; height: 60px; padding-top: 7px;">
         <div class="w3-container w3-row" style="flex: 1; align-content: center;">
             <div class="w3-col s4" style="width: 100%">
                 <img src="src/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
@@ -148,6 +152,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Stock</th>
                 </tr>
                 <?php while ($column = mysqli_fetch_array($productList)) { ?>
                     <?php 
@@ -156,6 +161,7 @@
                         echo "<td>$column[0]</td>";
                         echo "<td>$column[1]</td>";
                         echo "<td>RM $price</td>";
+                        echo "<td>$column[3]</td>";
                         echo "</tr>"; 
                     ?>
                 <?php } ?>
@@ -190,6 +196,13 @@
                     <input type="text" id="productPrice" name="productPrice" placeholder="10" value="<?php echo $productPrice ?>"/>
                     <?php if (isset($productPriceError)) {?>
                         <small id="productPriceError"><?php echo $productPriceError ?></small>
+                    <?php } ?>
+                </div>
+                <div style="margin-top: 10px">
+                    <label class="stockLabel">Stock</label>
+                    <input type="text" id="productStock" name="productStock" placeholder="1" value="<?php echo $productStock ?>"/>
+                    <?php if (isset($productStockError)) {?>
+                        <small id="productStockError"><?php echo $productStockError ?></small>
                     <?php } ?>
                 </div>
                 <div class="button">

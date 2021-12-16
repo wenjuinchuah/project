@@ -4,9 +4,9 @@
 
     $productName = $_SESSION['productName'];
     $productPrice = $_SESSION['productPrice'];
+    $productStock = $_SESSION['productStock'];
 
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
-    $sql = "INSERT INTO products (Name, Price) VALUES ('$productName', '$productPrice')";
+    $sql = "INSERT INTO products (Name, Price, Stock) VALUES ('$productName', '$productPrice','$productStock')";
 
     if (mysqli_query($conn, $sql) === TRUE) {
         header('Location: dashboard.php');

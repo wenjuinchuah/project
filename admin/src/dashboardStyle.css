@@ -53,9 +53,9 @@ table td {
 
 .addProductView-container {
     background-color: rgb(168, 168, 168);
-    margin: 200px auto;
+    margin: 150px auto;
     padding: 10px 20px;
-    height: 350px;
+    height: auto;
     max-width: 400px;
     min-width: 400px;
     border-radius: 10px;
@@ -87,7 +87,8 @@ table td {
     font-weight: bold;
 }
 
-.addProductView-container .priceLabel {
+.addProductView-container .priceLabel,
+.addProductView-container .stockLabel{
     display: block;
 }
 
@@ -104,7 +105,7 @@ table td {
 }
 
 .addProductView-container .button {
-    margin: 12px 0;
+    margin: 20px 0;
 }
 
 .addProductView-container #submit {

@@ -1,43 +1,6 @@
 <?php
     ob_start();
-    session_start();
-    //Hide Error Message by Default
-    $showError = 'hidden';
-    $dropdownLoginView = 'visible';
-    $dropdownUserInfoView = 'hidden';
-    $isLogin = false;
-
-    if (isset($_POST['submit'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        if (empty($username)) {
-            $nameError = "Username cannot be blank!";
-            $showError = 'visible';
-        }
-        if (empty($password)) {
-            $passwordError = "Password cannot be blank!";
-            $showError = 'visible';
-        }
-        if (empty($nameError) && empty($passwordError)) {
-            include 'validation/login.php';
-            $username = $password = '';
-            if ($count == 1) {
-                $loginUsername = $_SESSION['loginUser'];
-                $isLogin = true;
-                $dropdownLoginView = 'hidden';
-                $dropdownUserInfoView = 'visible';
-            }
-        }
-    } else {
-        $username = $password = '';
-        if (isset($_SESSION['loginUser'])) {
-            $loginUsername = $_SESSION['loginUser'];
-            $isLogin = true;
-            $dropdownLoginView = 'hidden';
-            $dropdownUserInfoView = 'visible';
-        }
-    }
+    include 'validation/loginValidation.php';
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +47,7 @@
             <nav>
                 <ul class="nav-links">
                     <li class="home"><a href="index.php">Home</a></li>
-                    <li class="about-us"><a href="aboutus.html">About Us</a></li>
+                    <li class="about-us"><a href="aboutus.php">About Us</a></li>
                     <li class="product"><a href="products.php">Products</a></li>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
@@ -124,7 +87,7 @@
                                 </div>
                                 <input type="submit" name="submit" id="signInButton" value="Login"/>
                                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
-                                    <p>Don't have an account? <a href="registration.html">Sign Up</a> now!</p>
+                                    <p>Don't have an account? <a href="registration.php">Sign Up</a> now!</p>
                                 </div>
                             </form>
                         </div>

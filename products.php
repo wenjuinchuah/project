@@ -1,3 +1,7 @@
+<?php
+    include 'validation/loginValidation.php';
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,11 +17,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <style>
-            main{
+            main {
                 background: linear-gradient( to top , rgb(241, 241, 241)90%, rgb(196, 196, 196));
             }
 
-            .product-div{
+            .product-div {
                 background-color: gray; 
                 width: 70%; 
                 position: relative; 
@@ -26,7 +30,7 @@
                 border-radius: 12px;
             }
 
-            main div{
+            main div {
                 display: inline-block;
                 padding: 20px 5%;
                 width: 30%;
@@ -34,6 +38,20 @@
                 background-color: white;
                 margin: 10px;
                 border-radius: 5px;
+            }
+
+            small {
+                font-size: 12px;
+                color: red;
+                visibility: <?=$showError?>;
+            }
+
+            .dropdown-signIn {
+                visibility: <?=$dropdownLoginView?>
+            }
+
+            .dropdown-userInfo {
+                visibility: <?=$dropdownUserInfoView?>
             }
         </style>
 
@@ -52,8 +70,8 @@
             <nav>
                 <ul class="nav-links">
                     <li class="home"><a href="index.php">Home</a></li>
-                    <li class="about-us"><a href="aboutus.html">About Us</a></li>
-                    <li class="product"><a href="products.html">Products</a></li>
+                    <li class="about-us"><a href="aboutus.php">About Us</a></li>
+                    <li class="product"><a href="products.php">Products</a></li>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
                         <div class="dropdown-content">
@@ -66,6 +84,38 @@
                             <a href="#">The Truth</a>
                             <a href="#">Career Center</a>
                             <a href="#contactus">Contact Us</a>
+                        </div>
+                    </div>
+                    <div class = "signIn"> <!--testing-->
+                        <button class="dropbtn">
+                            <?php if ($isLogin == true) { ?>
+                                <p>Hi, <?php echo $loginUsername ?></p>
+                            <?php } else { ?><p>Sign In</p><?php } ?>
+                        </button>
+                        <div class="dropdown-signIn">
+                            <form id="loginValidation" action="" method="POST">
+                                <div>
+                                    <label>Username:</label>
+                                    <input type="text" name="username" placeholder="Username" value="<?php echo $username ?>"/>
+                                    <?php if (isset($nameError)) {?>
+                                        <small id="nameError"><?php echo $nameError ?></small>
+                                    <?php } ?>
+                                </div>
+                                <div>
+                                    <label>Password:</label>
+                                    <input type="password" name="password" placeholder="Password" value="<?php echo $password ?>"/>
+                                    <?php if (isset($passwordError)) {?>
+                                        <small id="passwordError"><?php echo $passwordError ?></small>
+                                    <?php } ?>
+                                </div>
+                                <input type="submit" name="submit" id="signInButton" value="Login"/>
+                                <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
+                                    <p>Don't have an account? <a href="registration.php">Sign Up</a> now!</p>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="dropdown-userInfo">
+                            <a href="validation/logout.php">Logout</a>
                         </div>
                     </div>
                 </ul>
@@ -83,18 +133,7 @@
         <main>
             <div class= "product-div">
                 <?php
-                    $host = "";
-                    $user = "Admin_Project";
-                    $pass = "!-CI@-eSxzI.bhD(";
-
-                    $conn = mysqli_connect($host, $user, $pass, 'Gardenia');
-                    if(!$conn){
-                        echo "Could not connect to server\n";
-                        trigger_error(mysqli_error(), E_USER_ERROR);
-                    }else{
-                        //echo "Connected\n";
-                    }
-                    //echo mysqli_get_server_info($conn). "\n"; //testing
+                    include 'validation/connectSQL.php';
 
                     $query = "SELECT * FROM products";
                     $result = mysqli_query($conn, $query);
@@ -103,6 +142,7 @@
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
                         echo "<p>Price: RM $row[2]</p>";
+                        echo "<p>Stock: $row[3]</p>";
                         echo "</div>";
                     }
 

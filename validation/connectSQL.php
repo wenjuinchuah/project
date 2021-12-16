@@ -2,7 +2,7 @@
     $servername = "localhost";
     $dbUsername = "admin";
     $dbPassword = "w_2L!ynO8_X/jcob";
-    $dbName = "userinfo";
+    $dbName = "gardenia";
 
     // Create connection
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);
