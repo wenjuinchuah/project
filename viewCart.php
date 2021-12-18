@@ -11,6 +11,7 @@
         $UserID = $userDetails->UserID;
         $userType = $userDetails->UserType;
     }
+
     if ($userType == 'user') {
         //Select shoppingCart database
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingCart');
@@ -28,9 +29,6 @@
             die("Connection failed: " . mysqli_connect_error());
         }
     }
-
-    mysqli_free_result($result);
-    //header("location: ../index.php");
 ?>
 
 <!DOCTYPE html>
@@ -162,15 +160,17 @@
         </header>
 
         <main>
+            <h2 style="text-align: center; padding-top: 10px">Shopping Cart</h2>
             <div class= "product-div">
                 <?php
-                    $sql = "SELECT * FROM user_$UserID";
+                    $sql = "SELECT * FROM user_$UserID ORDER BY ProductID";
                     $result = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_row($result)){
+                        $price = number_format($row[2], 2, '.', '');
                         echo "<div>";
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
-                        echo "<p>Price: RM $row[2]</p>";
+                        echo "<p>Price: RM $price</p>";
                         echo "<p>Stock: $row[3]</p>";
                         echo "</div>";
                     }
@@ -178,7 +178,10 @@
                     mysqli_close($conn);
                 ?>
             </div>
-        </main>
+            <div style="background: none; margin: auto; width: 100%">
+                <button type="button"><a href="addOrder.php">Order Now</a></button>
+            </div>
+            </main>
 
         <footer>
             <div class="footer-container">
@@ -218,5 +221,6 @@
                 <p>Copyright &copy (2004-2018) Gardenia Bakeries (KL) Sdn. Bhd (139386X) All Rights Reserved. | <a href="#">PRIVACY</a></p>
             </div>
         </footer>
+
     </body>
 </html>

@@ -4,6 +4,7 @@
 
     $query = "SELECT * FROM products";
     $result = mysqli_query($conn, $query);
+
 ?>
 
 <!DOCTYPE html>
@@ -63,8 +64,54 @@
                 visibility: <?=$dropdownUserInfoView?>
             }
 
-            #addtoCart {
+            /* AddtoCart View */
+            #addtoCart, #successView {
+                background-color: #d3d3d3a0;
+                margin: 0;
+                padding: 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                align-content: center;
+                justify-items: center;
                 display: none;
+            }
+
+            .addtoCart-container {
+                background-color: rgb(168, 168, 168);
+                margin: 150px auto;
+                padding: 10px 20px;
+                height: auto;
+                max-width: 400px;
+                min-width: 400px;
+                border-radius: 10px;
+            }
+
+            .addtoCart-container h2 {
+                padding: 10px 0;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .addtoCart-container input {
+                border: none;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: medium;
+                margin: 5px auto;
+                padding-left: 5px;
+                width: 100%;
+                height: 30px;
+            }
+
+            .addtoCart-container input::placeholder {
+                color: darkgray;
+                font-weight: normal;
+            }
+
+            .addtoCart-container label {
+                font-weight: bold;
             }
         </style>
 
@@ -128,7 +175,8 @@
                             </form>
                         </div>
                         <div class="dropdown-userInfo">
-                            <a href="validation/logout.php">Logout</a>
+                            <a href="viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
+                            <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                         </div>
                     </div>
                 </ul>
@@ -144,18 +192,26 @@
         </header>
 
         <main>
-            <div class= "product-div">
+            <h2 style="text-align: center; padding-top: 10px">Product List</h2>
+            <div class="product-div" id="product">
                 <?php
-                    while($row = mysqli_fetch_row($result)){
+                    $i = 0;
+                    while ($row = mysqli_fetch_row($result)) {
+                        $ID[$i] = $row[0];
+                        $_SESSION['productID'.strval($i)] = $ID[$i];
+                        $stock[$i] = $row[3];
+
+                        $price = number_format($row[2], 2, '.', '');
                         echo "<div>";
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
-                        echo "<p>Price: RM $row[2]</p>";
+                        echo "<p>Price: RM $price</p>";
                         echo "<p>Stock: $row[3]</p>";
-                        echo "<button type='button' onclick='addtoCart()'>Add to Cart</button>";
+                        echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i])'>Add to Cart</button>";
                         echo "</div>";
-                    }
 
+                        $i++;
+                    }
                     mysqli_close($conn);
                 ?>
             </div>
@@ -204,11 +260,11 @@
         <div id="addtoCart">
             <div class="addtoCart-container">
                 <i class="fa fa-times" onclick="turnOff()"></i>
-                <form action="" method="POST">
+                <form action="addCart.php" method="POST">
                     <h2>Add to Cart</h2>
                     <div>
                         <label>Quantity</label>
-                        <input type="number" name="quantity" value="1" min="1" max="<?php $row['stock'] ?>"/>
+                        <input type="number" id="quantity" name="quantity" value="1" min="1" max="1"/>
                         <?php if (isset($productNameError)) {?>
                             <small id="productNameError"><?php echo $productNameError ?></small>
                         <?php } ?>
@@ -220,6 +276,35 @@
             </div>
         </div>
 
-        <style src="script.js"></style>
+
+        <script>
+            function turnOff() {
+                document.getElementById("addtoCart").style.display = "none";
+            }
+
+            function addCartView(ID, i) {
+                document.getElementById("addtoCart").style.display = "block";
+                document.getElementById("quantity").max = i;
+
+                createCookie("productID", ID, "0.1");
+            }
+
+            // Function to create the cookie
+            function createCookie(name, value, days) {
+                var expires;
+                
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                }
+                else {
+                    expires = "";
+                }
+                
+                document.cookie = escape(name) + "=" + 
+                    escape(value) + expires + "; path=/";
+            }
+        </script>
     </body>
 </html>

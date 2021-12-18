@@ -356,7 +356,8 @@
                         </form>
                     </div>
                     <div class="dropdown-userInfo">
-                        <a href="validation/logout.php">Logout</a>
+                        <a href="viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
+                        <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                     </div>
                 </div>
             </ul>
