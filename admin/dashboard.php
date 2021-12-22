@@ -2,7 +2,14 @@
     include '../validation/connectSQL.php';
     session_start();
 
+    //Get order amount
+    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'userorder');
+    $sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
+    $result = mysqli_query($conn, $sql);
+    $order = mysqli_num_rows($result);
+
     //Get user amount
+    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
     $sql = "SELECT * FROM user";
     $result = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($result) - 1;
@@ -102,7 +109,7 @@
             <div class="w3-container w3-red w3-padding-16">
                 <div class="w3-left"><i class="fa fa-shopping-bag w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                <h3>0</h3>
+                <h3><?php echo $order ?></h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Orders</h4>

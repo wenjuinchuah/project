@@ -8,8 +8,10 @@
 
     if ($result = mysqli_query($conn, $sql)) {
         $userDetails = mysqli_fetch_object($result);
-        $UserID = $userDetails->UserID;
+        $userID = $userDetails->UserID;
         $userType = $userDetails->UserType;
+
+        $_SESSION['userID'] = $userID;
     }
 
     if ($userType == 'user') {
@@ -17,7 +19,7 @@
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingCart');
 
         if ($conn) {
-            $sql = "CREATE TABLE user_$UserID (
+            $sql = "CREATE TABLE user_$userID (
                         ProductID INT(11) NOT NULL,
                         ProductName VARCHAR(100) NOT NULL,
                         Price FLOAT NOT NULL,
@@ -46,23 +48,46 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <style>
-            main {
+            body{
                 background: linear-gradient( to top , rgb(241, 241, 241)90%, rgb(196, 196, 196));
+            }
+
+            main {
+                display: inline-block;
+                width: 80%;
+                height: 500px;
+                margin: 20px 0% 5% 0%;
+                position: relative;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .product-div {
                 background-color: gray; 
-                width: 70%; 
-                position: relative; 
-                left: 50%; 
-                transform: translateX(-50%);
+                width: 65%; 
+                height: 100%;
                 border-radius: 12px;
+            }
+
+            .product-div p{
+                display: inline-block;
+            }
+
+            .amount-div {
+                position: absolute;
+                top: 0%;
+                background: white;
+                width: 30%;
+                height: 100%;
+                border: 2px solid black;
+                border-radius: 12px;
+                padding: 20px;
             }
 
             main div {
                 display: inline-block;
                 padding: 20px 5%;
-                width: 30%;
+                width: 100%;
                 text-align: center;
                 background-color: white;
                 margin: 10px;
@@ -81,6 +106,10 @@
 
             .dropdown-userInfo {
                 visibility: <?=$dropdownUserInfoView?>
+            }
+
+            #class12{
+                color: red;
             }
         </style>
 
@@ -115,7 +144,7 @@
                             <a href="#contactus">Contact Us</a>
                         </div>
                     </div>
-                    <div class = "signIn"> <!--testing-->
+                    <div class = "signIn">
                         <button class="dropbtn">
                             <?php if ($isLogin == true) { ?>
                                 <p>Hi, <?php echo $loginUsername ?></p>
@@ -158,30 +187,64 @@
                 </div>
             </nav>
         </header>
+        <?php
 
+        $abc = 12;
+        echo "<p id='class$abc'>testing</p>"
+
+        ?>
+        <h2 style="text-align: center; margin-top: 30px">Shopping Cart</h2>
         <main>
-            <h2 style="text-align: center; padding-top: 10px">Shopping Cart</h2>
             <div class= "product-div">
+                <div>
+                    <p style="width: 10%">ID</p><p style="width: 50%">Product</p><p style="width: 20%">Quantity</p><p style="width: 20%">Price per item</p>
+                </div>
                 <?php
-                    $sql = "SELECT * FROM user_$UserID ORDER BY ProductID";
+                    $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
                     $result = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_row($result)){
                         $price = number_format($row[2], 2, '.', '');
-                        echo "<div>";
-                        echo "<p>ID: $row[0]</p>";
-                        echo "<p>Name: $row[1]</p>";
-                        echo "<p>Price: RM $price</p>";
-                        echo "<p>Stock: $row[3]</p>";
-                        echo "</div>";
-                    }
-
-                    mysqli_close($conn);
-                ?>
+                        echo "<div id='item$row[0]'>";
+                        echo "<image style='width:3%;' src='src/arrow_down.png' onclick='removeItem($row[0])'/>"; //suppose to be delete button, i use a random pic first
+                        echo "<p style='width: 7%'>$row[0]</p>";
+                        echo "<p style='width: 50%'>$row[1]</p>";
+                        echo "<div style='width: 20%; padding: 0; margin: 0;'>";
+                        echo "<button onclick='minusAmount($row[0])' style='width: 35%'>-</button>";
+                        echo "<p id='test$row[0]' style='width: 30%'>$row[3]</p>";
+                        echo "<button onclick='addAmount($row[0])' style='width: 35%'>+</button>";   //hmm how ah, use javascript to access sql?
+                        echo "</div>";                                                      //not sure, or you pass data inside addAmount(var 1, var 2)
+                        echo "<p style='width: 20%'>RM $price</p>";                         //Use javascript to access sql is bad practice (From google) 
+                        echo "</div>";                                                      //yea that's what i saw too
+                    }                                                                       //I tried to use something called ajax it is somewhat working right now
+                ?>                                                                          <!--shud be fine using ajax i guess but there's problem where we can add the quantity exceed the product stock-->
             </div>
-            <div style="background: none; margin: auto; width: 100%">
-                <button type="button"><a href="addOrder.php">Order Now</a></button>
+            <div class="amount-div">
+                <h2 style="text-decoration: underline;">Amount </h2>
+                <div id="price">
+                    <?php
+                        
+                        $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
+                        $result = mysqli_query($conn, $sql);
+                        $index = 1;
+                        $total = 0;
+                        while($row = mysqli_fetch_row($result)){
+                            $price = number_format($row[2], 2, '.', '');
+                            $subtotal = $row[3]*$price;
+                            $subtotal = number_format($subtotal, 2, '.');
+                            echo "<p style='text-align: left;'>$index) RM $price X $row[3] = RM $subtotal</p>";
+                            $total += $subtotal;
+                            $index++;
+                        }
+                        $total = number_format($total, 2, '.');
+                        echo "<br><p style='text-align: left; font-weight: bold;'>TOTAL: RM $total</p>";
+                        mysqli_close($conn);
+                    ?>
+                    <div style="background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
+                        <button type="button"><a href="payment.php">Order Now</a></button>
+                    </div>
+                </div>
             </div>
-            </main>
+        </main>
 
         <footer>
             <div class="footer-container">
@@ -221,6 +284,46 @@
                 <p>Copyright &copy (2004-2018) Gardenia Bakeries (KL) Sdn. Bhd (139386X) All Rights Reserved. | <a href="#">PRIVACY</a></p>
             </div>
         </footer>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $("button").click(function() {
+                $("#price").load("calculatePrice.php");
+            });
 
+            function addAmount(id){
+                const xmlhttp = new XMLHttpRequest();
+                var x = document.getElementById("test"+id);
+                xmlhttp.onload = function(){
+                    x.innerHTML = this.responseText;
+                    
+                }
+                xmlhttp.open("GET", "testing.php?action=add&id=" + id);
+                xmlhttp.send();
+            }
+
+            function minusAmount(id){ 
+                const xmlhttp = new XMLHttpRequest();
+                var x = document.getElementById("test"+id);
+                xmlhttp.onload = function(){
+                    x.innerHTML = this.responseText;
+                    if(x.innerHTML == 0){
+                        document.getElementById("item"+id).remove();
+                    }
+                }
+                xmlhttp.open("GET", "testing.php?action=minus&id=" + id);
+                xmlhttp.send();
+            }
+
+            function removeItem(id){
+                const xmlhttp = new XMLHttpRequest();
+                var x = document.getElementById("item"+id);
+                xmlhttp.onload = function(){
+                    x.remove();
+                }
+                xmlhttp.open("GET", "testing.php?action=remove&id=" + id);
+                xmlhttp.send();
+            }
+        </script>
     </body>
 </html>

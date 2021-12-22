@@ -41,6 +41,7 @@
 
                     //Create shoppingCart db
                     include 'createCartDb.php';
+                    include 'createOrderDb.php';
                 }
             }
         } else {
