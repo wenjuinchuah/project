@@ -4,7 +4,7 @@
         
         if (isset($paymentMethod)) {
             if ($paymentMethod == 2) {
-                include 'validation/validatePayment.php';
+                header(Location: '../validation/validatePayment.php');
             }
             include 'addOrder.php';
             //$orderSuccessView = 'block';

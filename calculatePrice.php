@@ -1,5 +1,5 @@
 <?php
-    include 'validation/loginValidation.php';
+    session_start();
     include 'validation/connectSQL.php';
 
     //Select UserID from user

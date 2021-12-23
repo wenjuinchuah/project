@@ -1,7 +1,7 @@
 <?php
-    include 'validation/connectSQL.php';
-
     session_start();
+    include '../validation/connectSQL.php';
+
     //Select UserID from user
     $loginUsername = $_SESSION['loginUser'];
     $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
@@ -48,6 +48,6 @@
             die("Connection failed: " . mysqli_connect_error());
         }
     }
-    header("location: products.php");
+    header("location: ../products.php");
 ?>
 

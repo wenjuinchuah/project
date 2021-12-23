@@ -1,16 +1,7 @@
-<?php
-    include 'validation/loginValidation.php';
-    include 'validation/connectSQL.php';
-
-    $query = "SELECT * FROM products";
-    $result = mysqli_query($conn, $query);
-
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gardenia Bakeries (KL) Sdn Bhd</title>
+        <title>Products</title>
         <link rel="stylesheet" href="src/style.css">
         <link rel="icon" href="src/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,20 +39,6 @@
                 background-color: white;
                 margin: 10px;
                 border-radius: 5px;
-            }
-
-            small {
-                font-size: 12px;
-                color: red;
-                visibility: <?=$showError?>;
-            }
-
-            .dropdown-signIn {
-                visibility: <?=$dropdownLoginView?>
-            }
-
-            .dropdown-userInfo {
-                visibility: <?=$dropdownUserInfoView?>
             }
 
             /* AddtoCart View */
@@ -113,106 +90,49 @@
             .addtoCart-container label {
                 font-weight: bold;
             }
+
+            button {
+                cursor: pointer;
+            }
         </style>
 
     </head>
 
-    <body>
-        <header>
-            <div class="logo">
-                <div class="logo-container">
-                    <img src="src/gardenia.png" alt="Logo">
-                </div>
-                <div class="logo-container slogan">
-                    <img src="src/sogood.png" alt="Good">
-                </div>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li class="home"><a href="index.php">Home</a></li>
-                    <li class="about-us"><a href="aboutus.php">About Us</a></li>
-                    <li class="product"><a href="products.php">Products</a></li>
-                    <div class = "dropdown">
-                        <button class="dropbtn">More</button>
-                        <div class="dropdown-content">
-                            <a href="#">Halal Matters</a>
-                            <a href="#">Activities</a>
-                            <a href="#">Recipe</a>
-                            <a href="#">Tour</a>
-                            <a href="#">Health Tips</a>
-                            <a href="#">R&D/QA</a>
-                            <a href="#">The Truth</a>
-                            <a href="#">Career Center</a>
-                            <a href="#contactus">Contact Us</a>
-                        </div>
-                    </div>
-                    <div class = "signIn"> <!--testing-->
-                        <button class="dropbtn">
-                            <?php if ($isLogin == true) { ?>
-                                <p>Hi, <?php echo $loginUsername ?></p>
-                            <?php } else { ?><p>Sign In</p><?php } ?>
-                        </button>
-                        <div class="dropdown-signIn">
-                            <form id="loginValidation" action="" method="POST">
-                                <div>
-                                    <label>Username:</label>
-                                    <input type="text" name="username" placeholder="Username" value="<?php echo $username ?>"/>
-                                    <?php if (isset($nameError)) {?>
-                                        <small id="nameError"><?php echo $nameError ?></small>
-                                    <?php } ?>
-                                </div>
-                                <div>
-                                    <label>Password:</label>
-                                    <input type="password" name="password" placeholder="Password" value="<?php echo $password ?>"/>
-                                    <?php if (isset($passwordError)) {?>
-                                        <small id="passwordError"><?php echo $passwordError ?></small>
-                                    <?php } ?>
-                                </div>
-                                <input type="submit" name="submit" id="signInButton" value="Login"/>
-                                <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
-                                    <p>Don't have an account? <a href="registration.php">Sign Up</a> now!</p>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="dropdown-userInfo">
-                            <a href="viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
-                            <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
-                        </div>
-                    </div>
-                </ul>
-                <div class = "language">
-                    <button class="dropbtn"><img src="src/globe.png" alt="Globe"></button>
-                    <div class="dropdown-language">
-                        <a href="#">English</a>
-                        <a href="#">B. Melayu</a>
-                        <a href="#">中文</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
+    <?php include 'header.php'; ?>
 
+    <body>
         <main>
             <h2 style="text-align: center; padding-top: 10px">Product List</h2>
             <div class="product-div" id="product">
                 <?php
+                    include 'validation/connectSQL.php';
+
+                    $sql = "SELECT * FROM products";
+                    $result = mysqli_query($conn, $sql);
+                    $isLogin = $_SESSION['isLogin'];
                     $i = 0;
+
                     while ($row = mysqli_fetch_row($result)) {
                         $ID[$i] = $row[0];
                         $_SESSION['productID'.strval($i)] = $ID[$i];
                         $stock[$i] = $row[3];
-
                         $price = number_format($row[2], 2, '.', '');
+
                         echo "<div>";
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
                         echo "<p>Price: RM $price</p>";
                         echo "<p>Stock: $row[3]</p>";
-                        echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i])'>Add to Cart</button>";
-                        echo "</div>";
 
+                        if ($row[3] == 0) {
+                            echo "<button type='button' class='button' id='button$i' disable)'>Out of Stock</button>";
+                        } else {
+                            echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i], $isLogin)'>Add to Cart</button>";
+                        }
+
+                        echo "</div>";
                         $i++;
                     }
-                    mysqli_close($conn);
                 ?>
             </div>
         </main>
@@ -260,7 +180,7 @@
         <div id="addtoCart">
             <div class="addtoCart-container">
                 <i class="fa fa-times" onclick="turnOff()"></i>
-                <form action="addCart.php" method="POST">
+                <form action="user/addCart.php" method="POST">
                     <h2>Add to Cart</h2>
                     <div>
                         <label>Quantity</label>
@@ -282,11 +202,16 @@
                 document.getElementById("addtoCart").style.display = "none";
             }
 
-            function addCartView(ID, i) {
-                document.getElementById("addtoCart").style.display = "block";
-                document.getElementById("quantity").max = i;
+            function addCartView(ID, i, isLogin) {
+                if (isLogin) {
+                    document.getElementById("addtoCart").style.display = "block";
+                    document.getElementById("quantity").max = i;
 
-                createCookie("productID", ID, "0.1");
+                    createCookie("productID", ID, "0.1");
+                } else {
+                    alert("Please Login before Add item to cart!");
+                }
+                
             }
 
             // Function to create the cookie

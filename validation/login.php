@@ -1,6 +1,5 @@
 <?php
     include 'connectSQL.php';
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
         $usernameData = mysqli_real_escape_string($conn,$_POST['username']);

@@ -1,5 +1,5 @@
 <?php
-    include 'validation/connectSQL.php';
+    include '../validation/connectSQL.php';
     
     session_start();
     //connect to useroder database
@@ -45,11 +45,20 @@
         $sql = "INSERT INTO order_$i (ProductID, ProductName, Price, Quantity)
                 VALUES ('$row[0]', '$row[1]', '$row[2]', '$row[3]')";
         $order_result = mysqli_query($conn, $sql);
+
+        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
+        $sql = "SELECT * FROM products WHERE ID = '$row[0]'";
+        if ($products_result = mysqli_query($conn, $sql)) {
+            $assocProducts = mysqli_fetch_assoc($products_result);
+            $newStock = $assocProducts['Stock'] - $row[3];
+            $sql = "UPDATE products SET Stock = '$newStock' WHERE ID = '$row[0]'";
+            $products_result = mysqli_query($conn, $sql);
+        }
         
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingcart');
         $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
     }
 
     include 'removeCart.php';
-    header('location:index.php');
+    header('location:../index.php');
 ?>

@@ -144,7 +144,7 @@ nav {
     display: block;
 }
 
-.dropdown:hover .dropdown-content, .language:hover .dropdown-language, .signIn:hover .dropdown-signIn, .signIn:hover .dropdown-userInfo{
+.dropdown:hover .dropdown-content, .language:hover .dropdown-language, .signIn:hover .dropdown-userInfo{
     display: block;
 }
 

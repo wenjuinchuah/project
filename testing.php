@@ -1,14 +1,13 @@
 <?php
-    include 'validation/loginValidation.php';
-    include 'validation/connectSQL.php';
-
-    $action = $_REQUEST["action"];
-    $id = $_REQUEST["id"];
-
+    session_start();
     //Select UserID from user
     $loginUsername = $_SESSION['loginUser'];
     $userID = $_SESSION['userID'];
 
+    $action = $_REQUEST["action"];
+    $id = $_REQUEST["id"];
+
+    include 'validation/connectSQL.php';
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingcart');
 
     if ($conn) {
@@ -35,5 +34,4 @@
             $result = mysqli_query($conn, $sql);
         }
     }
-
 ?>

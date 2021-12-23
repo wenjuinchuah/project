@@ -4,9 +4,10 @@
 
     //Get order amount
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'userorder');
-    $sql = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'";
+    $sql = "SELECT COUNT(*) AS orderCount FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'userorder'";
     $result = mysqli_query($conn, $sql);
-    $order = mysqli_num_rows($result);
+    $assocResult = mysqli_fetch_assoc($result);
+    $orderCount = $assocResult['orderCount'];
 
     //Get user amount
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
@@ -109,7 +110,7 @@
             <div class="w3-container w3-red w3-padding-16">
                 <div class="w3-left"><i class="fa fa-shopping-bag w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                <h3><?php echo $order ?></h3>
+                <h3><?php echo $orderCount ?></h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Orders</h4>
@@ -119,7 +120,7 @@
             <div class="w3-container w3-blue w3-padding-16">
                 <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
                 <div class="w3-right">
-                <h3 class="visits">0</h3>
+                <h3 id="visits">0</h3>
                 </div>
                 <div class="w3-clear"></div>
                 <h4>Views</h4>
@@ -219,7 +220,6 @@
             </form>
         </div>
     </div>
-
     <script src="dashboardScript.js"></script>
     </body>
 </html>

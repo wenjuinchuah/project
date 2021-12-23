@@ -1,8 +1,8 @@
 <?php
+    //Select UserID from user
     include 'validation/loginValidation.php';
     include 'validation/connectSQL.php';
-
-    //Select UserID from user
+    
     $loginUsername = $_SESSION['loginUser'];
     $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
 
@@ -36,9 +36,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gardenia Bakeries (KL) Sdn Bhd</title>
-        <link rel="stylesheet" href="src/style.css">
-        <link rel="icon" href="src/icon.png">
+        <title>Shopping Cart</title>
+        <link rel="stylesheet" href="../src/style.css">
+        <link rel="icon" href="../src/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,20 +94,6 @@
                 border-radius: 5px;
             }
 
-            small {
-                font-size: 12px;
-                color: red;
-                visibility: <?=$showError?>;
-            }
-
-            .dropdown-signIn {
-                visibility: <?=$dropdownLoginView?>
-            }
-
-            .dropdown-userInfo {
-                visibility: <?=$dropdownUserInfoView?>
-            }
-
             #class12{
                 color: red;
             }
@@ -115,83 +101,12 @@
 
     </head>
 
+    <?php include 'header.php' ?>
+
     <body>
-        <header>
-            <div class="logo">
-                <div class="logo-container">
-                    <img src="src/gardenia.png" alt="Logo">
-                </div>
-                <div class="logo-container slogan">
-                    <img src="src/sogood.png" alt="Good">
-                </div>
-            </div>
-            <nav>
-                <ul class="nav-links">
-                    <li class="home"><a href="index.php">Home</a></li>
-                    <li class="about-us"><a href="aboutus.php">About Us</a></li>
-                    <li class="product"><a href="products.php">Products</a></li>
-                    <div class = "dropdown">
-                        <button class="dropbtn">More</button>
-                        <div class="dropdown-content">
-                            <a href="#">Halal Matters</a>
-                            <a href="#">Activities</a>
-                            <a href="#">Recipe</a>
-                            <a href="#">Tour</a>
-                            <a href="#">Health Tips</a>
-                            <a href="#">R&D/QA</a>
-                            <a href="#">The Truth</a>
-                            <a href="#">Career Center</a>
-                            <a href="#contactus">Contact Us</a>
-                        </div>
-                    </div>
-                    <div class = "signIn">
-                        <button class="dropbtn">
-                            <?php if ($isLogin == true) { ?>
-                                <p>Hi, <?php echo $loginUsername ?></p>
-                            <?php } else { ?><p>Sign In</p><?php } ?>
-                        </button>
-                        <div class="dropdown-signIn">
-                            <form id="loginValidation" action="" method="POST">
-                                <div>
-                                    <label>Username:</label>
-                                    <input type="text" name="username" placeholder="Username" value="<?php echo $username ?>"/>
-                                    <?php if (isset($nameError)) {?>
-                                        <small id="nameError"><?php echo $nameError ?></small>
-                                    <?php } ?>
-                                </div>
-                                <div>
-                                    <label>Password:</label>
-                                    <input type="password" name="password" placeholder="Password" value="<?php echo $password ?>"/>
-                                    <?php if (isset($passwordError)) {?>
-                                        <small id="passwordError"><?php echo $passwordError ?></small>
-                                    <?php } ?>
-                                </div>
-                                <input type="submit" name="submit" id="signInButton" value="Login"/>
-                                <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
-                                    <p>Don't have an account? <a href="registration.php">Sign Up</a> now!</p>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="dropdown-userInfo">
-                            <a href="validation/logout.php">Logout</a>
-                        </div>
-                    </div>
-                </ul>
-                <div class = "language">
-                    <button class="dropbtn"><img src="src/globe.png" alt="Globe"></button>
-                    <div class="dropdown-language">
-                        <a href="#">English</a>
-                        <a href="#">B. Melayu</a>
-                        <a href="#">中文</a>
-                    </div>
-                </div>
-            </nav>
-        </header>
         <?php
-
-        $abc = 12;
-        echo "<p id='class$abc'>testing</p>"
-
+            $abc = 12;
+            echo "<p id='class$abc'>testing</p>"
         ?>
         <h2 style="text-align: center; margin-top: 30px">Shopping Cart</h2>
         <main>
@@ -240,7 +155,7 @@
                         mysqli_close($conn);
                     ?>
                     <div style="background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
-                        <button type="button"><a href="payment.php">Order Now</a></button>
+                        <button type="button"><a href="user/payment.php">Order Now</a></button>
                     </div>
                 </div>
             </div>
