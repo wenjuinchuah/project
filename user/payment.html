@@ -1,17 +1,3 @@
-<?php
-    if (isset($_POST['submit'])) {
-        $paymentMethod = $_POST['paymentMethod'];
-        
-        if (isset($paymentMethod)) {
-            if ($paymentMethod == 2) {
-                header(Location: '../validation/validatePayment.php');
-            }
-            include 'addOrder.php';
-            //$orderSuccessView = 'block';
-        }
-    }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +31,7 @@
         <h2>Please select your prefer payment method</h2>
     </div>
     <div class="paymentMethod">
-        <form action="" method="POST">
+        <form action="../validation/paymentValidation.php" method="POST">
             <div>
                 <input type="radio" name="paymentMethod" id="cashOnDelivery" checked="true" value="1"></input>
                 <label for="cashOnDelivery">Cash On Delivery</label>
@@ -55,7 +41,7 @@
                 <label for="creditCard">Credit Card</label>
             </div>
             <div id="submitButton">
-                <input type="submit" id="submit" name="submit" value="Continue"></input>
+                <input type="submit" id="submit" name="submitPaymentMethod" value="Continue"></input>
             </div>
         </form>
     </div>

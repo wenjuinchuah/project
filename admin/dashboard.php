@@ -3,8 +3,8 @@
     session_start();
 
     //Get order amount
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'userorder');
-    $sql = "SELECT COUNT(*) AS orderCount FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'userorder'";
+    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
+    $sql = "SELECT COUNT(*) AS orderCount FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'gardenia_order'";
     $result = mysqli_query($conn, $sql);
     $assocResult = mysqli_fetch_assoc($result);
     $orderCount = $assocResult['orderCount'];

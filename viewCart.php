@@ -1,36 +1,14 @@
 <?php
+    ob_start();
     //Select UserID from user
     include 'validation/loginValidation.php';
     include 'validation/connectSQL.php';
+    include 'database/createCartTable.php';
+
+    $userType = $_SESSION['userType'];
+    $anonymousID = $_SESSION['anonymousID'];
     
-    $loginUsername = $_SESSION['loginUser'];
-    $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
-
-    if ($result = mysqli_query($conn, $sql)) {
-        $userDetails = mysqli_fetch_object($result);
-        $userID = $userDetails->UserID;
-        $userType = $userDetails->UserType;
-
-        $_SESSION['userID'] = $userID;
-    }
-
-    if ($userType == 'user') {
-        //Select shoppingCart database
-        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingCart');
-
-        if ($conn) {
-            $sql = "CREATE TABLE user_$userID (
-                        ProductID INT(11) NOT NULL,
-                        ProductName VARCHAR(100) NOT NULL,
-                        Price FLOAT NOT NULL,
-                        Quantity INT(11) NOT NULL
-                    )";
-
-            $result = mysqli_query($conn, $sql);
-        } else {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-    }
+    ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -94,8 +72,9 @@
                 border-radius: 5px;
             }
 
-            #class12{
-                color: red;
+            i:hover {
+                cursor: pointer;
+                color: #CE0101;
             }
         </style>
 
@@ -104,10 +83,6 @@
     <?php include 'header.php' ?>
 
     <body>
-        <?php
-            $abc = 12;
-            echo "<p id='class$abc'>testing</p>"
-        ?>
         <h2 style="text-align: center; margin-top: 30px">Shopping Cart</h2>
         <main>
             <div class= "product-div">
@@ -115,31 +90,51 @@
                     <p style="width: 10%">ID</p><p style="width: 50%">Product</p><p style="width: 20%">Quantity</p><p style="width: 20%">Price per item</p>
                 </div>
                 <?php
-                    $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
-                    $result = mysqli_query($conn, $sql);
-                    while($row = mysqli_fetch_row($result)){
-                        $price = number_format($row[2], 2, '.', '');
-                        echo "<div id='item$row[0]'>";
-                        echo "<image style='width:3%;' src='src/arrow_down.png' onclick='removeItem($row[0])'/>"; //suppose to be delete button, i use a random pic first
-                        echo "<p style='width: 7%'>$row[0]</p>";
-                        echo "<p style='width: 50%'>$row[1]</p>";
-                        echo "<div style='width: 20%; padding: 0; margin: 0;'>";
-                        echo "<button onclick='minusAmount($row[0])' style='width: 35%'>-</button>";
-                        echo "<p id='test$row[0]' style='width: 30%'>$row[3]</p>";
-                        echo "<button onclick='addAmount($row[0])' style='width: 35%'>+</button>";   //hmm how ah, use javascript to access sql?
-                        echo "</div>";                                                      //not sure, or you pass data inside addAmount(var 1, var 2)
-                        echo "<p style='width: 20%'>RM $price</p>";                         //Use javascript to access sql is bad practice (From google) 
-                        echo "</div>";                                                      //yea that's what i saw too
-                    }                                                                       //I tried to use something called ajax it is somewhat working right now
-                ?>                                                                          <!--shud be fine using ajax i guess but there's problem where we can add the quantity exceed the product stock-->
+                    if ($userType == "user") {
+                        $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
+                        $result = mysqli_query($conn, $sql);
+                    } else if ($userType == '') {
+                        $sql = "SELECT * FROM anonymous_$anonymousID ORDER BY ProductID";
+                        $result = mysqli_query($conn, $sql);
+                    }
+                    
+                    $count = mysqli_num_rows($result);
+
+                    if ($count == 0) {
+                        echo "<div>
+                                <p>Oops, Your Shopping Cart is Empty<br>Browse our awesome products now!</p><br><br>
+                                <button type='button'><a href='products.php'>Go Shopping Now<a></button>
+                            </div>";
+                    } else {
+                        while($row = mysqli_fetch_row($result)){
+                            $price = number_format($row[2], 2, '.', '');
+                            echo "<div id='item$row[0]'>";
+                            echo "<i class='fa fa-trash-o fa-lg' onclick='removeItem($row[0])'></i>"; //suppose to be delete button, i use a random pic first
+                            echo "<p style='width: 7%'>$row[0]</p>";
+                            echo "<p style='width: 50%'>$row[1]</p>";
+                            echo "<div style='width: 20%; padding: 0; margin: 0;'>";
+                            echo "<button onclick='minusAmount($row[0])' style='width: 35%'>-</button>";
+                            echo "<p id='test$row[0]' style='width: 30%'>$row[3]</p>";
+                            echo "<button onclick='addAmount($row[0])' style='width: 35%'>+</button>";
+                            echo "</div>";
+                            echo "<p style='width: 20%'>RM $price</p>"; 
+                            echo "</div>";
+                        }
+                    }
+                    
+                ?>
             </div>
             <div class="amount-div">
                 <h2 style="text-decoration: underline;">Amount </h2>
                 <div id="price">
                     <?php
-                        
-                        $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
-                        $result = mysqli_query($conn, $sql);
+                        if ($userType == "user") {
+                            $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
+                            $result = mysqli_query($conn, $sql);
+                        } else if ($userType == '') {
+                            $sql = "SELECT * FROM anonymous_$anonymousID ORDER BY ProductID";
+                            $result = mysqli_query($conn, $sql);
+                        }
                         $index = 1;
                         $total = 0;
                         while($row = mysqli_fetch_row($result)){
@@ -152,11 +147,20 @@
                         }
                         $total = number_format($total, 2, '.');
                         echo "<br><p style='text-align: left; font-weight: bold;'>TOTAL: RM $total</p>";
+                        $_SESSION['total'] = $total;
                         mysqli_close($conn);
+                        
+                        if ($userType == "user") {
+                            echo "<div style='background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);'>
+                                    <button type='button'><a href='user/payment.html'>Order Now</a></button>
+                                </div>";
+                        } else if ($userType == '') {
+                            echo "<div style='background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);'>
+                                    <p>You haven't sign in as user.<br><a href='registration.php'>Register Now</a> and proceed to the payment</p>
+                                </div>";
+                        }
+                        
                     ?>
-                    <div style="background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);">
-                        <button type="button"><a href="user/payment.php">Order Now</a></button>
-                    </div>
                 </div>
             </div>
         </main>
@@ -213,7 +217,7 @@
                     x.innerHTML = this.responseText;
                     
                 }
-                xmlhttp.open("GET", "testing.php?action=add&id=" + id);
+                xmlhttp.open("GET", "editCart.php?action=add&id=" + id);
                 xmlhttp.send();
             }
 
@@ -226,18 +230,20 @@
                         document.getElementById("item"+id).remove();
                     }
                 }
-                xmlhttp.open("GET", "testing.php?action=minus&id=" + id);
+                xmlhttp.open("GET", "editCart.php?action=minus&id=" + id);
                 xmlhttp.send();
             }
 
             function removeItem(id){
-                const xmlhttp = new XMLHttpRequest();
-                var x = document.getElementById("item"+id);
-                xmlhttp.onload = function(){
-                    x.remove();
-                }
-                xmlhttp.open("GET", "testing.php?action=remove&id=" + id);
-                xmlhttp.send();
+                if (confirm("Do you want to remove this product from your cart?") == true) {
+                    const xmlhttp = new XMLHttpRequest();
+                    var x = document.getElementById("item"+id);
+                    xmlhttp.onload = function(){
+                        x.remove();
+                    }
+                    xmlhttp.open("GET", "editCart.php?action=remove&id=" + id);
+                    xmlhttp.send();
+                };
             }
         </script>
     </body>

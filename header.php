@@ -1,5 +1,4 @@
 <?php
-    ob_start();
     include 'validation/loginValidation.php';
 ?>
 
@@ -92,7 +91,9 @@
                             </form>
                         </div>
                         <div class="dropdown-userInfo">
+                            <a href="userProfile.php"><i class="fa fa-user"></i> Profile</a>
                             <a href="viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
+                            <a href="user/orderHistory.php"><i class="fa fa-history"></i></i> Order History</a>
                             <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                         </div>
                     </div>

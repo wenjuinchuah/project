@@ -43,7 +43,7 @@
                     $isLogin = $_SESSION['isLogin'] = true;
                     $dropdownLoginView = 'hidden';
                     $dropdownUserInfoView = 'visible';
-
+                    
                     //Create shoppingCart db
                     include 'database/createCartDb.php';
                     include 'database/createOrderDb.php';

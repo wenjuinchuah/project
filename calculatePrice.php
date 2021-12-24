@@ -6,7 +6,7 @@
     $loginUsername = $_SESSION['loginUser'];
     $userID = $_SESSION['userID'];
 
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'shoppingcart');
+    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
 
     if ($conn) {
         $sql = "SELECT * FROM user_$userID ORDER BY ProductID";

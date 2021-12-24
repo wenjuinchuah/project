@@ -1,19 +1,16 @@
-<?php
-    include 'validation/loginValidation.php';
-?>
+<?php include 'header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Gardenia Bakeries (KL) Sdn Bhd</title>
+    <title>User Registration</title>
     <link rel="stylesheet" href="src/style.css">
     <link rel="icon" href="src/icon.png">
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -299,79 +296,6 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <div class="logo-container">
-                <img src="src/gardenia.png" alt="Logo">
-            </div>
-            <div class="logo-container slogan">
-                <img src="src/sogood.png" alt="Good">
-            </div>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li class="home"><a href="index.php">Home</a></li>
-                <li class="about-us"><a href="aboutus.php">About Us</a></li>
-                <li class="product"><a href="products.php">Products</a></li>
-                <div class = "dropdown">
-                    <button class="dropbtn">More</button>
-                    <div class="dropdown-content">
-                        <a href="#">Halal Matters</a>
-                        <a href="#">Activities</a>
-                        <a href="#">Recipe</a>
-                        <a href="#">Tour</a>
-                        <a href="#">Health Tips</a>
-                        <a href="#">R&D/QA</a>
-                        <a href="#">The Truth</a>
-                        <a href="#">Career Center</a>
-                        <a href="#contactus">Contact Us</a>
-                    </div>
-                </div>
-                <div class = "signIn"> <!--testing-->
-                    <button class="dropbtn">
-                        <?php if ($isLogin == true) { ?>
-                            <p>Hi, <?php echo $loginUsername ?></p>
-                        <?php } else { ?><p>Sign In</p><?php } ?>
-                    </button>
-                    <div class="dropdown-signIn">
-                        <form id="loginValidation" action="" method="POST">
-                            <div>
-                                <label>Username:</label>
-                                <input type="text" name="username" placeholder="Username" value="<?php echo $username ?>"/>
-                                <?php if (isset($nameError)) {?>
-                                    <small id="nameError"><?php echo $nameError ?></small>
-                                <?php } ?>
-                            </div>
-                            <div>
-                                <label>Password:</label>
-                                <input type="password" name="password" placeholder="Password" value="<?php echo $password ?>"/>
-                                <?php if (isset($passwordError)) {?>
-                                    <small id="passwordError"><?php echo $passwordError ?></small>
-                                <?php } ?>
-                            </div>
-                            <input type="submit" name="submit" id="signInButton" value="Login"/>
-                            <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
-                                <p>Don't have an account? <a href="registration.php">Sign Up</a> now!</p>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="dropdown-userInfo">
-                        <a href="viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
-                        <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
-                    </div>
-                </div>
-            </ul>
-            <div class = "language">
-                <button class="dropbtn"><img src="src/globe.png" alt="Globe"></button>
-                <div class="dropdown-language">
-                    <a href="#">English</a>
-                    <a href="#">B. Melayu</a>
-                    <a href="#">中文</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
     <div id="view-container">
         <div class="van">
             

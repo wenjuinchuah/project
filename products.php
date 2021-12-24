@@ -109,7 +109,6 @@
 
                     $sql = "SELECT * FROM products";
                     $result = mysqli_query($conn, $sql);
-                    $isLogin = $_SESSION['isLogin'];
                     $i = 0;
 
                     while ($row = mysqli_fetch_row($result)) {
@@ -127,7 +126,7 @@
                         if ($row[3] == 0) {
                             echo "<button type='button' class='button' id='button$i' disable)'>Out of Stock</button>";
                         } else {
-                            echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i], $isLogin)'>Add to Cart</button>";
+                            echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i])'>Add to Cart</button>";
                         }
 
                         echo "</div>";
@@ -202,16 +201,11 @@
                 document.getElementById("addtoCart").style.display = "none";
             }
 
-            function addCartView(ID, i, isLogin) {
-                if (isLogin) {
-                    document.getElementById("addtoCart").style.display = "block";
-                    document.getElementById("quantity").max = i;
+            function addCartView(ID, i) {
+                document.getElementById("addtoCart").style.display = "block";
+                document.getElementById("quantity").max = i;
 
-                    createCookie("productID", ID, "0.1");
-                } else {
-                    alert("Please Login before Add item to cart!");
-                }
-                
+                createCookie("productID", ID, "0.1");
             }
 
             // Function to create the cookie

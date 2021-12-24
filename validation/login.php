@@ -1,4 +1,5 @@
 <?php
+    ob_start();
     include 'connectSQL.php';
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
@@ -37,4 +38,5 @@
     } else {
         die();
     }
+    ob_end_flush();
 ?>
