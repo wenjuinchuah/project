@@ -1,13 +1,13 @@
 <?php
-    include 'validation/loginValidation.php';
+    include '../validation/loginValidation.php';
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <title>Gardenia Bakeries (KL) Sdn Bhd</title>
-        <link rel="stylesheet" href="src/style.css">
-        <link rel="icon" href="src/icon.png">
+        <link rel="stylesheet" href="../src/style.css">
+        <link rel="icon" href="../src/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,17 +37,17 @@
         <header>
             <div class="logo">
                 <div class="logo-container">
-                    <img src="src/gardenia.png" alt="Logo">
+                    <img src="../src/gardenia.png" alt="Logo">
                 </div>
                 <div class="logo-container slogan">
-                    <img src="src/sogood.png" alt="Good">
+                    <img src="../src/sogood.png" alt="Good">
                 </div>
             </div>
             <nav>
                 <ul class="nav-links">
-                    <li class="home"><a href="index.php">Home</a></li>
-                    <li class="about-us"><a href="aboutus.php">About Us</a></li>
-                    <li class="product"><a href="products.php">Products</a></li>
+                    <li class="home"><a href="../index.php">Home</a></li>
+                    <li class="about-us"><a href="../aboutus.php">About Us</a></li>
+                    <li class="product"><a href="../products.php">Products</a></li>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
                         <div class="dropdown-content">
@@ -91,15 +91,15 @@
                             </form>
                         </div>
                         <div class="dropdown-userInfo">
-                            <a href="user/userProfile.php"><i class="fa fa-user"></i> Profile</a>
-                            <a href="user/viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
-                            <a href="user/orderHistory.php"><i class="fa fa-history"></i></i> Order History</a>
-                            <a href="validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
+                            <a href="../user/userProfile.php"><i class="fa fa-user"></i> Profile</a>
+                            <a href="../user/viewCart.php"><i class="fa fa-shopping-cart"></i> Shopping Cart</a>
+                            <a href="../user/orderHistory.php"><i class="fa fa-history"></i></i> Order History</a>
+                            <a href="../validation/logout.php"><i class="fa fa-sign-out"></i> Logout</a>
                         </div>
                     </div>
                 </ul>
                 <div class = "language">
-                    <button class="dropbtn"><img src="src/globe.png" alt="Globe"></button>
+                    <button class="dropbtn"><img src="../src/globe.png" alt="Globe"></button>
                     <div class="dropdown-language">
                         <a href="#">English</a>
                         <a href="#">B. Melayu</a>

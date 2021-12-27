@@ -166,7 +166,7 @@
 
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {
-        include_once 'connectSQL.php';
+        include 'connectSQL.php';
 
         //Check database
         $dbCheck = "SELECT EMAIL FROM user WHERE EMAIL = '$email'";

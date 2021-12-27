@@ -1,12 +1,14 @@
 <?php
     ob_start();
     //Select UserID from user
-    include 'validation/loginValidation.php';
-    include 'validation/connectSQL.php';
-    include 'database/createCartTable.php';
+    include '../validation/loginValidation.php';
+    include '../validation/connectSQL.php';
+    include '../database/createCartTable.php';
 
     $userType = $_SESSION['userType'];
-    $anonymousID = $_SESSION['anonymousID'];
+    if (isset($_SESSION['anonymousID'])) {
+        $anonymousID = $_SESSION['anonymousID'];
+    }
     
     ob_end_flush();
 ?>
@@ -80,7 +82,7 @@
 
     </head>
 
-    <?php include 'header.php' ?>
+    <?php include 'userHeader.php' ?>
 
     <body>
         <h2 style="text-align: center; margin-top: 30px">Shopping Cart</h2>
@@ -103,22 +105,22 @@
                     if ($count == 0) {
                         echo "<div>
                                 <p>Oops, Your Shopping Cart is Empty<br>Browse our awesome products now!</p><br><br>
-                                <button type='button'><a href='products.php'>Go Shopping Now<a></button>
+                                <button type='button'><a href='../products.php'>Go Shopping Now<a></button>
                             </div>";
                     } else {
                         while($row = mysqli_fetch_row($result)){
                             $price = number_format($row[2], 2, '.', '');
-                            echo "<div id='item$row[0]'>";
-                            echo "<i class='fa fa-trash-o fa-lg' onclick='removeItem($row[0])'></i>"; //suppose to be delete button, i use a random pic first
-                            echo "<p style='width: 7%'>$row[0]</p>";
-                            echo "<p style='width: 50%'>$row[1]</p>";
-                            echo "<div style='width: 20%; padding: 0; margin: 0;'>";
-                            echo "<button onclick='minusAmount($row[0])' style='width: 35%'>-</button>";
-                            echo "<p id='test$row[0]' style='width: 30%'>$row[3]</p>";
-                            echo "<button onclick='addAmount($row[0])' style='width: 35%'>+</button>";
-                            echo "</div>";
-                            echo "<p style='width: 20%'>RM $price</p>"; 
-                            echo "</div>";
+                            echo "<div id='item$row[0]'>";                                                      
+                            echo "<i class='fa fa-trash-o fa-lg' onclick='removeItem($row[0])'></i>";           
+                            echo "<p style='width: 7%'>$row[0]</p>";                                            
+                            echo "<p style='width: 50%'>$row[1]</p>";                                           
+                            echo "<div style='width: 20%; padding: 0; margin: 0;'>";                            
+                            echo "<button onclick='minusAmount($row[0])' style='width: 35%'>-</button>";        
+                            echo "<p id='test$row[0]' style='width: 30%'>$row[3]</p>";                          
+                            echo "<button onclick='addAmount($row[0])' style='width: 35%'>+</button>";          
+                            echo "</div>";                                                                      
+                            echo "<p style='width: 20%'>RM $price</p>";                                         
+                            echo "</div>";                                                                      
                         }
                     }
                     
@@ -152,11 +154,11 @@
                         
                         if ($userType == "user") {
                             echo "<div style='background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);'>
-                                    <button type='button'><a href='user/payment.html'>Order Now</a></button>
+                                    <button type='button'><a href='payment.html'>Order Now</a></button>
                                 </div>";
                         } else if ($userType == '') {
                             echo "<div style='background: none; width: 100%; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);'>
-                                    <p>You haven't sign in as user.<br><a href='registration.php'>Register Now</a> and proceed to the payment</p>
+                                    <p>You haven't sign in as user.<br><a href='../registration.php'>Register Now</a> and proceed to the payment</p>
                                 </div>";
                         }
                         
@@ -194,10 +196,10 @@
             <div class="bottom">
                 <div class="social-media">
                     <div class="social-media-container">
-                        <a href="https://www.facebook.com/GardeniaKL" title="Facebook" target=_blank><img src="src/fb.png" alt="Facebook"></a>
-                        <a href="https://www.instagram.com/gardenia_kl/" title="Instagram" target=_blank><img src="src/ig.png" alt="Instagram"></a>
-                        <a href="https://twitter.com/gardenia_kl" title="Twitter" target=_blank><img src="src/tw.png" alt="Twitter"></a>
-                        <a href="https://www.youtube.com/user/GardeniaKL" title="Youtube" target=_blank><img src="src/yt.png" alt="Youtube"></a>
+                        <a href="https://www.facebook.com/GardeniaKL" title="Facebook" target=_blank><img src="../src/fb.png" alt="Facebook"></a>
+                        <a href="https://www.instagram.com/gardenia_kl/" title="Instagram" target=_blank><img src="../src/ig.png" alt="Instagram"></a>
+                        <a href="https://twitter.com/gardenia_kl" title="Twitter" target=_blank><img src="../src/tw.png" alt="Twitter"></a>
+                        <a href="https://www.youtube.com/user/GardeniaKL" title="Youtube" target=_blank><img src="../src/yt.png" alt="Youtube"></a>
                     </div>
                 </div>
                 <p>Copyright &copy (2004-2018) Gardenia Bakeries (KL) Sdn. Bhd (139386X) All Rights Reserved. | <a href="#">PRIVACY</a></p>

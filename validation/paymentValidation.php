@@ -28,9 +28,11 @@
         $name = $_POST['name'];
 
         $_SESSION['address'] = $address;
-
+        
         include '../user/addOrder.php';
-        include '../user/orderDetails.php';
+        include '../user/removeCart.php';
+        header('location:../index.php');
+        ob_end_flush();
     }
 ?>
 

@@ -1,6 +1,5 @@
 <?php
     include '../validation/connectSQL.php';
-    ob_start();
     session_start();
     //connect to useroder database
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
@@ -60,7 +59,5 @@
         $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
     }
 
-    include 'removeCart.php';
-    header('location:../index.php');
-    ob_end_flush();
+    include 'orderDetails.php';
 ?>

@@ -7,7 +7,7 @@
     $action = $_REQUEST["action"];
     $id = $_REQUEST["id"];
 
-    include 'validation/connectSQL.php';
+    include '../validation/connectSQL.php';
 
     //Get the current stock
     $sql = "SELECT Stock from products WHERE ID=$id";

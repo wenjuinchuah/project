@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include 'validation/connectSQL.php';
+    include '../validation/connectSQL.php';
 
     //Select UserID from user
     $loginUsername = $_SESSION['loginUser'];
