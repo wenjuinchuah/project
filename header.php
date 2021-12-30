@@ -1,5 +1,8 @@
 <?php
     include 'validation/loginValidation.php';
+    include 'validation/connectSQL.php';
+    include 'database/createCartDb.php';
+    include 'database/createOrderDb.php';
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +51,11 @@
                     <li class="home"><a href="index.php">Home</a></li>
                     <li class="about-us"><a href="aboutus.php">About Us</a></li>
                     <li class="product"><a href="products.php">Products</a></li>
+                    <?php if (isset($_SESSION['isLogin'])) { ?>
+                        <?php if ($_SESSION['isLogin'] === FALSE) { ?>
+                            <?php echo "<li class='product'><a href='user/viewCart.php'>Shopping Cart</a></li>"; ?>
+                        <?php } ?>
+                    <?php } ?>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
                         <div class="dropdown-content">
@@ -65,14 +73,14 @@
                     <div class = "signIn" id="signIn">
                         <button class="dropbtn">
                             <?php if ($isLogin == true) { ?>
-                                <p>Hi, <?php echo $loginUsername ?></p>
+                                <p>Hi, <?php echo $loginUsername?></p>
                             <?php } else { ?><p>Sign In</p><?php } ?>
                         </button>
                         <div class="dropdown-signIn" id="dropdown-signIn">
                             <form id="loginValidation" action="" method="POST">
                                 <div>
-                                    <label>Username:</label>
-                                    <input type="text" id="username" name="username" autocomplete="username" placeholder="Username" value="<?php echo $username ?>"/>
+                                    <label>Email:</label>
+                                    <input type="text" id="username" name="username" autocomplete="username" placeholder="Email Address" value="<?php echo $username ?>"/>
                                     <?php if (isset($nameError)) {?>
                                         <small id="nameError"><?php echo $nameError ?></small>
                                     <?php } ?>

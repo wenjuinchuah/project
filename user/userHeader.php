@@ -1,5 +1,8 @@
 <?php
     include '../validation/loginValidation.php';
+    include '../validation/connectSQL.php';
+    include '../database/createCartDb.php';
+    include '../database/createOrderDb.php';
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +51,11 @@
                     <li class="home"><a href="../index.php">Home</a></li>
                     <li class="about-us"><a href="../aboutus.php">About Us</a></li>
                     <li class="product"><a href="../products.php">Products</a></li>
+                    <?php if (isset($_SESSION['isLogin'])) { ?>
+                        <?php if ($_SESSION['isLogin'] === FALSE) { ?>
+                            <?php echo "<li class='product'><a href='viewCart.php'>Shopping Cart</a></li>"; ?>
+                        <?php } ?>
+                    <?php } ?>
                     <div class = "dropdown">
                         <button class="dropbtn">More</button>
                         <div class="dropdown-content">

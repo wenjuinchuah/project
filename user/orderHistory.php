@@ -1,17 +1,30 @@
+<?php
+    session_start();
+    include '../validation/connectSQL.php';
+
+    //declare variable
+    $orderID = array();
+    $index = 0;
+    $subtotal = $total = 0;
+    $isFound = FALSE;
+
+    if (!empty($_SESSION['userID'])) {
+        $userID = $_SESSION['userID'];
+        $sql = "SELECT * FROM order_details WHERE userID = '$userID'";
+        $result = mysqli_query($conn, $sql);
+        $count = mysqli_num_rows($result);
+        if ($count > 0) {
+            $isFound = TRUE;
+        } else {
+            $isFound = FALSE;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>Order History</title>
-        <link rel="stylesheet" href="../src/style.css">
-        <link rel="icon" href="../src/icon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <style>
             .title {
                 padding: 10px 0;
@@ -19,6 +32,122 @@
 
             .title h2 {
                 text-align: center;
+            }
+
+            .order {
+                display: flex;
+                justify-content: center;
+                padding-bottom: 20px;
+            }
+
+            .order table {
+                width: 80%;
+                border-collapse: collapse;
+                text-align: center;
+            }
+
+            .order td, .order th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            .order tr:nth-child(odd) {
+                background-color: #fff;
+            }
+
+            .order tr:hover {
+                background-color: #ddd;
+            }
+
+            .order th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                background-color: #110971;
+                color: white;
+            }
+
+            .order .details {
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .order .details:hover {
+                color: #CE0101;
+            }
+
+            #orderListView a {
+                font-family: 'Balsamiq Sans', cursive;
+                font-size: larger;
+                cursor: pointer;
+                margin: 20px 0 10px 0;
+                background-color: #3F3F3F;
+                color: #fff;
+                padding: 10px 20px;
+            }
+
+            #orderListView a:hover {
+                opacity: 0.7;
+            }
+
+            #orderListView, #mask-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                visibility: hidden;
+            }
+
+            #orderListView #orderListView-container {
+                display: flex;
+                flex-direction: column;
+                background-color: #fff;
+                justify-content: center;
+                align-items: center;
+                width: 60%;
+                height: min-content;
+                padding: 30px 0;
+                border-radius: 5px;
+                box-shadow: 10px 10px 20px 5px #0000003F;
+            }
+
+            #orderListView table {
+                width: 80%;
+                border-collapse: collapse;
+                text-align: center;
+                display: none;
+            }
+
+            #orderListView td, #orderListView th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #orderListView tr:nth-child(odd) {
+                background-color: #ddd;
+            }
+
+            #orderListView tr:nth-child(even) {
+                background-color: #fff;
+            }
+
+            #orderListView th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: center;
+                background-color: #110971;
+                color: white;
+            }
+
+            #orderListView-container h3 {
+                margin-bottom: 20px;
+            }
+
+            #mask-container {
+                background-color: #fff;
+                opacity: 0.9;
             }
         </style>
     </head>
@@ -31,11 +160,93 @@
                 <h2>Order History</h2>
             </div>
             <div class="order">
-                <?php
-                    echo "<table>
-                    
-                    </table>";
-                ?>
+                <table id='orderHistory'>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>User ID</th>
+                            <th>Address</th>
+                            <th>Payment Method</th>
+                            <th>Payment Timestamp</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <?php
+                        if ($isFound === TRUE) {
+                            while ($orderDetails = mysqli_fetch_assoc($result)) {
+                                array_push($orderID, $orderDetails['orderID']);
+                                $paymentMethod = $orderDetails['PaymentMethod'];
+                                if ($paymentMethod == 'COD') {
+                                    $paymentMethod = 'Cash On Delivery';
+                                } else if ($paymentMethod == 'CC') {
+                                    $paymentMethod = 'Credit Card';
+                                } else {
+                                    $paymentMethod = 'Payment Failed';
+                                }
+                                echo "<tr>
+                                        <td>$orderDetails[orderID]</td>
+                                        <td>$orderDetails[userID]</td>
+                                        <td>$orderDetails[Address]</td>
+                                        <td>$paymentMethod</td>
+                                        <td>$orderDetails[PaymentDate]</td>
+                                        <td>$orderDetails[Status]</td>
+                                        <td class='details' onclick='expand(\"$orderID[$index]\")'>More Details >></td>
+                                    </tr>";
+                                $index++;
+                            }
+                        } 
+                    ?>
+                    <div id="mask-container"></div>
+                </table>
+            </div>
+            <div id="orderListView">
+                <div id="orderListView-container">
+                    <?php
+                        if ($isFound === TRUE) {
+                            echo "<h3 id='orderID'></h3>";
+
+                            for ($i = 0; $i < count($orderID); $i++) {
+                                $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
+                                $sql = "SELECT * FROM $orderID[$i]";
+                                $orderResult = mysqli_query($conn, $sql);
+                                echo "<table id='$orderID[$i]' class='orderList'>
+                                        <tr>
+                                            <th>Product ID</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Subtotal</th>
+                                        </tr>";
+                                while ($orderDetails = mysqli_fetch_assoc($orderResult)) {
+                                    $price = number_format($orderDetails['Price'], 2, '.', '');
+                                    $subtotal = $price * $orderDetails['Quantity'];
+                                    $total = $total + $subtotal;
+                                    $subtotal = number_format($subtotal, 2, '.', '');
+                                    $total = number_format($total, 2, '.', '');
+
+                                    echo "<tr>
+                                            <td>$orderDetails[ProductID]</td>
+                                            <td>$orderDetails[ProductName]</td>
+                                            <td>RM $price</td>
+                                            <td>$orderDetails[Quantity]</td>
+                                            <td>RM $subtotal</td>
+                                        </tr>";
+                                }
+                                echo "<tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total</td>
+                                <td>RM$total</td>
+                                </tr>
+                                </table>";
+                                $subtotal = $total = 0;
+                            }
+                        }
+                    ?>
+                    <a onclick='expand("empty")'>Close Table</a>
+                </div>
             </div>
         </main>
 
@@ -78,4 +289,32 @@
             </div>
         </footer>
     </body>
+    <script>
+        function expand(orderID) {
+            var x = document.getElementById("orderListView");
+            if (orderID != "empty") {
+                var y = document.getElementById(orderID);
+            }
+            var z = document.getElementById('mask-container');
+            
+            if (x.style.visibility == "visible") {
+                if (orderID != "empty") {
+                    y.style.display = "none";
+                } else {
+                    document.querySelectorAll(".orderList").forEach(a => a.style.display = "none");
+                }
+                x.style.visibility = 'hidden';
+                z.style.visibility = 'hidden';
+            } else {
+                if (orderID != "empty") {
+                    y.style.display = "table";
+                }
+                document.getElementById("orderID").innerHTML = "Order ID: " + orderID;
+                x.style.visibility = 'visible';
+                z.style.visibility = 'visible';
+            }
+
+            document.getElementById("orderID").style.width = tableWidth + 'px';
+        }
+    </script>
 </html>

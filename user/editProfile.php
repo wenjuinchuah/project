@@ -7,7 +7,7 @@ $type = $_POST['button'];
 
 include '../validation/connectSQL.php';
 
-//I tried to make it so that profile page will update without reloading or going to other page, but everything method i tried are not working,
+//I tried to make it so that profile page will update without reloading or going to other page, but every method i tried are not working,
 //in the end have to make it like this
 
 if($type == 'name'){
