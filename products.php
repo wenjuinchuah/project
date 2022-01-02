@@ -116,8 +116,10 @@
                         $_SESSION['productID'.strval($i)] = $ID[$i];
                         $stock[$i] = $row[3];
                         $price = number_format($row[2], 2, '.', '');
+                        $path = 'productPic/'.$row[4];
 
                         echo "<div>";
+                        echo "<img src='$path' width='200px' height='150px'/>";
                         echo "<p>ID: $row[0]</p>";
                         echo "<p>Name: $row[1]</p>";
                         echo "<p>Price: RM $price</p>";

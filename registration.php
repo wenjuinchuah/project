@@ -298,8 +298,6 @@
 <body>
     <div id="view-container">
         <div class="van">
-            
-
             <div id="registerForm">
                 <form class="RegForm" id="RegForm" action="validation/formValidation.php" method="POST" onsubmit="return formValidation()">
                     <h2>User Account Registration</h2>

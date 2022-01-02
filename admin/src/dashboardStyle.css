@@ -13,7 +13,8 @@
     cursor: pointer;
 }
 
-.addProduct i, .addProduct {
+.addProduct i,
+.addProduct {
     color: #fff;
 }
 
@@ -55,12 +56,13 @@ table .fa.fa-plus {
 table tr:nth-child(odd) {
     background-color: #fff;
 }
+
 table tr:nth-child(even) {
     background-color: #ddd;
 }
 
-/*Add Product*/
-#addProductView {
+/*Add Edit Product*/
+.addEditView {
     background-color: #d3d3d3a0;
     margin: 0;
     padding: 0;
@@ -110,18 +112,20 @@ table tr:nth-child(even) {
 }
 
 .addProductView-container .priceLabel,
-.addProductView-container .stockLabel{
+.addProductView-container .stockLabel {
     display: block;
 }
 
-.addProductView-container #currency, .addProductView-container #productPrice {
+.addProductView-container .currency,
+.addProductView-container .price {
     display: inline-block;
     width: 35px;
     background-color: #fff;
     border-radius: 5px 0 0 5px;
 }
 
-.addProductView-container #productPrice {
+.addProductView-container #productPrice,
+.addProductView-container #editPrice {
     width: calc(100% - 39px);
     border-radius: 0 5px 5px 0;
 }
@@ -130,13 +134,15 @@ table tr:nth-child(even) {
     margin: 20px 0;
 }
 
-.addProductView-container #submit {
+.addProductView-container #submit,
+.addProductView-container #edit {
     height: 40px;
     color: #fff;
     background-color: #000;
 }
 
-.addProductView-container #submit:hover, .addProductView-container i:hover {
+.addProductView-container #submit:hover,
+.addProductView-container i:hover {
     opacity: 0.7;
     cursor: pointer;
 }
@@ -144,5 +150,3 @@ table tr:nth-child(even) {
 .addProductView-container i:hover {
     color: #fff;
 }
-
-

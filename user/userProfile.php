@@ -60,13 +60,36 @@
 
     <body>
         <div class="profile">
-            <img src="../src/icon.png" style="border: 5px solid black; border-radius: 50%; height: 300px; width: 300px; "/>
+            <?php include '../validation/connectSQL.php';
+
+                //get picture path from sql
+                $sql = "SELECT pic_path FROM user WHERE Email='$loginUsername'";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_row($result);
+
+                //if NULL set default
+                if(empty($row[0])){
+                    $path = "../src/icon.png";
+                }else{
+                    $path = "../userpic/".$row[0];
+                }
+
+                echo "<img src='$path' style='border: 5px solid black; border-radius: 50%; height: 300px; width: 300px; '/>";
+            ?>
             <br><br>
-            <button>Change Profile Picture</button>
+            <button onclick="showHidden(0)">Edit Profile Picture</button>
+            <div id="hidden0" style="display:none;">
+                <br>
+                <form action="uploadpic.php" method="POST" enctype="multipart/form-data" >
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="submit" value="Upload Image" name="submit">
+                </form>
+            </div>
         </div>
         
         <div class="profile">
-            <?php include '../validation/connectSQL.php';
+            <?php
                 $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_row($result);

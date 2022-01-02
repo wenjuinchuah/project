@@ -7,9 +7,6 @@ $type = $_POST['button'];
 
 include '../validation/connectSQL.php';
 
-//I tried to make it so that profile page will update without reloading or going to other page, but every method i tried are not working,
-//in the end have to make it like this
-
 if($type == 'name'){
     $fname = $_POST['firstname'];
     $lname = $_POST['lastname'];
@@ -26,8 +23,8 @@ if($type == 'name'){
     header('Location: userProfile.php');
 }else if($type == 'mobile'){
     $mobile = $_POST['mobile'];
-
-    $sql = "UPDATE user SET Mobile='$mobile' WHERE UserID=$userID";
+    $country_code = "+60";
+    $sql = "UPDATE user SET Mobile='$country_code$mobile' WHERE UserID=$userID";
     mysqli_query($conn, $sql);
     header('Location: userProfile.php');
 }else if($type == 'state'){

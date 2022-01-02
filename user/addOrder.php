@@ -1,6 +1,5 @@
 <?php
     include '../validation/connectSQL.php';
-    session_start();
     //connect to useroder database
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
 

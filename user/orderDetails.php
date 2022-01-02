@@ -2,7 +2,6 @@
     include '../validation/connectSQL.php';
     date_default_timezone_set('Asia/Kuala_Lumpur');
     ob_start();
-    session_start();
 
     $orderID = $_SESSION['orderID'];
     $userID = $_SESSION['userID'];
@@ -28,7 +27,6 @@
                 )";
                 $result = mysqli_query($conn, $sql);
             }
-
             $sql = "INSERT INTO order_Details (orderID, userID, Address, PaymentMethod)
                     VALUES ('order_$orderID', '$userID', '$address', '$paymentMethod')";
             $result = mysqli_query($conn, $sql);

@@ -202,6 +202,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    <link rel="stylesheet" href="../src/style.css">
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -211,72 +212,101 @@
             display: border-box;
         }
 
-        /* Body */
-        body {
-            background-color: #364150;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-
-        /* Form */
-        form {
-            width: 340px;
-            margin: 100px auto;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-        }
-        
-        /* Title */
-        h2 {
-            text-align: center;
-            padding: 10px;
-        }
-
-        div{
-            margin: 15px 10px;
-            padding-bottom: 10px;
-        }
-
-        label {
-            padding: 10px 0;
-        }
-
-        small {
+         /* Login */
+         small {
             font-size: 12px;
-            padding-left: 5px;
             color: red;
-            position: absolute;
             visibility: <?=$showError?>;
         }
 
-        input, select {
+        .dropdown-signIn {
+            visibility: <?=$dropdownLoginView?>
+        }
+
+        .dropdown-userInfo {
+            visibility: <?=$dropdownUserInfoView?>
+        }
+
+        /* View Container */
+        #view-container {   
+            max-width: 100%;
+        }
+
+        .van {
+            background-image: url("../src/van.jpeg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 20px;
+        }
+
+        /* Form */
+        #registerForm {
+            /*width: calc(100% - 650px);*/
+            width: 100%;
+        }
+        
+        #RegForm {
+            /*font-family: Arial, Helvetica, sans-serif;*/
+            width: 380px;
+            margin: auto;
+            padding: 20px;
+            padding-bottom: 40px;
+            position: relative;
+            border-radius: 25px;
+            background-color: #ffffffe8;
+        }
+
+        /* Title */
+        #RegForm h2 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        #RegForm div {
+            margin-bottom: 10px;
+        }
+
+        #RegForm small {
+            font-size: 12px;
+            padding-left: 15px;
+            color: red;
+            display: none;
+        }
+
+        #RegForm input, #RegForm select {
             display: block;
             width: 93%;
             height: 30px;
             padding: 0 10px;
-            margin-top: 10px;
             border-radius: 5px;
+            margin: auto;
             border: 1px solid lightgray;
+        }
+
+        #RegForm label {
+            padding-left: 15px;
         }
 
         /* Mobile */
         .mobile-container {
-            margin: 0;
-            padding: 0;
+            margin: auto;
+            padding-left: 11px;
         }
 
         .mobile-container label {
             display: block;
         }
 
-        #code {
+        #RegForm #code {
             display: inline-block;
-            width: 25px;
+            width: 50px;
+            pointer-events: none;
         }
 
-        #mobile {
+        #RegForm #mobile {
             display: inline-block;
-            width: 246px;
+            width: calc(95% - 50px);
         }
 
         #mobileError {
@@ -290,57 +320,66 @@
             margin-bottom: 10px;
         }
 
-        #i-password1, #i-password2, #i-password1-slash, #i-password2-slash {
+        #i-password1,
+        #i-password2,
+        #i-password1-slash,
+        #i-password2-slash {
             position: relative;
-            top: 34px;
+            top: 24px;
             color: gray;
         }
 
         #i-password1 {
-            left: 220px;
+            left: 193px;
         }
 
         #i-password1-slash {
-            left: 200px;
-        } 
-
-        #i-password2 {
-            left: 158px;
-        } 
-        
-        #i-password2-slash {
-            left: 138px;
+            left: 173px;
         }
 
-        #i-password1:hover, #i-password2:hover, #i-password1-slash:hover, #i-password2-slash:hover {
+        #i-password2 {
+            left: 134px;
+        }
+
+        #i-password2-slash {
+            left: 114px;
+        }
+
+        #i-password1:hover,
+        #i-password2:hover,
+        #i-password1-slash:hover,
+        #i-password2-slash:hover {
             cursor: pointer;
             color: #000;
         }
 
-        #i-password1-slash, #i-password2-slash{
+        #i-password1-slash,
+        #i-password2-slash {
             visibility: hidden;
         }
 
         /* Gender */
         .gender-container {
             margin: 0;
-            padding: 0;
+            padding-left: 15px;
         }
 
-        .gender-container input {
+        #RegForm .gender-container input {
             display: inline-block;
             width: 15px;
+            padding-left: 15px;
         }
 
         .gender-container label, .checkbox-container label {
             position: relative;
             bottom: 9px;
             margin-right: 10px;
+            padding: 0 !important;
         }
 
         /* State */
-        select {
-            width: 100%;
+        #RegForm select {
+            width: 93%;
             height: 32px;
 
             /* Removes the default <select> styling */
@@ -351,15 +390,16 @@
             /* Positions background arrow image */
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
             background-repeat: no-repeat;
-            background-position: 295px center;
+            background-position: 270px center;
         }
 
         /* t&c */
         .checkbox-container {
-           margin-top: 0;
+            text-align: center;
+            margin: 0;
         }
 
-        .checkbox-container input{
+        #RegForm .checkbox-container input {
             display: inline-block;
             width: 15px;
         }
@@ -378,35 +418,38 @@
         }
 
         /* Button*/
-        .button {
-            margin: 15px 10px;
+
+        #RegForm .button{
+            margin:0;
+            text-align: center;;
         }
 
-        .button input {
+        #RegForm .button input {
             display: inline-block;
             height: 32px;
         }
 
-        #reset {
-            width: 20%;
+        #RegForm #reset {
+            width: 15%;
         }
 
-        #reset:hover {
+        #RegForm #reset:hover {
             background-color: rgb(255, 194, 194);
             cursor: pointer;
         }
 
-        #submit {
-            width: 78.6%;
+        #RegForm #submit {
+            width: 77%;
             background-color: #2b323d;
             color: #fff;
             font-weight: bold;
         }
 
-        #submit:hover {
+        #RegForm #submit:hover {
             opacity: 70%;
             cursor: pointer;
         }
+
 
         /* Registration Successful */
         #success {
@@ -472,102 +515,108 @@
     <script src="formValidation.js"></script>
 </head>
 <body>
-    <form class="form" id="form" action="formValidation.php" method="POST">
-        <h2>User Account Registration</h2>
-        <div>
-            <label>First Name</label>
-            <input type="text" id="fname" name="fname" placeholder="First Name" value="<?php echo $fname ?>"/>
-            <?php if (isset($fnameError)) {?>
-                <small id="fnameError"><?php echo $fnameError ?></small>
-            <?php } ?>
-        </div>
-        <div>
-            <label>Last Name</label>
-            <input type="text" id="lname" name="lname" placeholder="Last Name" value="<?php echo $lname ?>"/>
-            <?php if (isset($lnameError)) {?>
-                <small id="lnameError"><?php echo $lnameError ?></small>
-            <?php } ?>
-        </div>
-        <div>
-            <label>Email</label>
-            <input type="email" id="email" name="email" placeholder="Email Address" value="<?php echo $email ?>"/>
-            <?php if (isset($emailError)) {?>
-                <small id="emailError"><?php echo $emailError ?></small>
-            <?php } ?>
-        </div>
-        <div>
-            <label >Mobile</label>
-            <div class="mobile-container">
-                <input type="text" id="code" name="code" value="+60" disabled/>  
-                <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number" value="<?php echo $mobile ?>"/>
-                <?php if (isset($mobileError)) {?>
-                <small id="mobileError"><?php echo $mobileError ?></small>
-            <?php } ?>
+<div id="view-container">
+        <div class="van">
+            <div id="registerForm">
+                <form class="RegForm"id="RegForm"action="formValidation.php" method="POST">
+                    <h2>User Account Registration</h2>
+                    <div>
+                        <label>First Name</label>
+                        <input type="text" id="fname" name="fname" placeholder="First Name" value="<?php echo $fname ?>"/>
+                        <?php if (isset($fnameError)) {?>
+                            <small id="fnameError"><?php echo $fnameError ?></small>
+                        <?php } ?>
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input type="text" id="lname" name="lname" placeholder="Last Name" value="<?php echo $lname ?>"/>
+                        <?php if (isset($lnameError)) {?>
+                            <small id="lnameError"><?php echo $lnameError ?></small>
+                        <?php } ?>
+                    </div>
+                    <div>
+                        <label>Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email Address" value="<?php echo $email ?>"/>
+                        <?php if (isset($emailError)) {?>
+                            <small id="emailError"><?php echo $emailError ?></small>
+                        <?php } ?>
+                    </div>
+                    <div>
+                        <label >Mobile</label>
+                        <div class="mobile-container">
+                            <input type="text" id="code" name="code" value="+60" disabled/>  
+                            <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number" value="<?php echo $mobile ?>"/>
+                            <?php if (isset($mobileError)) {?>
+                            <small id="mobileError"><?php echo $mobileError ?></small>
+                        <?php } ?>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <i id="i-password1" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                        <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                        <div class="password-container">
+                            <input type="password" id="password1" name="password1" placeholder="Password" value="<?php echo $password1 ?>"/>
+                            <?php if (isset($password1Error)) {?>
+                            <small id="password1Error"><?php echo $password1Error ?></small>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Confirm Password</label>
+                        <i id="i-password2" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                        <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                        <input type="password" id="password2" name="password2" placeholder="Confirm Password" value="<?php echo $password2 ?>"/>
+                        <?php if (isset($password2Error)) {?>
+                            <small id="password2Error"><?php echo $password2Error ?></small>
+                        <?php } ?>        
+                    </div>
+                    <div>
+                        <label>Gender</label>
+                        <div class="gender-container">
+                            <input type="radio" id="male" name="gender" value="Male" <?php echo $gender == 'Male' ? 'checked': ''?>/>
+                            <label for="male">Male</label>
+                            <input type="radio" id="female" name="gender" value="Female" <?php echo $gender == 'Female' ? 'checked': ''?>/>
+                            <label for="female">Female</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label>State</label>
+                        <select name="state" id="state">
+                            <option disabled>- Select Your State-</option>
+                            <option <?php echo $state == 'Johor' ? 'selected': ''?>>Johor</option>
+                            <option <?php echo $state == 'Kedah' ? 'selected': ''?>>Kedah</option>
+                            <option <?php echo $state == 'Kelantan' ? 'selected': ''?>>Kelantan</option>
+                            <option <?php echo $state == 'Melaka' ? 'selected': ''?>>Melaka</option>
+                            <option <?php echo $state == 'Negeri Sembilan' ? 'selected': ''?>>Negeri Sembilan</option>
+                            <option <?php echo $state == 'Pahang' ? 'selected': ''?>>Pahang</option>
+                            <option <?php echo $state == 'Perak' ? 'selected': ''?>>Perak</option>
+                            <option <?php echo $state == 'Perlis' ? 'selected': ''?>>Perlis</option>
+                            <option <?php echo $state == 'Pulau Pinang' ? 'selected': ''?>>Pulau Pinang</option>
+                            <option <?php echo $state == 'Sabah' ? 'selected': ''?>>Sabah</option>
+                            <option <?php echo $state == 'Sarawak' ? 'selected': ''?>>Sarawak</option>
+                            <option <?php echo $state == 'Selangor' ? 'selected': ''?>>Selangor</option>
+                            <option <?php echo $state == 'Terrengganu' ? 'selected': ''?>>Terengganu</option>
+                            <option disabled>-Federal Territories-</option>
+                            <option <?php echo $state == 'Kuala Lumpur' ? 'selected': ''?>>Kuala Lumpur</option>
+                            <option <?php echo $state == 'Labuan' ? 'selected': ''?>>Labuan</option>
+                            <option <?php echo $state == 'Putrajaya' ? 'selected': ''?>>Putrajaya</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="t&c" name="t&c" value="value1" <?=$tnc?>/>
+                        <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
+                        <?php if (isset($fnameError)) {?>
+                            <small id="fnameError"><?php echo $tncError ?></small>
+                        <?php } ?>        </div>
+                    <div class="button">
+                        <input type="reset" id="reset" value="Clear"></input>
+                        <input type="submit" id="submit" name="submit" value="Register"></input>
+                    </div>
+                </form>
             </div>
         </div>
-        <div>
-            <label>Password</label>
-            <i id="i-password1" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
-            <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
-            <div class="password-container">
-                <input type="password" id="password1" name="password1" placeholder="Password" value="<?php echo $password1 ?>"/>
-                <?php if (isset($password1Error)) {?>
-                <small id="password1Error"><?php echo $password1Error ?></small>
-                <?php } ?>
-            </div>
-        </div>
-        <div>
-            <label>Confirm Password</label>
-            <i id="i-password2" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
-            <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
-            <input type="password" id="password2" name="password2" placeholder="Confirm Password" value="<?php echo $password2 ?>"/>
-            <?php if (isset($password2Error)) {?>
-                <small id="password2Error"><?php echo $password2Error ?></small>
-            <?php } ?>        
-        </div>
-        <div>
-            <label>Gender</label>
-            <div class="gender-container">
-                <input type="radio" id="male" name="gender" value="Male" <?php echo $gender == 'Male' ? 'checked': ''?>/>
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="Female" <?php echo $gender == 'Female' ? 'checked': ''?>/>
-                <label for="female">Female</label>
-            </div>
-        </div>
-        <div>
-            <label>State</label>
-            <select name="state" id="state">
-                <option disabled>- Select Your State-</option>
-                <option <?php echo $state == 'Johor' ? 'selected': ''?>>Johor</option>
-                <option <?php echo $state == 'Kedah' ? 'selected': ''?>>Kedah</option>
-                <option <?php echo $state == 'Kelantan' ? 'selected': ''?>>Kelantan</option>
-                <option <?php echo $state == 'Melaka' ? 'selected': ''?>>Melaka</option>
-                <option <?php echo $state == 'Negeri Sembilan' ? 'selected': ''?>>Negeri Sembilan</option>
-                <option <?php echo $state == 'Pahang' ? 'selected': ''?>>Pahang</option>
-                <option <?php echo $state == 'Perak' ? 'selected': ''?>>Perak</option>
-                <option <?php echo $state == 'Perlis' ? 'selected': ''?>>Perlis</option>
-                <option <?php echo $state == 'Pulau Pinang' ? 'selected': ''?>>Pulau Pinang</option>
-                <option <?php echo $state == 'Sabah' ? 'selected': ''?>>Sabah</option>
-                <option <?php echo $state == 'Sarawak' ? 'selected': ''?>>Sarawak</option>
-                <option <?php echo $state == 'Selangor' ? 'selected': ''?>>Selangor</option>
-                <option <?php echo $state == 'Terrengganu' ? 'selected': ''?>>Terengganu</option>
-                <option disabled>-Federal Territories-</option>
-                <option <?php echo $state == 'Kuala Lumpur' ? 'selected': ''?>>Kuala Lumpur</option>
-                <option <?php echo $state == 'Labuan' ? 'selected': ''?>>Labuan</option>
-                <option <?php echo $state == 'Putrajaya' ? 'selected': ''?>>Putrajaya</option>
-            </select>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" id="t&c" name="t&c" value="value1" <?=$tnc?>/>
-            <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
-            <?php if (isset($fnameError)) {?>
-                <small id="fnameError"><?php echo $tncError ?></small>
-            <?php } ?>        </div>
-        <div class="button">
-            <input type="reset" id="reset" value="Clear"></input>
-            <input type="submit" id="submit" name="submit" value="Register"></input>
-        </div>
-    </form>
+    </div>
     
     <div id="success">
         <div class="success-container">

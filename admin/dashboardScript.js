@@ -1,8 +1,12 @@
 //addProduct View
-function addProduct() {
-    document.getElementById("addProductView").style.display = "block";
-}
+// function addProduct() {
+//     document.getElementById("addProductView").style.display = "block";
+// }
 
-function turnOff() {
-    document.getElementById("addProductView").style.display = "none";
-}
+// function turnOff() {
+//     document.getElementById("addProductView").style.display = "none";
+// }
+
+//replace with bootstrap modal
+
+

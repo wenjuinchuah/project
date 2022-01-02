@@ -28,8 +28,17 @@
         $name = $_POST['name'];
 
         $_SESSION['address'] = $address;
+
+        if (isset($_POST['cardnumber'])) {
+            $cardno = $_POST['cardnumber'];
+            if (strlen($cardno) != 20) {
+                
+            }
+        }
         
+        // include '../user/sendEmail.php';
         include '../user/addOrder.php';
+        include '../user/addTransaction.php';
         include '../user/removeCart.php';
         header('location:../index.php');
         ob_end_flush();
@@ -223,9 +232,23 @@
                                     <label for="cname">Name on Card</label>
                                     <input type="text" id="cname" name="cardname" placeholder="John More Doe">
                                     <label for="ccnum">Credit card number</label>
-                                    <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                                    <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444">
                                     <label for="expmonth">Exp Month</label>
-                                    <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                                    <select name="expmonth" id="expmonth">
+                                        <option value="January">January</option>
+                                        <option value="Febuary">Febuary</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="Jult">Jult</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                    </select>
+                                    <!--<input type="text" id="expmonth" name="expmonth" placeholder="September">-->
                                     <div class="row">
                                         <div class="col-50">
                                             <label for="expyear">Exp Year</label>
@@ -270,9 +293,26 @@
             </div>
         </div>
         <footer>
-            <h4>FOOTER</h4>
             <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
         </footer>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript">     
+            // enable spacing for credit card number     
+            $('#ccnum').on('keyup', function(e){         
+                var val = $(this).val();         
+                var newval = '';         
+                val = val.replace(/\s/g, ''); 
+                
+                // iterate to letter-spacing after every 4 digits   
+                for(var i = 0; i < val.length; i++) {             
+                if(i%4 == 0 && i > 0) newval = newval.concat(' ');             
+                newval = newval.concat(val[i]);         
+                }        
+
+                // format in same input field 
+                $(this).val(newval);     
+            });   
+        </script>
     </body>
 
 </html>

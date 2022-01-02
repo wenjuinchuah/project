@@ -27,7 +27,9 @@
                 </tr>
                 <?php while ($user = mysqli_fetch_assoc($result)) { ?>
                     <?php if ($user['UserType'] !== 'admin') { ?>
-                        <?php echo "<tr>
+                        <?php 
+                            $user['Password'] = substr($user['Password'],0,10) . "...";
+                            echo "<tr>
                                 <td>$user[UserID]</td>
                                 <td>$user[Name]</td>
                                 <td>$user[Email]</td>
