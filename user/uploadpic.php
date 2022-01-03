@@ -10,13 +10,25 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 //Check if image file is a actual image or fake image
 
 if(isset($_POST["submit"])){
-	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-	if($check !== false){
-		echo "File is an image - ".$check["mime"].". ";
-		$uploadOK = 1;
-	}else{
-		echo "File is not a image.";
-		$uploadOK = 0;
+	if(empty($_FILES["fileToUpload"]["name"])){
+		echo "No file is chosen. ";
+		$uploadOk = 0;
+	} else{	
+		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+		if($check === false){
+			echo "File is not a image.";
+			$uploadOK = 0;
+		}
+		//Check file size
+		else if($_FILES["fileToUpload"]["size"] > 500000){
+			echo "Sorry, your file is too large.";
+			$uploadOK = 0;
+		}
+		//Allow certain file formats
+		else if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ){
+			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+			$uploadOK = 0;
+		}
 	}
 }
 //Check if file already exists 
@@ -27,16 +39,6 @@ if(file_exists($target_file)){
 }
 */
 
-//Check file size
-if($_FILES["fileToUpload"]["size"] > 500000){
-	echo "Sorry, your file is too large.";
-	$uploadOK = 0;
-}
-//Allow certain file formats
-if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ){
-	echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-	$uploadOK = 0;
-}
 //Check if $uploadOK is set to 0 by an error
 if($uploadOK == 0){
 	echo "Sorry, your file was not uploaded.";

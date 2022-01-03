@@ -2,23 +2,23 @@
     font-family: "Raleway", sans-serif;
 }
 
-.addProduct {
+.addFunction {
     border-radius: 25px;
     background-color: #000;
     padding: 3px 10px;
 }
 
-.addProduct:hover {
+.addFunction:hover {
     opacity: 0.7;
     cursor: pointer;
 }
 
-.addProduct i,
-.addProduct {
+.addFunction i,
+.addFunction {
     color: #fff;
 }
 
-.addProduct a {
+.addFunction a {
     text-decoration: none;
 }
 
@@ -62,7 +62,7 @@ table tr:nth-child(even) {
 }
 
 /*Add Edit Product*/
-.addEditView {
+.addEditView, #addUserView {
     background-color: #d3d3d3a0;
     margin: 0;
     padding: 0;
@@ -75,9 +75,13 @@ table tr:nth-child(even) {
     display: none;
 }
 
+#addUserView {
+    position: absolute !important;
+}
+
 .addProductView-container {
     background-color: rgb(168, 168, 168);
-    margin: 150px auto;
+    margin: 100px auto;
     padding: 10px 20px;
     height: auto;
     max-width: 400px;
@@ -107,7 +111,7 @@ table tr:nth-child(even) {
     font-weight: normal;
 }
 
-.addProductView-container label {
+.addProductView-container label, .addUserView-container label {
     font-weight: bold;
 }
 
@@ -142,11 +146,51 @@ table tr:nth-child(even) {
 }
 
 .addProductView-container #submit:hover,
-.addProductView-container i:hover {
+.addProductView-container i:not(.fa-exclamation-circle):hover {
     opacity: 0.7;
     cursor: pointer;
 }
 
-.addProductView-container i:hover {
+.addProductView-container i:not(.fa-exclamation-circle):hover {
     color: #fff;
+}
+
+.addProductView-container::selection(.fa-exclamation-circle){
+    text-align: center;
+}
+
+.openEdit, .openDelete {
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 7px #999;
+}
+
+.openEdit {
+    background-color: #46ca4a;
+}
+
+.openDelete{
+    background-color:rgb(230, 84, 84);
+}
+
+.openEdit:hover {background-color: #2da531}
+
+.openDelete:hover{background-color:rgb(204, 23, 23)}
+
+.openEdit:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(2px);
+}
+
+.openDelete:active {
+    background-color: rgb(197, 34, 34);
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
 }

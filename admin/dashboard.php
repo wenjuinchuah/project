@@ -7,7 +7,7 @@
         <div style="margin-left: 15px;">
             <h5 style="display: inline-block"><b><i class="fa fa-list"></i> Products</b></h5>
             <div class="w3-right" style="margin-right: 15px">
-                <h5 class="addProduct" onclick="addProduct()" data-toggle="modal" data-target="#addProductView"><i class="fa fa-plus"></i> Add Product</h5>
+                <h5 class="addFunction" onclick="addProduct()"><i class="fa fa-plus"></i> Add Product</h5>
             </div>
         </div>
         <div style="padding: 0 15px">
@@ -16,9 +16,10 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Picture</th>
-                    <th>Price</th>
+                    <th>Price (RM)</th>
                     <th>Stock</th>
-                    <th>Action</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 <?php while ($column = mysqli_fetch_array($productList)) { ?>
                     <?php 
@@ -26,14 +27,16 @@
                         echo "<tr>";
                         echo "<td>$column[0]</td>";
                         echo "<td>$column[1]</td>";
-                        echo "<td><img src='../productPic/" . $column[4] . "' width='100px' height='75px;'</td>";
-                        echo "<td>RM $price</td>";
+                        echo "<td><img src='../productPic/" . $column[4] . "' width='auto' height='75px;'</td>";
+                        echo "<td>$price</td>";
                         echo "<td>
                                 <i class='fa fa-minus' class='button-quantity' onclick='minusStock($column[0])'></i>
                                 <p style='display: inline-block; padding: 0; margin: 0;' id='product$column[0]'>$column[3]</p>
                                 <i class='fa fa-plus' class='button-quantity' onclick='addStock($column[0])'></i>
                             </td>";
-                        echo '<td><button type="button" class="openEdit" name="openEdit">Edit</button>
+                        echo '<td><button type="button" class="openEdit" name="openEdit" onclick="editProduct()">Edit</button>
+                              </td>';
+                        echo '<td><button type="button" class="openDelete" name="openDelete" onclick="deleteProduct()">Delete</button>
                               </td>';
                         echo "</tr>"; 
                     ?>
@@ -53,7 +56,7 @@
     <!--Add Product View-->
     <div class='addEditView' id="addProductView">
         <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()" data-dismiss="modal"></i>
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i>
             <form action="" method="POST" enctype="multipart/form-data">
                 <h2>Add New Product</h2>
                 <div>
@@ -91,11 +94,12 @@
             </form>
         </div>
     </div>
-
-    <!--Edit Product View (sql part incomplete)-->
+    
+    
+    <!--Edit Product View -->
     <div class='addEditView' id="editProductView">
         <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" data-dismiss="modal"></i>
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffEdit()"></i>
             <form action="" method="POST" enctype="multipart/form-data">
                 <h2>Edit Product</h2>
                 <input type="hidden" id="editID" name="editID">
@@ -135,6 +139,26 @@
         </div>
     </div>
 
+    <!--Delete view -->
+    <div class='addEditView' id="deleteProductView">
+        <div class="addProductView-container">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffDelete()"></i>
+            <form action="" method="POST">
+                <input type="hidden" id="deleteID" name="deleteID">
+                <h2>Delete Product</h2>
+                <div style="text-align: center">
+                    <i class="fa fa-exclamation-circle" style="font-size:250px"></i>             
+                </div>
+                <div>
+                    <h3>The data can't be restored once deleted, are you sure?</h3>
+                 </div>
+                <div class="button">
+                    <input type="submit" id="delete" name="delete" value="Confirm"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <script src="dashboardScript.js"></script>
     <script>
@@ -159,17 +183,14 @@
         }
     </script>
 
-    <!--Bootstrap-->
+    <!--JS Libraries-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
     <script>
+        //Edit
         $(document).ready(function () {
             $('.openEdit').on('click', function () { 
-                //show edit view
-                $('#editProductView').modal('show');
-
                 //retrieve data from table
                 $tr = $(this).closest('tr');
                 var data = $tr.children("td").map(function () {
@@ -186,6 +207,23 @@
                 $('#editStock').val(data[4].trim());
             });
         });
+
+        //Delete
+        $(document).ready(function () {
+            $('.openDelete').on('click', function () { 
+                //retrieve data from table
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+                //write data to console
+                console.log(data);
+
+                //set the value for respective attributes
+                $('#deleteID').val(data[0]);
+            });
+        });
+
     </script>
     </body>
 </html>

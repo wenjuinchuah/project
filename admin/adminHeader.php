@@ -44,7 +44,7 @@
         $target_dir = "../productPic/";
         $target_file = basename($_FILES['productPicture']['name']);
         $target_path = $target_dir.$target_file;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $imageFileType = strtolower(pathinfo($target_path,PATHINFO_EXTENSION));
 
         if (empty($_POST['productName'])) {
             $productNameError = "Product Name cannot be blank!";
@@ -61,29 +61,26 @@
         if(empty($_FILES["productPicture"]["name"])){
             $productPicError = "Must choose a product picture!";
             $showError = 'visible';
+        } else{
+            //validate fake/real image
+            $check = getimagesize($_FILES["productPicture"]["tmp_name"]);
+            if($check === false){
+                $productPicError = "File is not an image.";
+                $showError = 'visible';
+            } //Check size 
+            else if($_FILES["productPicture"]["size"] > 500000){
+                $productPicError = "File size too large.";
+                $showError = 'visible';
+            } //Allow certain file formats
+            else if(!in_array($imageFileType,["jpg","jpeg","png"])){
+                $productPicError = "Only JPG,JPEG,PNG allowed.";
+                $showError = 'visible';
+            } //Delete old file with same name 
+            else if(file_exists($target_path)){ 
+                unlink($target_path);
+            }
         }
-        //validate fake/real image
-        $check = getimagesize($_FILES["productPicture"]["tmp_name"]);
-        if($check === false){
-            $productPicError = "File is not an image.";
-            $showError = 'visible';
-            $uploadOK = 0;
-        }
-        //check if file already exists
-        if(file_exists($target_path)){ 
-            $productPicError = "File already exists.";
-            $showError = 'visible';
-        }
-        //Check file size
-        if($_FILES["productPicture"]["size"] > 500000){
-            $productPicError = "File size too large.";
-            $showError = 'visible';
-        }
-        //Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
-            $productPicError = "Only JPG,JPEG,PNG allowed.";
-            $showError = 'visible';
-        }
+        
         if (empty($productNameError) && empty($productPriceError) && empty($productStockError) && empty($productPicError)) {
             if ($product['Name'] != $_POST['productName']) {
                 $_SESSION['productName'] = $_POST['productName'];
@@ -100,7 +97,13 @@
         $productName = $productPrice = $productStock = $productPicture = "";
         $productList = mysqli_query($conn, $productsql);
     }
+    //edit
+    include "editProduct.php";
+    //delete
+    include "deleteProduct.php";
     mysqli_free_result($result);
+
+
 ?>
 
 <!DOCTYPE html>

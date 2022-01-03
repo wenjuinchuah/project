@@ -12,7 +12,7 @@
 
         <!--Order-->
         <div style="margin-left: 15px;">
-            <h5 style="display: inline-block"><b><i class="fa fa-shopping-bag"></i> Orders</b></h5>
+            <h5 style="display: inline-block"><b><i class="fa fa-credit-card"></i> Transaction</b></h5>
         </div>
         <div style="padding: 0 15px">
             <table>
@@ -33,9 +33,9 @@
                             $paymentMethod = 'Payment Failed';
                         }
                         $total = number_format($transaction['Total'], 2, '.', '');
-                        
+                        $transactionID = str_pad($transaction['TransactionID'], 4, 0, STR_PAD_LEFT);
                         echo "<tr>
-                            <td>$transaction[TransactionID]</td>
+                            <td>$transactionID</td>
                             <td>order_$transaction[OrderID]</td>
                             <td>$total</td>
                             <td>$paymentMethod</td>

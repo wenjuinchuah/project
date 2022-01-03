@@ -5,7 +5,7 @@
     $productName = $_SESSION['productName'];
     $productPrice = $_SESSION['productPrice'];
     $productStock = $_SESSION['productStock'];
-    $productPicture = $_SESSION['productPicture'];
+    $productPicture = $_FILES["productPicture"]["name"];
     $tempPic = $_FILES['productPicture']['tmp_name'];
 
     if(move_uploaded_file($tempPic,$target_path)){

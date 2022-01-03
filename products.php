@@ -19,7 +19,7 @@
 
             .product-div {
                 background-color: gray; 
-                width: 70%; 
+                width: 72%;
                 position: relative; 
                 left: 50%; 
                 transform: translateX(-50%);
@@ -91,8 +91,48 @@
                 font-weight: bold;
             }
 
-            button {
+            .addtoCart-container i{
+                font-size:x-large;
+                float:right;
+            }
+
+            .addtoCart-container i:hover{
+                opacity:0.7;
+                color:#fff;
+                cursor:pointer;
+            }
+
+            .addCart, .outStock {
+                padding: 10px 20px !important;
                 cursor: pointer;
+                font-size:medium;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #fff;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 7px #999;
+            }
+
+            .addCart{
+                background-color:#291ea8;
+            }
+
+            .outStock{
+                background-color:#e43030;
+            }
+
+            .addCart:active {
+                background-color: #110971;
+                box-shadow: 0 5px #666;
+                transform: translateY(2px);
+            }
+
+            .outStock:active {
+                background-color: #CE0101;
+                box-shadow: 0 5px #666;
+                transform: translateY(2px);
             }
         </style>
 
@@ -119,16 +159,15 @@
                         $path = 'productPic/'.$row[4];
 
                         echo "<div>";
-                        echo "<img src='$path' width='200px' height='150px'/>";
-                        echo "<p>ID: $row[0]</p>";
-                        echo "<p>Name: $row[1]</p>";
+                        echo "<img src='$path' width='auto' height='150px'/>";
+                        echo "<p>$row[1]</p>";
                         echo "<p>Price: RM $price</p>";
                         echo "<p>Stock: $row[3]</p>";
 
                         if ($row[3] == 0) {
-                            echo "<button type='button' class='button' id='button$i' disable)'>Out of Stock</button>";
+                            echo "<button type='button' class='outStock' id='button$i' disable)'>Out of Stock</button>";
                         } else {
-                            echo "<button type='button' class='button' id='button$i' onclick='addCartView($ID[$i], $stock[$i])'>Add to Cart</button>";
+                            echo "<button type='button' class='addCart' id='button$i' onclick='addCartView($ID[$i], $stock[$i])'>Add to Cart</button>";
                         }
 
                         echo "</div>";
@@ -180,7 +219,7 @@
         <!--Add to Cart View-->
         <div id="addtoCart">
             <div class="addtoCart-container">
-                <i class="fa fa-times" onclick="turnOff()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i><br>
                 <form action="user/addCart.php" method="POST">
                     <h2>Add to Cart</h2>
                     <div>
