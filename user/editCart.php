@@ -4,7 +4,7 @@
     if (isset($_SESSION['loginUser'])) {
         $userID = $_SESSION['userID'];
     } else {
-        $anonymousID = $_SESSION['anonymousID'];
+        $anonymousID = $_COOKIE['anonymousID'];
     }
 
     $action = $_REQUEST["action"];
@@ -57,7 +57,6 @@
             }else if($action == 'remove'){
                 $sql = "DELETE FROM user_$userID WHERE ProductID=$id";
                 $result = mysqli_query($conn, $sql);
-                
             }
         } else {
             if($action == 'add'){

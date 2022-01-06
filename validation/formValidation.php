@@ -1,4 +1,7 @@
 <?php
+
+    include '../user/userHeader.php';
+
     //Hide Undefine Message
     error_reporting(0);
 
@@ -13,7 +16,7 @@
     $password1 = $_POST['password1'];
     $password2 = $_POST['password2'];
     $tnc = $_POST['t&c'];
-    $submit = $_POST['submit'];
+    $submit = $_POST['register'];
     $state = $_POST['state'];
     $gender = $_POST['gender'];
 
@@ -103,6 +106,10 @@
         $showError = errorHandle('$mobile', $submit);
     } else {
         $mobile = trim($mobile);
+            //remove first char if it's 0
+            if($mobile[0] == "0"){
+                $mobile = substr($mobile,1);
+            }
             if (strlen($mobile) < 9 || strlen($mobile) > 10) {
                 $mobileError = 'Please enter a valid mobile number!';
                 $showError = errorHandle('$mobile', $submit);
@@ -178,8 +185,8 @@
             //Hash Password
             $password1 = password_hash($password1, PASSWORD_DEFAULT);
             //insert data into mySQL
-            $sql = "INSERT INTO user (Name, Email, Mobile, State, Gender, Password)
-                VALUES ('$fname $lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
+            $sql = "INSERT INTO user (FirstName, LastName, Email, Mobile, State, Gender, Password)
+                VALUES ('$fname', '$lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
 
             if ($conn->query($sql) === TRUE) {
                 $successVisibility = 'visible';
@@ -206,29 +213,8 @@
     <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            display: border-box;
-        }
-
-         /* Login */
-         small {
-            font-size: 12px;
-            color: red;
-            visibility: <?=$showError?>;
-        }
-
-        .dropdown-signIn {
-            visibility: <?=$dropdownLoginView?>
-        }
-
-        .dropdown-userInfo {
-            visibility: <?=$dropdownUserInfoView?>
-        }
-
         /* View Container */
-        #view-container {   
+        #view-container {
             max-width: 100%;
         }
 
@@ -241,145 +227,129 @@
         }
 
         /* Form */
-        #registerForm {
-            /*width: calc(100% - 650px);*/
-            width: 100%;
+        #regform {
+            width: 340px;
+            margin: 100px auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
         }
-        
-        #RegForm {
-            /*font-family: Arial, Helvetica, sans-serif;*/
-            width: 380px;
-            margin: auto;
-            padding: 20px;
-            padding-bottom: 40px;
-            position: relative;
-            border-radius: 25px;
-            background-color: #ffffffe8;
-        }
-
         /* Title */
-        #RegForm h2 {
+        #regform h2 {
             text-align: center;
-            padding: 20px 0;
+            padding: 10px;
         }
 
-        #RegForm div {
-            margin-bottom: 10px;
+        #regform div {
+            margin: 15px 10px;
+            padding-bottom: 10px;
         }
 
-        #RegForm small {
+        #regform label {
+            padding: 10px 0;
+        }
+
+        #regform small {
             font-size: 12px;
-            padding-left: 15px;
+            padding-left: 5px;
             color: red;
-            display: none;
+            position: absolute;
+            visibility: <?=$showError?>;
         }
 
-        #RegForm input, #RegForm select {
+        #regform input, #regform select {
             display: block;
             width: 93%;
             height: 30px;
             padding: 0 10px;
+            margin-top: 10px;
             border-radius: 5px;
-            margin: auto;
             border: 1px solid lightgray;
         }
 
-        #RegForm label {
-            padding-left: 15px;
-        }
-
         /* Mobile */
-        .mobile-container {
-            margin: auto;
-            padding-left: 11px;
+        #regform .mobile-container {
+            margin: 0;
+            padding: 0;
         }
 
-        .mobile-container label {
+        #regform .mobile-container label {
             display: block;
         }
 
-        #RegForm #code {
+        #regform #code {
             display: inline-block;
-            width: 50px;
+            width: 25px;
             pointer-events: none;
         }
 
-        #RegForm #mobile {
+        #regform #mobile {
             display: inline-block;
-            width: calc(95% - 50px);
+            width: 246px;
         }
 
-        #mobileError {
+        #regform #mobileError {
             display: block;
         }
 
         /* Password */
-        .password-container {
+        #regform .password-container {
             padding: 0;
             margin: 0;
             margin-bottom: 10px;
         }
 
-        #i-password1,
-        #i-password2,
-        #i-password1-slash,
-        #i-password2-slash {
+        #regform #i-password1, #regform #i-password2, #regform #i-password1-slash, #regform #i-password2-slash {
             position: relative;
-            top: 24px;
+            top: 34px;
             color: gray;
         }
 
-        #i-password1 {
-            left: 193px;
+        #regform #i-password1 {
+            left: 220px;
         }
 
-        #i-password1-slash {
-            left: 173px;
+        #regform #i-password1-slash {
+            left: 200px;
+        } 
+
+        #regform #i-password2 {
+            left: 158px;
+        } 
+        
+        #regform #i-password2-slash {
+            left: 138px;
         }
 
-        #i-password2 {
-            left: 134px;
-        }
-
-        #i-password2-slash {
-            left: 114px;
-        }
-
-        #i-password1:hover,
-        #i-password2:hover,
-        #i-password1-slash:hover,
-        #i-password2-slash:hover {
+        #regform #i-password1:hover, #regform #i-password2:hover, #regform #i-password1-slash:hover, #regform #i-password2-slash:hover {
             cursor: pointer;
             color: #000;
         }
 
-        #i-password1-slash,
-        #i-password2-slash {
+        #regform #i-password1-slash, #regform #i-password2-slash{
             visibility: hidden;
         }
 
         /* Gender */
-        .gender-container {
+        #regform .gender-container {
             margin: 0;
-            padding-left: 15px;
+            padding: 0;
         }
 
-        #RegForm .gender-container input {
+        #regform .gender-container input {
             display: inline-block;
             width: 15px;
-            padding-left: 15px;
         }
 
-        .gender-container label, .checkbox-container label {
+        #regform .gender-container label, .checkbox-container label {
             position: relative;
             bottom: 9px;
             margin-right: 10px;
-            padding: 0 !important;
         }
 
         /* State */
-        #RegForm select {
-            width: 93%;
+        #regform select {
+            width: 100%;
             height: 32px;
 
             /* Removes the default <select> styling */
@@ -390,66 +360,62 @@
             /* Positions background arrow image */
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
             background-repeat: no-repeat;
-            background-position: 270px center;
+            background-position: 295px center;
         }
 
         /* t&c */
-        .checkbox-container {
-            text-align: center;
-            margin: 0;
+        #regform .checkbox-container {
+           margin-top: 0;
         }
 
-        #RegForm .checkbox-container input {
+        #regform .checkbox-container input{
             display: inline-block;
             width: 15px;
         }
 
-        .checkbox-container label {
+        #regform .checkbox-container label {
             font-size: 15px;
         }
 
-        .checkbox-container u {
+        #regform .checkbox-container u {
             cursor: pointer;
             color: purple;
         }
 
-        .checkbox-container small {
+        #regform .checkbox-container small {
             display: block;
         }
 
         /* Button*/
-
-        #RegForm .button{
-            margin:0;
-            text-align: center;;
+        #regform .button {
+            margin: 15px 10px;
         }
 
-        #RegForm .button input {
+        #regform .button input {
             display: inline-block;
             height: 32px;
         }
 
-        #RegForm #reset {
-            width: 15%;
+        #regform #reset {
+            width: 20%;
         }
 
-        #RegForm #reset:hover {
+        #regform #reset:hover {
             background-color: rgb(255, 194, 194);
             cursor: pointer;
         }
 
-        #RegForm #submit {
-            width: 77%;
+        #regform #register {
+            width: 78.6%;
             background-color: #2b323d;
             color: #fff;
             font-weight: bold;
         }
 
-        #RegForm #submit:hover {
+        #regform #register:hover {
             opacity: 70%;
             cursor: pointer;
         }
-
 
         /* Registration Successful */
         #success {
@@ -518,7 +484,7 @@
 <div id="view-container">
         <div class="van">
             <div id="registerForm">
-                <form class="RegForm"id="RegForm"action="formValidation.php" method="POST">
+                <form class="form" id="regform" action="" method="POST">
                     <h2>User Account Registration</h2>
                     <div>
                         <label>First Name</label>
@@ -611,12 +577,56 @@
                         <?php } ?>        </div>
                     <div class="button">
                         <input type="reset" id="reset" value="Clear"></input>
-                        <input type="submit" id="submit" name="submit" value="Register"></input>
+                        <input type="submit" id="register" name="register" value="Register"></input>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="icon" id="contactus">
+                <h3 class="pacifico_normal">Contact Us</h3>
+                <div>
+                    <i class="fa fa-map-marker"></i>
+                    <p>Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor Darul Ehsan Malaysia</p>
+                </div>
+                <div>
+                    <i class="fa fa-envelope"></i>
+                    <p>customer_service@gardenia.com.my</p>
+                </div>
+                <div>
+                    <i class="fa fa-phone"></i>
+                    <p>03-55423228</p>
+                </div>
+            </div>
+            <div class="subscribe">
+                <h3 class="pacifico_normal">Subscribe</h3>
+                <form>
+                    <input type="email" id="email" name="email" placeholder="Enter your Email ">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <div class="social-media">
+                <div class="social-media-container">
+                    <a href="https://www.facebook.com/GardeniaKL" title="Facebook" target=_blank><img src="../src/fb.png"
+                            alt="Facebook"></a>
+                    <a href="https://www.instagram.com/gardenia_kl/" title="Instagram" target=_blank><img
+                            src="../src/ig.png" alt="Instagram"></a>
+                    <a href="https://twitter.com/gardenia_kl" title="Twitter" target=_blank><img src="../src/tw.png"
+                            alt="Twitter"></a>
+                    <a href="https://www.youtube.com/user/GardeniaKL" title="Youtube" target=_blank><img
+                            src="../src/yt.png" alt="Youtube"></a>
+                </div>
+            </div>
+            <p>Copyright &copy (2004-2018) Gardenia Bakeries (KL) Sdn. Bhd (139386X) All Rights Reserved. | <a
+                    href="#">PRIVACY</a></p>
+        </div>
+    </footer>
     
     <div id="success">
         <div class="success-container">

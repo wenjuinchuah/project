@@ -1,43 +1,40 @@
+<?php include 'userHeader.php'; ?>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gardenia Bakeries (KL) Sdn Bhd</title>
-        <link rel="stylesheet" href="src/style.css">
-        <link rel="icon" href="src/icon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+        <title>User Profile</title>
         <style>
             .profile{
-                background-color: rgba(109, 109, 109, 0.6); 
-                width: 70%;
-                margin: 50px auto; 
-                border-radius: 12px; 
+                background-color: rgba(39, 55, 70 , 0.6); 
+                width: auto; 
                 position: relative; 
                 text-align: center;
                 padding: 30px;
-                /* left: 50%;
-                transform: translateX(-50%) */
+                margin-bottom: 3px;
+                box-shadow: 3px 3px 10px #17202A;
+                
+                /*background-image: url("https://i.pinimg.com/564x/62/f5/a5/62f5a5854bb2febeeb3944b378a40781.jpg");*/
+                background-image: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg");
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
             }
 
             .profile img, button{
                 position: relative; 
-                /* left: 50%; 
-                transform: translateX(-50%); */
             }
 
             table{
+                width:80%;
+                margin:auto;
                 position: relative; 
-                /* left: 50%; 
-                transform: translateX(-50%); */
                 border: solid black;
                 border-collapse: collapse;
             }
+
 
             td, th{
                 padding: 10px;
@@ -45,22 +42,110 @@
                 border-collapse: collapse;
             }
 
-            table {
-                width: 100%;
+            th{
+                background-color: rgba(28, 40, 51, 0.85);
+                color: white;
+                text-align: right;
             }
 
-            i:hover, a:hover {
-                cursor: pointer;
-                color: #CE0101;
+            td{
+                text-align: left;
+                background-color: RGBA(255,255,255,0.85);
             }
+
+            .edit {
+                padding: 10px 20px !important;
+                cursor: pointer;
+                font-size:medium;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #fff;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 7px #999;
+                background-color:#291ea8;
+            }
+
+            .edit2 {
+                padding: 6px 20px !important;
+                cursor: pointer;
+                font-size:medium;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #fff;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 7px #999;
+                background-color:#291ea8;
+            }
+
+            .change {
+                padding: 10px 20px !important;
+                cursor: pointer;
+                font-size:medium;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                color: #fff;
+                border: none;
+                border-radius: 15px;
+                box-shadow: 0 7px #999;
+                background-color:#27AE60;
+            }
+
+            .edit:active, .edit2:active, .edit:hover, .edit2:hover {
+                background-color: #110971;
+                box-shadow: 0 5px #666;
+                transform: translateY(2px);
+            }
+
+            .change:active, .change:hover {
+                background-color: #145A32;
+                box-shadow: 0 5px #666;
+                transform: translateY(2px);
+            }
+
+            .pfp_div{
+                border: 5px solid black; 
+                border-radius: 50%; 
+                height: 300px; 
+                width: 300px; 
+                box-shadow: 3px 3px 10px #17202A;
+                margin-left:auto;
+                margin-right:auto;
+            }
+
+            .error{
+                visibility: <?= $errStat ?>
+            }
+
+            form input, form select {
+                border: 1px solid lightgray;
+                border-radius: 3px;
+                font-size: large;
+                padding: 2px 5px;
+            }
+
+            form #code {
+                width: 30px;
+            }
+
         </style>
     </head>
 
-    <?php include 'userHeader.php'; ?>
-
     <body>
         <div class="profile">
+        
             <?php include '../validation/connectSQL.php';
+
+                $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_row($result);
+
+                echo "<h2 class='pacifico_L' style='color: white; text-shadow: 3px 3px 5px #17202A; text-align: center; padding-top: 10px '>Good day, ".$row[1].' '.$row[2]."!</h2>";
+                echo "<br><br>";
 
                 //get picture path from sql
                 $sql = "SELECT pic_path FROM user WHERE Email='$loginUsername'";
@@ -69,26 +154,37 @@
 
                 //if NULL set default
                 if(empty($row[0])){
-                    $path = "../src/icon.png";
+                    //$path = "../src/icon.png";
+                    $path = "https://p.kindpng.com/picc/s/105-1055656_account-user-profile-avatar-avatar-user-profile-icon.png";
                 }else{
                     $path = "../userpic/".$row[0];
                 }
+                
+                //crop image nicely
+                $imagecrop = "background-image: url($path);background-position: center; background-repeat: no-repeat; background-size: cover;";
+                echo "<div class='pfp_div' style='$imagecrop'></div>"
 
-                echo "<img src='$path' style='border: 5px solid black; border-radius: 50%; height: 300px; width: 300px; '/>";
             ?>
             <br><br>
-            <button onclick="showHidden(0)">Edit Profile Picture</button>
+            <button class='edit' onclick="showHidden(0)">Edit Profile Picture</button>
             <div id="hidden0" style="display:none;">
                 <br>
                 <form action="uploadpic.php" method="POST" enctype="multipart/form-data" >
-                    Select image to upload:
-                    <input type="file" name="fileToUpload" id="fileToUpload">
-                    <input type="submit" value="Upload Image" name="submit">
+                    <input class='edit2' type="file" name="fileToUpload" id="fileToUpload">
+                    <input class='edit' type="submit" value="Upload Image" name="submit">
                 </form>
             </div>
-        </div>
-        
-        <div class="profile">
+            <span class='error'> 
+                <?php //Error message for upload picture
+                    if(isset($_SESSION['pic_error'])){
+                        echo "<br><br>".$_SESSION['pic_error'];
+                        unset($_SESSION['pic_error']);
+                    }
+                ?>
+            </span> 
+                <br>
+                <br>
+
             <?php
                 $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
                 $result = mysqli_query($conn, $sql);
@@ -97,75 +193,81 @@
                 echo "<table>";
                 echo "<tr>";
                 echo "<th> Name </th>";
-                echo "<td><p id='name'>$row[1]</p>";
+                echo "<td><p id='name'>$row[1] $row[2]</p>";
                 echo "<form id='hidden1' action='editProfile.php' name='name' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
-                echo "<br>First name: <input name='firstname' type='text' />  Last name: <input name='lastname' type= 'text' />";
-                echo "<br><div id='error1' style='color:darkred;' ></div><br>";
-                echo "<button name='button' type='submit' value='name' >Change</button>";
+                echo "<div style='margin: 5px 0'><span style='margin-right: 5px'>First Name</span><input name='firstname' type='text' value='$row[1]'/></div>
+                    <div><span style='margin-right: 6px'>Last Name</span><input name='lastname' type= 'text' value='$row[2]'/></div>";
+                echo "<div id='error1' style='color:darkred;' ></div><br>";
+                if(isset($_SESSION['validation_name'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_name]</p><br>"; }; //for php validation
+                echo "<button class='change' name='button' type='submit' value='name' >Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(1)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td style='width:90px'><button class='edit' onclick=showHidden(1)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
 
                 echo "<tr>";
                 echo "<th> Email </th>";
-                echo "<td><p id='email'> $row[2]</p>";
+                echo "<td><p id='email'> $row[3]</p>";
                 echo "<form id='hidden2' action='editProfile.php' name='email' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
-                echo "<br>Email: <input name='email' type='text' />";
-                echo "<br><div id='error2' style='color:darkred;' ></div><br>";
-                echo "<button name='button' type='submit' >Change</button>";
+                echo "<div style='margin: 5px 0'><span style='margin-right: 5px'>Email</span><input name='email' type='text' value='$row[3]'/></div>";
+                echo "<div id='error2' style='color:darkred;' ></div><br>";
+                if(isset($_SESSION['validation_email'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_email]</p><br>"; }; //for php validation
+                echo "<button class='change' name='button' type='submit' value='email'>Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(2)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td><button class='edit' onclick=showHidden(2)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
 
                 echo "<tr>";
                 echo "<th> Phone Number </th>";
-                echo "<td><p id='phone'> $row[3]</p>";
+                echo "<td><p id='phone'> $row[4]</p>";
+                $mobile = substr($row[4], 2);
                 echo "<form id='hidden3' action='editProfile.php' name='mobile' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
-                echo "<br>Phone Number: +60  <input name='mobile' type='text'/>";
+                echo "<br>Phone Number <input type='text' id='code' name='code' value='+60' disabled /><input name='mobile' type='text' value='$mobile'/>";
                 echo "<br><div id='error3' style='color:darkred;' ></div><br>";
-                echo "<button name='button' type='submit' value='mobile'>Change</button>";
+                if(isset($_SESSION['validation_mobile'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_mobile]</p><br>"; }; //for php validation
+                echo "<button class='change' name='button' type='submit' value='mobile'>Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(3)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td><button class='edit' onclick=showHidden(3)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
 
                 echo "<tr>";
                 echo "<th> State </th>";
-                echo "<td><p id='state'> $row[4]</p>";
+                echo "<td><p id='state'> $row[5]</p>";
+                $state = $row[5];
                 echo "<form id='hidden4' action='editProfile.php' name='state' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
                 echo "<br><label>State: </label>
-                        <select name='state' id='stat'>
-                            <option value='state' disabled>- Select Your State-</option>
-                            <option value='Johor'>Johor</option>
-                            <option value='Kedah'>Kedah</option>
-                            <option value='Kelantan'>Kelantan</option>
-                            <option value='Melaka'>Melaka</option>
-                            <option value='Negeri Sembilan'>Negeri Sembilan</option>
-                            <option value='Pahang'>Pahang</option>
-                            <option value='Perak'>Perak</option>
-                            <option value='Perlis'>Perlis</option>
-                            <option value='Pulau Pinang'>Pulau Pinang</option>
-                            <option value='Sabah'>Sabah</option>
-                            <option value='Sarawak'>Sarawak</option>
-                            <option value='Selangor'>Selangor</option>
-                            <option value='Terengganu'>Terengganu</option>
-                            <option value='federal' disabled>-Federal Territories-</option>
-                            <option value='Kuala Lumpur'>Kuala Lumpur</option>
-                            <option value='Labuan'>Labuan</option>
-                            <option value='Putrajaya'>Putrajaya</option>
-                        </select>";
+                    <select name='state'>
+                        <option disabled>- Select Your State-</option>
+                        <option"; echo $state == 'Johor' ? 'selected': ''; echo ">Johor</option>
+                        <option"; echo $state == 'Kelantan' ? 'selected': ''; echo ">Kelantan</option>
+                        <option"; echo $state == 'Kedah' ? 'selected': ''; echo ">Kedah</option>
+                        <option"; echo $state == 'Melaka' ? 'selected': ''; echo ">Melaka</option>
+                        <option"; echo $state == 'Negeri Sembilan' ? 'selected': ''; echo ">Negeri Sembilan</option>
+                        <option"; echo $state == 'Pahang' ? 'selected': ''; echo ">Pahang</option>
+                        <option"; echo $state == 'Perak' ? 'selected': ''; echo ">Perak</option>
+                        <option"; echo $state == 'Perlis' ? 'selected': ''; echo ">Perlis</option>
+                        <option"; echo $state == 'Pulau Pinang' ? 'selected': ''; echo ">Pulau Pinang</option>
+                        <option"; echo $state == 'Sabah' ? 'selected': ''; echo ">Sabah</option>
+                        <option"; echo $state == 'Sarawak' ? 'selected': ''; echo ">Sarawak</option>
+                        <option"; echo $state == 'Selangor' ? 'selected': ''; echo ">Selangor</option>
+                        <option"; echo $state == 'Terrengganu' ? 'selected': ''; echo ">Terengganu</option>
+                        <option disabled>-Federal Territories-</option>
+                        <option"; echo $state == 'Kuala Lumpur' ? 'selected': ''; echo ">Kuala Lumpur</option>
+                        <option"; echo $state == 'Labuan' ? 'selected': ''; echo ">Labuan</option>
+                        <option"; echo $state == 'Putrajaya' ? 'selected': ''; echo ">Putrajaya</option>
+                    </select>";
                 echo "<br><br>";
-                echo "<button name='button' type='submit' value='state'>Change</button>";
+                echo "<button class='change' name='button' type='submit' value='state'>Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(4)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td><button class='edit' onclick=showHidden(4)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
 
                 echo "<tr>";
                 echo "<th> Gender </th>";
-                echo "<td><p id='gender'> $row[5]</p>";
+                echo "<td><p id='gender'> $row[6]</p>";
                 echo "<form id='hidden5' action='editProfile.php' name='gender' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
                 echo "<br>Gender:  
                 <input type='radio' id='male' name='gender' value='Male' checked='true' />
@@ -173,23 +275,35 @@
                 <input type='radio' id='female' name='gender' value='Female' />
                 <label for='female'>Female</label> ";
                 echo "<br><br>";
-                echo "<button name='button' type='submit' value='gender'>Change</button>";
+                echo "<button class='change' name='button' type='submit' value='gender'>Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(5)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td><button class='edit' onclick=showHidden(5)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
 
                 echo "<tr>";
                 echo "<th> Password </th>";
-                echo "<td><p id='password'> $row[6]</p>";
-                echo "<form id='hidden6' name='password' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
-                echo "<br>New password: <input name='password' type='password'/>";
-                echo "  Reenter password: <input name='confirmpassword' type='password'/>";
-                echo "<br><div id='error4' style='color:darkred;' ></div><br>";
-                echo "<button name='button' type='submit' value='password'>Change</button>";
+                for ($i = 0; $i < strlen($row[7]); $i++) {
+                    if (empty($currentPassword)) {
+                        $currentPassword = '*';
+                    } else {
+                        $currentPassword .= '*';
+                        $_SESSION['hashPassword'] = $currentPassword;
+                    }
+                }
+                echo "<td><p id='password'> $_SESSION[hashPassword]</p>";
+                echo "<form id='hidden6' action='editProfile.php' name='password' method='POST' onsubmit='return formValidation(name)' style='display: none;'>";
+                echo "<div style='margin: 5px 0'><span style='margin: 0 5px'>Current Password</span><input name='currentPassword' type='password'/></div>";
+                echo "<div id='error4' style='color:darkred;' ></div>";
+                if(isset($_SESSION['validation_currentPassword'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_currentPassword]</p>"; };
+                echo "<div style='margin: 5px 0'><span style='margin: 0 5px 0 27px'>New Password</span><input name='password' type='password'/></div>";
+                echo "<div style='margin: 5px 0'><span style='margin-right: 5px'>Reenter Password</span><input name='confirmpassword' type='password'/></div>";
+                echo "<br><div id='error5' style='color:darkred;' ></div>";
+                if(isset($_SESSION['validation_password'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_password]</p><br>"; }; //for php validation
+                echo "<button class='change' name='button' type='submit' value='password'>Change</button>";
                 echo "</form>";
                 echo "</td>";
-                echo "<td><a onclick=showHidden(6)><i class='fa fa-pencil'></i> Edit</a></td>";
+                echo "<td><button class='edit' onclick=showHidden(6)><i class='fa fa-pencil'></i> Edit</button></td>";
                 echo "</tr>";
                 echo "</table>";
             ?>
@@ -243,11 +357,38 @@
         <script>
             /* Edit button */
             function showHidden(num){
-                var x = document.getElementById("hidden"+num);
-                if(x.style.display == "none"){
-                    x.style.display = "block";
-                }else{
-                    x.style.display = "none";
+                switch (num) {
+                    case 0:
+                        toggleDisplay(num, "");
+                    case 1:
+                        toggleDisplay(num, "name");
+                        break;
+                    case 2:
+                        toggleDisplay(num, "email");
+                        break;
+                    case 3:
+                        toggleDisplay(num, "phone");
+                        break;
+                    case 4:
+                        toggleDisplay(num, "state");
+                        break;
+                    case 5:
+                        toggleDisplay(num, "gender");
+                        break;
+                    case 6:
+                        toggleDisplay(num, "password");
+                        break;
+                }
+
+                function toggleDisplay(num, name) {
+                    var x = document.getElementById("hidden"+num);
+                    if(x.style.display == "none"){
+                        x.style.display = "block";
+                        document.getElementById(name).style.display = "none";
+                    }else{
+                        x.style.display = "none";
+                        document.getElementById(name).style.display = "block";
+                    }
                 }
             }
 
@@ -343,28 +484,37 @@
                 }
 
                 if(type == "password"){
+                    var currentPassword = document.forms['password']['currentPassword'].value;
                     var password1 = document.forms['password']['password'].value;
                     var password2 = document.forms['password']['confirmpassword'].value;
 
                     /* password1 */
+                    if (currentPassword == "") {
+                        displayErr(4, "Current Password cannot be blank!")
+                        return false;
+                    } else {
+                        displayErr(4, "")
+                        return false;
+                    }
+                    /* password1 */
                     if (password1 == "") {
-                        displayErr(4, "Password cannot be blank!")
+                        displayErr(5, "Password cannot be blank!")
                         return false;
                     } else {
                         if (passwordHandle(password1)) {
                         } else {
-                            displayErr(4, "Password must have Uppercase, Lowercase, Special <br> Character, Numbers and No Space!");
+                            displayErr(5, "Password must have Uppercase, Lowercase, Special <br> Character, Numbers and No Space!");
                             return false;
                         }
                     }
                     /* password2 */
                     if (password2 == "") {
-                        displayErr(4, "Confirm password cannot be blank!")
+                        displayErr(5, "Confirm password cannot be blank!")
                         return false;
                     } else {
                         if (password2 == password1) {
                         } else {
-                            displayErr(4, "Password does not match!");
+                            displayErr(5, "Password does not match!");
                             return false;
                         }
                     }

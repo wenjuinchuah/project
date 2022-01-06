@@ -3,6 +3,16 @@
     include '../validation/connectSQL.php';
     include '../database/createCartDb.php';
     include '../database/createOrderDb.php';
+
+    if (isset($_SESSION['userID'])) {
+        $userID = $_SESSION['userID'];
+        
+        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
+        $sql = "SELECT FirstName, pic_path FROM user WHERE UserID = $userID";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($result);
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +50,7 @@
         <header>
             <div class="logo">
                 <div class="logo-container">
-                    <img src="../src/gardenia.png" alt="Logo">
+                    <a href="../index.php"><img src="../src/gardenia.png" alt="Logo"></a>
                 </div>
                 <div class="logo-container slogan">
                     <img src="../src/sogood.png" alt="Good">
@@ -72,9 +82,23 @@
                     </div>
                     <div class = "signIn" id="signIn">
                         <button class="dropbtn">
-                            <?php if ($isLogin == true) { ?>
-                                <p>Hi, <?php echo $loginUsername ?></p>
+                            <div>
+                            <?php if ($isLogin == true) { 
+                                echo "<div style='display: flex'>";
+                                echo "<p style='padding-top: 5px'>Hi, ".$row['FirstName']."!</p>";
+
+                                if(empty($row['pic_path'])){
+                                    //$path = "../src/icon.png";
+                                    $path = "https://p.kindpng.com/picc/s/105-1055656_account-user-profile-avatar-avatar-user-profile-icon.png";
+                                }else{
+                                    $path = "../userpic/".$row['pic_path'];
+                                }
+                                echo "<img src='$path' style='border-radius: 50%; border:2px solid #110971; height: 30px; width: 30px; left: 5px; top: -1px'/>";
+                                echo "</div>";
+                                
+                            ?>                           
                             <?php } else { ?><p>Sign In</p><?php } ?>
+                            </div>
                         </button>
                         <div class="dropdown-signIn" id="dropdown-signIn">
                             <form id="loginValidation" action="" method="POST">

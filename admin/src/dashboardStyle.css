@@ -2,13 +2,14 @@
     font-family: "Raleway", sans-serif;
 }
 
-.addFunction {
+.addFunction, 
+.category{
     border-radius: 25px;
     background-color: #000;
     padding: 3px 10px;
 }
 
-.addFunction:hover {
+.addFunction:hover{
     opacity: 0.7;
     cursor: pointer;
 }
@@ -40,7 +41,7 @@ table td {
     padding: 10px 0;
 }
 
-table i:hover {
+table i:not(.fa-edit,.fa-trash-can):hover {
     opacity: 0.4;
     cursor: pointer;
 }
@@ -62,7 +63,7 @@ table tr:nth-child(even) {
 }
 
 /*Add Edit Product*/
-.addEditView, #addUserView {
+.addEditView, #addUserView, #editOrderStatusView {
     background-color: #d3d3d3a0;
     margin: 0;
     padding: 0;
@@ -79,7 +80,7 @@ table tr:nth-child(even) {
     position: absolute !important;
 }
 
-.addProductView-container {
+.addProductView-container, .editOrderStatusView-container {
     background-color: rgb(168, 168, 168);
     margin: 100px auto;
     padding: 10px 20px;
@@ -89,7 +90,7 @@ table tr:nth-child(even) {
     border-radius: 10px;
 }
 
-.addProductView-container h2 {
+.addProductView-container h2, .editOrderStatusView-container h2 {
     padding: 10px 0;
     text-align: center;
     font-weight: bold;

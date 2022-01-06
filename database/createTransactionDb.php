@@ -10,6 +10,7 @@
                     TransactionID INT(11) AUTO_INCREMENT,
                     OrderID INT(11) NOT NULL,
                     Total FLOAT NOT NULL,
+                    TransactionDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     PaymentMethod VARCHAR(11) NOT NULL,
                     PRIMARY KEY (TransactionID)
                 )";

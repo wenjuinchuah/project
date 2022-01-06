@@ -15,7 +15,7 @@
             $sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'order_$i'";
             if ($result = mysqli_query($conn, $sql)) {
                 $row = mysqli_num_rows($result);
-                if ($row == 0) {
+                if ($row == 0) { //if no table, create table
                     $sql = "CREATE TABLE order_$i (
                         ProductID INT(11) NOT NULL,
                         ProductName VARCHAR(100) NOT NULL,
@@ -38,22 +38,23 @@
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
     $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
     $result = mysqli_query($conn, $sql);
-    //addorder to table
+    //add order to table
     while ($row = mysqli_fetch_row($result)) {
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
         $sql = "INSERT INTO order_$i (ProductID, ProductName, Price, Quantity)
                 VALUES ('$row[0]', '$row[1]', '$row[2]', '$row[3]')";
         $order_result = mysqli_query($conn, $sql);
 
+        //reduce the stock
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
         $sql = "SELECT * FROM products WHERE ID = '$row[0]'";
         if ($products_result = mysqli_query($conn, $sql)) {
             $assocProducts = mysqli_fetch_assoc($products_result);
             $newStock = $assocProducts['Stock'] - $row[3];
-            $sql = "UPDATE products SET Stock = '$newStock' WHERE ID = '$row[0]'";
+            $newSales = $assocProducts['Sales'] += $row[3];
+            $sql = "UPDATE products SET Stock = '$newStock', Sales = '$newSales' WHERE ID = '$row[0]'";
             $products_result = mysqli_query($conn, $sql);
         }
-        
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
         $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
     }

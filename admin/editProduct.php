@@ -5,6 +5,7 @@ if (isset($_POST['edit'])) {
     $editPrice = $_POST['editPrice'];
     $editStock = $_POST['editStock'];
     //product pic validation
+    $boolNewPic = true; //, value='true' if user chose a new product pic
     $editPicture = $_FILES['editPicture']['name'];
     $target_dir = "../productPic/";
     $target_file = basename($_FILES['editPicture']['name']);
@@ -24,8 +25,9 @@ if (isset($_POST['edit'])) {
         $showError = 'visible';
     }
     if(empty($_FILES["editPicture"]["name"])){
-        $editPicError = "Must choose a product picture!";
-        $showError = 'visible';
+        //if user didn't choose a picture, use the original pic name
+        $editPicture = $_POST['oriPic'];
+        $boolNewPic = false;
     }else{
         //validate fake/real image
         $check = getimagesize($_FILES["editPicture"]["tmp_name"]);
@@ -47,16 +49,16 @@ if (isset($_POST['edit'])) {
     }
 
     if (empty($editNameError) && empty($editPriceError) && empty($editStockError) && empty($editPicError)) {
-        if(move_uploaded_file($_FILES["editPicture"]["tmp_name"],$target_path)){
-            $sql = "UPDATE products SET Name='$editName', Price='$editPrice',Stock='$editStock',image='$editPicture' WHERE ID='$id'";
-            if (mysqli_query($conn, $sql) === TRUE) {
-                header('Location: dashboard.php');
-            }else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }   
-        } else{
-            echo "Sorry, there was an error uploading your file.";                
-        }
+        if($boolNewPic == true){
+            move_uploaded_file($_FILES["editPicture"]["tmp_name"],$target_path);
+        } 
+        
+        $sql = "UPDATE products SET Name='$editName', Price='$editPrice',Stock='$editStock',image='$editPicture' WHERE ID='$id'";
+        if (mysqli_query($conn, $sql) === TRUE) {
+            header('Location: dashboard.php');
+        }else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }   
     } else{
         $editView = "block";
     }

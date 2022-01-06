@@ -36,9 +36,10 @@
             }
         }
         
-        // include '../user/sendEmail.php';
+         
         include '../user/addOrder.php';
         include '../user/addTransaction.php';
+        include '../user/sendEmail.php';
         include '../user/removeCart.php';
         header('location:../index.php');
         ob_end_flush();

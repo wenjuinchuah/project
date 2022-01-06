@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
-    <?php include 'header.php'; ?>
+    <?php include 'header.php';  ?>
 
     <body>
         <main>
@@ -28,7 +28,7 @@
                     <h2>Check out our Latest Product now!</h2>
                     <p>Try the creamy buttery goodness of Gardenia</p>
                     <p>Delicious . Fresh . Convenient</p>
-                    <button class="pacifico_normal" type="button" onclick="document.location='#'">Know More</button>
+                    <button class="pacifico_normal" type="button" onclick="document.location='products.php'">Know More</button>
                 </div>
             </div>
         </main>

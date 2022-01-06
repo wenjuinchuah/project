@@ -1,6 +1,9 @@
+<!--The gardenia order, order details, and transaction do not sync, clear all to remake?-->
+<!-- can, delete all database, leave table user and products enough -->
 <?php
     session_start();
     include '../validation/connectSQL.php';
+    include 'userHeader.php';
 
     //declare variable
     $orderID = array();
@@ -12,9 +15,13 @@
         $userID = $_SESSION['userID'];
         $sql = "SELECT * FROM order_details WHERE userID = '$userID'";
         $result = mysqli_query($conn, $sql);
-        $count = mysqli_num_rows($result);
-        if ($count > 0) {
-            $isFound = TRUE;
+        if ($result) {
+            $count = mysqli_num_rows($result);
+            if ($count > 0) {
+                $isFound = TRUE;
+            } else {
+                $isFound = FALSE;
+            }
         } else {
             $isFound = FALSE;
         }
@@ -152,12 +159,10 @@
         </style>
     </head>
 
-    <?php include 'userHeader.php'; ?>
-
     <body>
         <main>
             <div class="title">
-                <h2>Order History</h2>
+                <h2 class="pacifico_L">Order History</h2>
             </div>
             <div class="order">
                 <table id='orderHistory'>
@@ -195,7 +200,17 @@
                                     </tr>";
                                 $index++;
                             }
-                        } 
+                        } else {
+                            echo "<tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>You haven't order anything before this!<br>Order now before it is too late!</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>";
+                        }
                     ?>
                     <div id="mask-container"></div>
                 </table>

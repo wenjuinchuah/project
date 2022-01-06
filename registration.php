@@ -17,21 +17,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-        /* Login */
-        small {
-            font-size: 12px;
-            color: red;
-            visibility: <?=$showError?>;
-        }
-
-        .dropdown-signIn {
-            visibility: <?=$dropdownLoginView?>
-        }
-
-        .dropdown-userInfo {
-            visibility: <?=$dropdownUserInfoView?>
-        }
-
         /* View Container */
         #view-container {
             max-width: 100%;
@@ -46,145 +31,129 @@
         }
 
         /* Form */
-        #registerForm {
-            /*width: calc(100% - 650px);*/
-            width: 100%;
+        #regform {
+            width: 340px;
+            margin: 100px auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
         }
-        
-        #RegForm {
-            /*font-family: Arial, Helvetica, sans-serif;*/
-            width: 380px;
-            margin: auto;
-            padding: 20px;
-            padding-bottom: 40px;
-            position: relative;
-            border-radius: 25px;
-            background-color: #ffffffe8;
-        }
-
         /* Title */
-        #RegForm h2 {
+        #regform h2 {
             text-align: center;
-            padding: 20px 0;
+            padding: 10px;
         }
 
-        #RegForm div {
-            margin-bottom: 10px;
+        #regform div {
+            margin: 15px 10px;
+            padding-bottom: 10px;
         }
 
-        #RegForm small {
+        #regform label {
+            padding: 10px 0;
+        }
+
+        #regform small {
             font-size: 12px;
-            padding-left: 15px;
+            padding-left: 5px;
             color: red;
-            display: none;
+            position: absolute;
+            visibility: hidden;
         }
 
-        #RegForm input, #RegForm select {
+        #regform input, #regform select {
             display: block;
             width: 93%;
             height: 30px;
             padding: 0 10px;
+            margin-top: 10px;
             border-radius: 5px;
-            margin: auto;
             border: 1px solid lightgray;
         }
 
-        #RegForm label {
-            padding-left: 15px;
-        }
-
         /* Mobile */
-        .mobile-container {
-            margin: auto;
-            padding-left: 11px;
+        #regform .mobile-container {
+            margin: 0;
+            padding: 0;
         }
 
-        .mobile-container label {
+        #regform .mobile-container label {
             display: block;
         }
 
-        #RegForm #code {
+        #regform #code {
             display: inline-block;
-            width: 50px;
+            width: 25px;
             pointer-events: none;
         }
 
-        #RegForm #mobile {
+        #regform #mobile {
             display: inline-block;
-            width: calc(95% - 50px);
+            width: 246px;
         }
 
-        #mobileError {
+        #regform #mobileError {
             display: block;
         }
 
         /* Password */
-        .password-container {
+        #regform .password-container {
             padding: 0;
             margin: 0;
             margin-bottom: 10px;
         }
 
-        #i-password1,
-        #i-password2,
-        #i-password1-slash,
-        #i-password2-slash {
+        #regform #i-password1, #regform #i-password2, #regform #i-password1-slash, #regform #i-password2-slash {
             position: relative;
-            top: 24px;
+            top: 34px;
             color: gray;
         }
 
-        #i-password1 {
-            left: 193px;
+        #regform #i-password1 {
+            left: 220px;
         }
 
-        #i-password1-slash {
-            left: 173px;
+        #regform #i-password1-slash {
+            left: 200px;
+        } 
+
+        #regform #i-password2 {
+            left: 158px;
+        } 
+        
+        #regform #i-password2-slash {
+            left: 138px;
         }
 
-        #i-password2 {
-            left: 134px;
-        }
-
-        #i-password2-slash {
-            left: 114px;
-        }
-
-        #i-password1:hover,
-        #i-password2:hover,
-        #i-password1-slash:hover,
-        #i-password2-slash:hover {
+        #regform #i-password1:hover, #regform #i-password2:hover, #regform #i-password1-slash:hover, #regform #i-password2-slash:hover {
             cursor: pointer;
             color: #000;
         }
 
-        #i-password1-slash,
-        #i-password2-slash {
+        #regform #i-password1-slash, #regform #i-password2-slash{
             visibility: hidden;
         }
 
         /* Gender */
-        .gender-container {
+        #regform .gender-container {
             margin: 0;
-            padding-left: 15px;
+            padding: 0;
         }
 
-        #RegForm .gender-container input {
+        #regform .gender-container input {
             display: inline-block;
             width: 15px;
-            padding-left: 15px;
         }
 
-        .gender-container label, .checkbox-container label {
+        #regform .gender-container label, .checkbox-container label {
             position: relative;
             bottom: 9px;
             margin-right: 10px;
-            padding: 0 !important;
         }
 
         /* State */
-        #RegForm select {
-            width: 93%;
+        #regform select {
+            width: 100%;
             height: 32px;
 
             /* Removes the default <select> styling */
@@ -195,99 +164,95 @@
             /* Positions background arrow image */
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
             background-repeat: no-repeat;
-            background-position: 270px center;
+            background-position: 295px center;
         }
 
         /* t&c */
-        .checkbox-container {
-            text-align: center;
-            margin: 0;
+        #regform .checkbox-container {
+           margin-top: 0;
         }
 
-        #RegForm .checkbox-container input {
+        #regform .checkbox-container input{
             display: inline-block;
             width: 15px;
         }
 
-        .checkbox-container label {
+        #regform .checkbox-container label {
             font-size: 15px;
         }
 
-        .checkbox-container u {
+        #regform .checkbox-container u {
             cursor: pointer;
             color: purple;
         }
 
-        .checkbox-container small {
+        #regform .checkbox-container small {
             display: block;
         }
 
         /* Button*/
-
-        #RegForm .button{
-            margin:0;
-            text-align: center;;
+        #regform .button {
+            margin: 15px 10px;
         }
 
-        #RegForm .button input {
+        #regform .button input {
             display: inline-block;
             height: 32px;
         }
 
-        #RegForm #reset {
-            width: 15%;
+        #regform #reset {
+            width: 20%;
         }
 
-        #RegForm #reset:hover {
+        #regform #reset:hover {
             background-color: rgb(255, 194, 194);
             cursor: pointer;
         }
 
-        #RegForm #submit {
-            width: 77%;
+        #regform #submit {
+            width: 78.6%;
             background-color: #2b323d;
             color: #fff;
             font-weight: bold;
         }
 
-        #RegForm #submit:hover {
+        #regform #submit:hover {
             opacity: 70%;
             cursor: pointer;
         }
 
         /* The message box is shown when the user clicks on the password field */
-        #message {
-            width: 93%;
+        #regform #message {
             background: #f1f1f1;
             color: #000;
             border-radius: 10px;
-            margin: 10px 0 0 5px;
+            margin: 10px 0 0 0;
             padding: 10px 0 0 10px;
             display: none;
         }
 
-        #message p {
+        #regform #message p {
             padding: 5px 35px;
             font-size: 13px;
         }
 
         /* Add a green text color and a checkmark when the requirements are right */
-        .valid {
+        #regform .valid {
             color: green;
         }
 
-        .valid:before {
+        #regform .valid:before {
             position: relative;
             left: -35px;
             content: "✔";
         }
 
         /* Add a red text color and an "x" when the requirements are wrong */
-        .invalid {
+        #regform .invalid {
             color: red;
         }
 
-        .invalid:before {
+        #regform .invalid:before {
             position: relative;
             left: -35px;
             content: "✖";
@@ -299,37 +264,62 @@
     <div id="view-container">
         <div class="van">
             <div id="registerForm">
-                <form class="RegForm" id="RegForm" action="validation/formValidation.php" method="POST" onsubmit="return formValidation()">
+                <form class="form" id="regform" action="validation/formValidation.php" method="POST" onsubmit="return formValidation()">
                     <h2>User Account Registration</h2>
                     <div>
                         <label>First Name</label>
-                        <input type="text" id="fname" name="fname" placeholder="First Name" />
+                        <input type="text" id="fname" name="fname" placeholder="First Name"/>
                         <small id="fnameError">Error message</small>
                     </div>
                     <div>
                         <label>Last Name</label>
-                        <input type="text" id="lname" name="lname" placeholder="Last Name" />
+                        <input type="text" id="lname" name="lname" placeholder="Last Name"/>
                         <small id="lnameError">Error message</small>
                     </div>
                     <div>
                         <label>Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email Address" />
+                        <input type="email" id="email" name="email" placeholder="Email Address"/>
                         <small id="emailError">Error message</small>
                     </div>
                     <div>
-                        <label>Mobile</label>
+                        <label >Mobile</label>
                         <div class="mobile-container">
-                            <input type="text" id="code" name="code" value="+60" disabled />
-                            <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number" maxlength="10" />
+                            <input type="text" id="code" name="code" value="+60" disabled/>  
+                            <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number"/>
                             <small id="mobileError">Error message</small>
                         </div>
                     </div>
                     <div>
+                        <label>Password</label>
+                        <i id="i-password1" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                        <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                        <div class="password-container">
+                            <input type="password" id="password1" name="password1" placeholder="Password"/>
+                            <small id="password1Error"></small>
+                            <div id="message">
+                                <h5>Password must contain the following:</h5>
+                                <p id="capital" class="invalid">At least one <b>Uppercase [A-Z]</b></p>
+                                <p id="letter" class="invalid">At least one <b>Lowercase [a-z]</b></p>
+                                <p id="number" class="invalid">At least one <b>Number [0-9]</b></p>
+                                <p id="specialChar" class="invalid">At least one <b>Special Character</b></p>
+                                <p id="length" class="invalid">Minimum <b>Length of 6</b></p>
+                                <p id="space" class="valid">No <b>space</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Confirm Password</label>
+                        <i id="i-password2" class="fa fa-eye" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                        <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true" onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                        <input type="password" id="password2" name="password2" placeholder="Confirm Password"/>
+                        <small id="password2Error">Error message</small>
+                    </div>
+                    <div>
                         <label>Gender</label>
                         <div class="gender-container">
-                            <input type="radio" id="male" name="gender" value="Male" checked="true" />
+                            <input type="radio" id="male" name="gender" value="Male" checked="true"/>
                             <label for="male">Male</label>
-                            <input type="radio" id="female" name="gender" value="Female" />
+                            <input type="radio" id="female" name="gender" value="Female"/>
                             <label for="female">Female</label>
                         </div>
                     </div>
@@ -356,44 +346,14 @@
                             <option value="Putrajaya">Putrajaya</option>
                         </select>
                     </div>
-                    <div>
-                        <label>Password</label>
-                        <i id="i-password1" class="fa fa-eye" aria-hidden="true"
-                            onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
-                        <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true"
-                            onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
-                        <div class="password-container">
-                            <input type="password" id="password1" name="password1" placeholder="Password" />
-                            <div id="message">
-                                <h5>Password must contain the following:</h5>
-                                <p id="capital" class="invalid">At least one <b>Uppercase [A-Z]</b></p>
-                                <p id="letter" class="invalid">At least one <b>Lowercase [a-z]</b></p>
-                                <p id="number" class="invalid">At least one <b>Number [0-9]</b></p>
-                                <p id="specialChar" class="invalid">At least one <b>Special Character</b></p>
-                                <p id="length" class="invalid">Minimum <b>Length of 6</b></p>
-                                <p id="space" class="valid">No <b>space</b></p>
-                            </div>
-                            <small id="password1Error"></small>
-                        </div>
-                    </div>
-                    <div>
-                        <label>Confirm Password</label>
-                        <i id="i-password2" class="fa fa-eye" aria-hidden="true"
-                            onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
-                        <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true"
-                            onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
-                        <input type="password" id="password2" name="password2" placeholder="Confirm Password" />
-                        <small id="password2Error">Error message</small>
-                    </div>
                     <div class="checkbox-container">
-                        <input type="checkbox" id="t&c" name="t&c" value="value1" />
+                        <input type="checkbox" id="t&c" name="t&c" value="value1"/>
                         <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
                         <small id="t&cError">Error message</small>
                     </div>
                     <div class="button">
                         <input type="reset" id="reset" value="Clear"></input>
-                        <input type="submit" id="submit" name="submit" value="Register"
-                            onclick="return  confirm('Do you want to register?')"></input>
+                        <input type="submit" id="submit" name="submit" value="Register" onclick="return  confirm('Do you want to register?')"></input>
                     </div>
                 </form>
             </div>

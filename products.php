@@ -1,3 +1,5 @@
+<?php include 'header.php'; ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,11 +21,44 @@
 
             .product-div {
                 background-color: gray; 
-                width: 72%;
+                width: auto;
                 position: relative; 
-                left: 50%; 
-                transform: translateX(-50%);
-                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 3px;
+                /* left: 50%; 
+                transform: translateX(-50%); */
+
+                box-shadow: 3px 3px 10px #17202A;
+                
+                /*background-image: url("https://i.pinimg.com/564x/62/f5/a5/62f5a5854bb2febeeb3944b378a40781.jpg");*/
+                background-image: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg");
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            .product_tag{
+                box-shadow: 3px 3px 10px #17202A;
+                background-image: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-Blue-White-Background-Image.jpg");
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+
+                display: inline-block;
+                padding: 20px 5%;
+                width: 21.5%;
+                text-align: center;
+                background-color: white;
+                margin: 10px;
+                border-radius: 5px;
+                transition:0.2s;
+            }
+
+            .product_tag:hover{
+                transform:translateY(-5px);
             }
 
             .product-div button{
@@ -31,18 +66,12 @@
                 padding: 3px;
             }
 
-            main div {
-                display: inline-block;
-                padding: 20px 5%;
-                width: 30%;
-                text-align: center;
-                background-color: white;
-                margin: 10px;
-                border-radius: 5px;
+            .productPic:hover{
+                cursor:zoom-in;
             }
 
             /* AddtoCart View */
-            #addtoCart, #successView {
+            #addtoCart, #showPic, #successView {
                 background-color: #d3d3d3a0;
                 margin: 0;
                 padding: 0;
@@ -56,13 +85,14 @@
             }
 
             .addtoCart-container {
-                background-color: rgb(168, 168, 168);
+                background-color: aliceblue;
                 margin: 150px auto;
                 padding: 10px 20px;
                 height: auto;
                 max-width: 400px;
                 min-width: 400px;
                 border-radius: 10px;
+                border:3px solid #110971;
             }
 
             .addtoCart-container h2 {
@@ -72,7 +102,7 @@
             }
 
             .addtoCart-container input {
-                border: none;
+                border:2px solid #110971;;
                 border-radius: 5px;
                 font-weight: bold;
                 font-size: medium;
@@ -80,6 +110,13 @@
                 padding-left: 5px;
                 width: 100%;
                 height: 30px;
+            }
+
+            #submit{
+                color:white;
+                background-color:#291ea8;
+                border:none;
+                width:102%;
             }
 
             .addtoCart-container input::placeholder {
@@ -98,7 +135,7 @@
 
             .addtoCart-container i:hover{
                 opacity:0.7;
-                color:#fff;
+                color:#CE0101;
                 cursor:pointer;
             }
 
@@ -123,33 +160,41 @@
                 background-color:#e43030;
             }
 
-            .addCart:active {
+            .addCart:active, .addCart:hover {
                 background-color: #110971;
                 box-shadow: 0 5px #666;
                 transform: translateY(2px);
             }
 
-            .outStock:active {
+            .outStock:active, .outStock:hover {
                 background-color: #CE0101;
                 box-shadow: 0 5px #666;
                 transform: translateY(2px);
+            }
+
+            #bigPic{
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width:auto;
+                height:300px;
             }
         </style>
 
     </head>
 
-    <?php include 'header.php'; ?>
-
     <body>
         <main>
-            <h2 style="text-align: center; padding-top: 10px">Product List</h2>
             <div class="product-div" id="product">
+            <h2 class="pacifico_L" style="color: white; text-shadow: 3px 3px 5px #17202A; text-align: center; padding-top: 10px ">Our Products</h2>
+            <br>
+            <br>
                 <?php
-                    include 'validation/connectSQL.php';
+                    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
 
                     $sql = "SELECT * FROM products";
                     $result = mysqli_query($conn, $sql);
-                    $i = 0;
+                    $i = 0; 
 
                     while ($row = mysqli_fetch_row($result)) {
                         $ID[$i] = $row[0];
@@ -158,8 +203,8 @@
                         $price = number_format($row[2], 2, '.', '');
                         $path = 'productPic/'.$row[4];
 
-                        echo "<div>";
-                        echo "<img src='$path' width='auto' height='150px'/>";
+                        echo "<div class='product_tag'>";
+                        echo "<img src='$path' class='productPic' width='auto' height='150px' onclick='showpic(this.src)'>";
                         echo "<p>$row[1]</p>";
                         echo "<p>Price: RM $price</p>";
                         echo "<p>Stock: $row[3]</p>";
@@ -219,7 +264,7 @@
         <!--Add to Cart View-->
         <div id="addtoCart">
             <div class="addtoCart-container">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i><br>
+                <i class="fa fa-times" onclick="turnOff()"></i><br>
                 <form action="user/addCart.php" method="POST">
                     <h2>Add to Cart</h2>
                     <div>
@@ -236,10 +281,18 @@
             </div>
         </div>
 
-
+        <!--Show large pic-->
+        <div id="showPic">
+            <div class="addtoCart-container">
+                <i class="fa fa-times" onclick="turnOff()"></i><br>
+                <img id="bigPic"/>
+            </div>
+        </div>
+                            
         <script>
             function turnOff() {
                 document.getElementById("addtoCart").style.display = "none";
+                document.getElementById("showPic").style.display = "none";
             }
 
             function addCartView(ID, i) {
@@ -247,6 +300,11 @@
                 document.getElementById("quantity").max = i;
 
                 createCookie("productID", ID, "0.1");
+            }
+
+            function showpic(pic_src){
+                document.getElementById("showPic").style.display = "block";
+                document.getElementById("bigPic").src = pic_src;
             }
 
             // Function to create the cookie

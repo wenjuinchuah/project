@@ -6,7 +6,7 @@
     if (isset($_SESSION['loginUser'])) {
         $userID = $_SESSION['userID'];
     } else {
-        $anonymousID = $_SESSION['anonymousID'];
+        $anonymousID = $_COOKIE['anonymousID'];
     }
 
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');

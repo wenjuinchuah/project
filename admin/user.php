@@ -1,5 +1,5 @@
 <?php 
-    include 'adminHeader.php'; 
+    include_once 'adminHeader.php'; 
     
     $sql = "SELECT * FROM user ORDER BY UserID";
     $result = mysqli_query($conn, $sql);
@@ -7,7 +7,7 @@
 
 <!DOCTYPE html>
 <head>
-    <style>
+    <!--Erm why is this here <style>
         /* Form */
         #registerForm {
             /*width: calc(100% - 650px);*/
@@ -21,8 +21,17 @@
             padding: 20px;
             padding-bottom: 40px;
             position: relative;
+            top: 80px;
             border-radius: 25px;
             background-color: #ffffffe8;
+        }
+
+        #RegForm i {
+            cursor: pointer;
+        }
+
+        #RegForm i:hover {
+            opacity: 0.7;
         }
 
         /* Title */
@@ -50,6 +59,10 @@
             border-radius: 5px;
             margin: auto;
             border: 1px solid lightgray;
+        }
+
+        #RegForm #reset {
+            padding: 0;
         }
 
         #RegForm label {
@@ -93,7 +106,7 @@
         #i-password1-slash,
         #i-password2-slash {
             position: relative;
-            top: 25px;
+            top: 27px;
             color: gray;
         }
 
@@ -255,7 +268,7 @@
             left: -35px;
             content: "✖";
         }
-    </style>
+    </style> -->
 </head>
 <html>
     <body class="w3-light-grey">
@@ -271,13 +284,16 @@
             <table>
                 <tr class="table-top">
                     <th>User ID</th>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>Email</th>
                     <th>Mobile</th>
                     <th>State</th>
                     <th>Gender</th>
                     <th>Password</th>
                     <th>UserType</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 <?php while ($user = mysqli_fetch_assoc($result)) { ?>
                     <?php if ($user['UserType'] !== 'admin') { ?>
@@ -285,13 +301,18 @@
                             $user['Password'] = substr($user['Password'],0,10) . "...";
                             echo "<tr>
                                 <td>$user[UserID]</td>
-                                <td>$user[Name]</td>
+                                <td>$user[FirstName]</td>
+                                <td>$user[LastName]</td>
                                 <td>$user[Email]</td>
                                 <td>$user[Mobile]</td>
                                 <td>$user[State]</td>
                                 <td>$user[Gender]</td>
                                 <td>$user[Password]</td>
                                 <td>$user[UserType]</td>
+                                <td><button type='button' class='openEdit' name='openEdit' onclick='editUser()'>
+                                <i class='fas fa-edit'></i></button></td>
+                                <td><button type='button' class='openDelete' name='openDelete' onclick='deleteUser()'>	
+                                <i class='fa-solid fa-trash-can'></i></button></td>
                             </tr>";
                         ?>
                     <?php } ?>
@@ -311,8 +332,8 @@
     <!--Add User View-->
     <div id="addUserView">
         <div class="addUserView-container" id="registerForm">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserView()"></i>
             <form class="RegForm" id="RegForm" action="" method="POST" enctype="multipart/form-data">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserView()"></i>
                 <h2>Add New User</h2>
                 <div>
                     <label>First Name</label>
@@ -405,13 +426,179 @@
                 </div>
                 <div class="button">
                     <input type="reset" id="reset" value="Clear"></input>
-                    <input type="submit" id="submit" name="submit" value="Register"
+                    <input type="submit" id="submit" name="register" value="Register"
                         onclick="return  confirm('Do you want to register?')"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!--Edit User View-->
+    <!--
+    <div id="editUserView">
+        <div class="addUserView-container" id="registerForm">
+            <form class="RegForm" id="EditForm" action="" method="POST" enctype="multipart/form-data">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserEdit()"></i>
+                <h2>Add New User</h2>
+                <div>
+                    <label>First Name</label>
+                    <input type="text" id="editfname" name="editfname" placeholder="First Name" />
+                    <small id="fnameError">Error message</small>
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text" id="editlname" name="editlname" placeholder="Last Name" />
+                    <small id="lnameError">Error message</small>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email" id="editemail" name="editemail" placeholder="Email Address" />
+                    <small id="emailError">Error message</small>
+                </div>
+                <div>
+                    <label>Mobile</label>
+                    <div class="mobile-container">
+                        <input type="text" id="editcode" name="code" value="+60" disabled />
+                        <input type="tel" id="editmobile" name="editmobile" placeholder="Mobile Number" maxlength="10" />
+                        <small id="mobileError">Error message</small>
+                    </div>
+                </div>
+                <div>
+                    <label>Gender</label>
+                    <div class="gender-container">
+                        <input type="radio" id="editmale" name="editgender" value="Male" checked="true" />
+                        <label for="male">Male</label>
+                        <input type="radio" id="editfemale" name="editgender" value="Female" />
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <div>
+                    <label>State</label>
+                    <select name="editstate" id="editstate">
+                        <option value="state" disabled>- Select Your State-</option>
+                        <option value="Johor">Johor</option>
+                        <option value="Kedah">Kedah</option>
+                        <option value="Kelantan">Kelantan</option>
+                        <option value="Melaka">Melaka</option>
+                        <option value="Negeri Sembilan">Negeri Sembilan</option>
+                        <option value="Pahang">Pahang</option>
+                        <option value="Perak">Perak</option>
+                        <option value="Perlis">Perlis</option>
+                        <option value="Pulau Pinang">Pulau Pinang</option>
+                        <option value="Sabah">Sabah</option>
+                        <option value="Sarawak">Sarawak</option>
+                        <option value="Selangor">Selangor</option>
+                        <option value="Terengganu">Terengganu</option>
+                        <option value="federal" disabled>-Federal Territories-</option>
+                        <option value="Kuala Lumpur">Kuala Lumpur</option>
+                        <option value="Labuan">Labuan</option>
+                        <option value="Putrajaya">Putrajaya</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Password</label>
+                    <i id="i-password1" class="fa fa-eye" aria-hidden="true"
+                        onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                    <i id="i-password1-slash" class="fa fa-eye-slash" aria-hidden="true"
+                        onclick="isVisible('password1', 'i-password1', 'i-password1-slash')"></i>
+                    <div class="password-container">
+                        <input type="password" id="editpassword1" name="editpassword1" placeholder="Password" />
+                        <div id="message">
+                            <h5>Password must contain the following:</h5>
+                            <p id="capital" class="invalid">At least one <b>Uppercase [A-Z]</b></p>
+                            <p id="letter" class="invalid">At least one <b>Lowercase [a-z]</b></p>
+                            <p id="number" class="invalid">At least one <b>Number [0-9]</b></p>
+                            <p id="specialChar" class="invalid">At least one <b>Special Character</b></p>
+                            <p id="length" class="invalid">Minimum <b>Length of 6</b></p>
+                            <p id="space" class="valid">No <b>space</b></p>
+                        </div>
+                        <small id="password1Error"></small>
+                    </div>
+                </div>
+                <div>
+                    <label>Confirm Password</label>
+                    <i id="i-password2" class="fa fa-eye" aria-hidden="true"
+                        onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                    <i id="i-password2-slash" class="fa fa-eye-slash" aria-hidden="true"
+                        onclick="isVisible('password2', 'i-password2', 'i-password2-slash')"></i>
+                    <input type="password" id="editpassword2" name="editpassword2" placeholder="Confirm Password" />
+                    <small id="password2Error">Error message</small>
+                </div>
+                <div class="button">
+                    <input type="submit" id="edit" name="edit" value="Edit User"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+    -->
+
+    <!--Delete view -->
+    <div class='addEditView' id="deleteUserView">
+        <div class="addProductView-container">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserDelete()"></i>
+            <form action="" method="POST">
+                <input type="hidden" id="deleteID" name="deleteID">
+                <h2>Delete User</h2>
+                <div style="text-align: center">
+                    <i class="fa fa-exclamation-circle" style="font-size:250px"></i>             
+                </div>
+                <div style="text-align:center;">
+                    <h4>Data can't be restored once deleted. </h4>
+                    <h4>Are you sure?</h4>
+                 </div>
+                <div class="button">
+                    <input type="submit" id="deleteUser" name="deleteUser" value="Confirm"></input>
                 </div>
             </form>
         </div>
     </div>
 
     <script src="dashboardScript.js"></script>
+    <!--JS Libraries-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+    <script>
+         //Edit
+         /*
+         $(document).ready(function () {
+            $('.openEdit').on('click', function () { 
+                //retrieve data from table
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+                //to retrieve image source
+                var img = $tr.find("img").attr('src');
+                
+                //write data to console
+                console.log(data,img);
+
+                //set the value for respective attributes
+                $('#editfname').val(data[1]);
+                $('#editemail').val(data[1]);
+                $('#oriPic').val(img);
+                $('#editPrice').val(data[3]);
+                $('#editStock').val(data[4].trim());
+            });
+        });
+        */
+
+        //Delete
+        $(document).ready(function () {
+            $('.openDelete').on('click', function () { 
+                //retrieve data from table
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+                //write data to console
+                console.log(data);
+
+                //set the id to delete
+                $('#deleteID').val(data[0]);
+            });
+        });
+    </script>
     </body>
 </html>

@@ -1,3 +1,5 @@
+<!--The gardenia order, order details, and transaction do not sync, clear all to remake?-->
+<!-- Can, just delete all database, leave table user and products enough, then try n see works onot -->
 <?php include 'adminHeader.php'; ?>
 
 <!DOCTYPE html>
@@ -18,26 +20,28 @@
                     <th>Picture</th>
                     <th>Price (RM)</th>
                     <th>Stock</th>
+                    <th>Sales</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 <?php while ($column = mysqli_fetch_array($productList)) { ?>
                     <?php 
                         $price = number_format($column[2], 2, '.', '');
-                        echo "<tr>";
+                        echo "<tr class='product-data'>";
                         echo "<td>$column[0]</td>";
                         echo "<td>$column[1]</td>";
-                        echo "<td><img src='../productPic/" . $column[4] . "' width='auto' height='75px;'</td>";
+                        echo "<td><img src='../productPic/" . $column[4] . "' width='auto' height='75px;'></td>";
                         echo "<td>$price</td>";
                         echo "<td>
                                 <i class='fa fa-minus' class='button-quantity' onclick='minusStock($column[0])'></i>
                                 <p style='display: inline-block; padding: 0; margin: 0;' id='product$column[0]'>$column[3]</p>
                                 <i class='fa fa-plus' class='button-quantity' onclick='addStock($column[0])'></i>
                             </td>";
-                        echo '<td><button type="button" class="openEdit" name="openEdit" onclick="editProduct()">Edit</button>
-                              </td>';
-                        echo '<td><button type="button" class="openDelete" name="openDelete" onclick="deleteProduct()">Delete</button>
-                              </td>';
+                        echo "<td>$column[5]</td>";
+                        echo '<td><button type="button" class="openEdit" name="openEdit" onclick="editProduct()">
+                              <i class="fas fa-edit"></i></button></td>';
+                        echo '<td><button type="button" class="openDelete" name="openDelete" onclick="deleteProduct()">	
+                              <i class="fa-solid fa-trash-can"></i></button></td>';
                         echo "</tr>"; 
                     ?>
                 <?php } ?>
@@ -103,6 +107,7 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 <h2>Edit Product</h2>
                 <input type="hidden" id="editID" name="editID">
+                <input type="hidden" id="oriPic" name="oriPic"> 
                 <div>
                     <label>Product Name</label>
                     <input type="text" id="editName" name="editName" placeholder="Product Name" />
@@ -149,8 +154,9 @@
                 <div style="text-align: center">
                     <i class="fa fa-exclamation-circle" style="font-size:250px"></i>             
                 </div>
-                <div>
-                    <h3>The data can't be restored once deleted, are you sure?</h3>
+                <div style="text-align:center;">
+                    <h4>Data can't be restored once deleted. </h4>
+                    <h4>Are you sure?</h4>
                  </div>
                 <div class="button">
                     <input type="submit" id="delete" name="delete" value="Confirm"></input>
@@ -196,13 +202,16 @@
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
+                //to retrieve image source
+                var img = $tr.find("img").attr('src');
+                
                 //write data to console
-                console.log(data);
+                console.log(data,img);
 
                 //set the value for respective attributes
                 $('#editID').val(data[0]);
                 $('#editName').val(data[1]);
-                $('#editPicture').val(data[2]);
+                $('#oriPic').val(img);
                 $('#editPrice').val(data[3]);
                 $('#editStock').val(data[4].trim());
             });
@@ -219,7 +228,7 @@
                 //write data to console
                 console.log(data);
 
-                //set the value for respective attributes
+                //set the id to delete
                 $('#deleteID').val(data[0]);
             });
         });

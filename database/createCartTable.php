@@ -3,17 +3,12 @@
         $loginUsername = $_SESSION['loginUser'];
 
         //get userID
-        $sql = "SELECT * FROM user WHERE Email = '$loginUsername'";
-        if ($result = mysqli_query($conn, $sql)) {
-            $userDetails = mysqli_fetch_object($result);
-            $userID = $userDetails->UserID;
-            $userType = $userDetails->UserType;
-            $_SESSION['userType'] = $userType;
-            $_SESSION['userID'] = $userID;
-        }
+        $userType = $_SESSION['role'];
+        $userID = $_SESSION['userID'];
+
     } else {
         $userType = '';
-        $_SESSION['userType'] = $userType;
+        $_SESSION['role'] = $userType;
     }
 
     //try connecting gardenia_shoppingcart database
@@ -31,11 +26,16 @@
             $result = mysqli_query($conn, $sql);
         } else if ($userType == '') {
             $i = 1;
-            $isFound = false;
-            $isSet = false;
-
-            if (isset($_SESSION['anonymousID'])) {
-                $isSet = true;
+            if (isset($_COOKIE['anonymousID'])) {
+                $anonymousID = $_COOKIE['anonymousID'];
+                $sql = "SELECT * FROM anonymous_$anonymousID";
+                if ($result = mysqli_query($conn, $sql)) {
+                    $isFound = true;
+                } else {
+                    $isFound = false;
+                }
+            } else {
+                $isFound = false;
             }
 
             while (!$isFound) {
@@ -43,15 +43,17 @@
                 $sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'anonymous_$i'";
                 if ($result = mysqli_query($conn, $sql)) {
                     $row = mysqli_num_rows($result);
-                    if ($row == 0 || $isSet == true) {
+                    if ($row == 0) {
                         $sql = "CREATE TABLE anonymous_$i (
                             ProductID INT(11) NOT NULL,
                             ProductName VARCHAR(100) NOT NULL,
                             Price FLOAT NOT NULL,
-                            Quantity INT(11) NOT NULL
+                            Quantity INT(11) NOT NULL,
+                            CartTimestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
                         )";
                         $result = mysqli_query($conn, $sql);
                         $isFound = true;
+                        setcookie("anonymousID", $i);
                         $_SESSION['anonymousID'] = $i;
                     } else {
                         $i++;

@@ -1,4 +1,6 @@
 <?php
+    include 'connectSQL.php';
+
     if(!isset($_SESSION)) { 
         session_start(); 
     }
@@ -24,9 +26,17 @@
         if (isset($_POST['submit'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
-    
+
+            $sql = "SELECT Email FROM user WHERE Email = '$username'";
+            $result = mysqli_query($conn,$sql);
+            $row = mysqli_num_rows($result);
+
+            if($row == 0){
+                $nameError = "Email does not exist";
+                $showError = "visible";
+            }
             if (empty($username)) {
-                $nameError = "Username cannot be blank!";
+                $nameError = "Email cannot be blank!";
                 $showError = 'visible';
             }
             if (empty($password)) {
@@ -35,6 +45,7 @@
             }
             if (empty($nameError) && empty($passwordError)) {
                 include 'login.php';
+
                 $username = $password = '';
                 //If found, $count == 1
                 if ($count == 1) {

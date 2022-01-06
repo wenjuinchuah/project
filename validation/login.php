@@ -1,6 +1,5 @@
 <?php
     ob_start();
-    include 'connectSQL.php';
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
         $usernameData = mysqli_real_escape_string($conn,$_POST['username']);
@@ -24,13 +23,16 @@
             }
 
             //Get user role
-            $role = mysqli_fetch_assoc($result);
-            $_SESSION['role'] = $role['UserType'];
+            $user = mysqli_fetch_assoc($result);
 
             //If admin then goto admin dashboard
-            if ($role['UserType'] == 'admin') {
-                header('Location: ./admin/dashboard.php');
+            if ($user['UserType'] == 'admin') {
+                header('Location: ../project/admin/dashboard.php');
             }
+
+            $_SESSION['role'] = $user['UserType'];
+            $_SESSION['userID'] = $user['UserID'];
+            $_SESSION['name'] = $user['FirstName'].$user['LastName'];
         } else {
             $count = 0;
         }

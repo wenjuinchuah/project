@@ -1,8 +1,53 @@
 <?php
+    session_start();
     include 'validation/loginValidation.php';
     include 'validation/connectSQL.php';
     include 'database/createCartDb.php';
     include 'database/createOrderDb.php';
+    if ($_SESSION['isLogin'] === true) {
+        if (isset($_COOKIE['anonymousID'])) {
+            $anonymousID = $_COOKIE['anonymousID'];
+            $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
+            $sql = "SELECT * FROM anonymous_$anonymousID";
+            $result = mysqli_query($conn, $sql);
+            $anonymousCart = mysqli_fetch_assoc($result);
+
+            $userID = $_SESSION['userID'];
+            $sql = "SELECT * FROM user_$userID";
+            echo $userID;
+
+            $sql = "SELECT pic_path FROM user WHERE Email='$loginUsername'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_row($result);
+
+            //if NULL set default
+            if(empty($row[0])){
+                //$path = "../src/icon.png";
+                $path = "https://p.kindpng.com/picc/s/105-1055656_account-user-profile-avatar-avatar-user-profile-icon.png";
+            }else{
+                $path = "../userpic/".$row[0];
+            }
+        }
+    }
+    //session_destroy();      
+    
+    //is there a reason for this to be here, cuz if destroy session here everytime logged-in user go product page, they get "disconnected"
+    //cus there are session_start() everywhere and error “session_start(): Ignoring session_start() because a session is already active will pop out
+    //or can do 
+
+    // if(!isset($_SESSION)) { 
+    //   session_start(); 
+    // } 
+
+    //so if there is a session started then it wont run session_start() again
+    if (isset($_SESSION['userID'])) {
+        $userID = $_SESSION['userID'];
+        
+        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
+        $sql = "SELECT FirstName, pic_path FROM user WHERE UserID = $userID";
+        $result = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_assoc($result);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +64,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <style>
         small {
@@ -74,9 +119,19 @@
                 </div>
                 <div class="signIn" id="signIn">
                     <button class="dropbtn">
-                        <?php if ($isLogin == true) { ?>
-                        <p>Hi, <?php echo $loginUsername?></p>
-                        <?php } else { ?><p>Sign In</p><?php } ?>
+                        <?php if ($isLogin == true) { 
+                            echo "<div style='display: flex'>";
+                            echo "<p style='padding-top: 7px'>Hi, ".$row['FirstName']."!</p>";
+
+                            if(empty($row['pic_path'])){
+                                //$path = "../src/icon.png";
+                                $path = "https://p.kindpng.com/picc/s/105-1055656_account-user-profile-avatar-avatar-user-profile-icon.png";
+                            }else{
+                                $path = "userpic/".$row['pic_path'];
+                            }
+                            echo "<img src='$path' style='border-radius: 50%; border:2px solid #110971; height: 30px; width: 30px; left: 5px; top: -1px'/>";
+                            echo "</div>";
+                         } else { ?><p>Sign In</p><?php } ?>
                     </button>
                     <div class="dropdown-signIn" id="dropdown-signIn">
                         <form id="loginValidation" action="" method="POST">

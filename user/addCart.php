@@ -4,8 +4,7 @@
     include '../validation/connectSQL.php';
     include '../database/createCartTable.php';
     
-    $userType = $_SESSION['userType'];
-    $anonymousID = $_SESSION['anonymousID'];
+    $userType = $_SESSION['role'];
 
     $productID = $_COOKIE['productID'];
     if (isset($_POST['quantity'])) {
@@ -42,27 +41,30 @@
                 }
             }
         } else if ($userType == '') {
-            $sql = "SELECT Quantity FROM anonymous_$anonymousID WHERE ProductID = '$productID'";
+            if (isset($_COOKIE['anonymousID'])) {
+                $anonymousID = $_COOKIE['anonymousID'];
 
-            if ($result = mysqli_query($conn, $sql)) {
-                $row = mysqli_num_rows($result);
-                if ($row == 0) {
-                    $sql = "INSERT INTO anonymous_$anonymousID (ProductID, ProductName, Price, Quantity)
-                            VALUES ('$productID', '$productName', '$productPrice', '$quantity')";
-                    $result = mysqli_query($conn, $sql);
-                } else {
-                    $cartDetails = mysqli_fetch_object($result);
-                    if (($quantity + $cartDetails->Quantity) <= $productStock) {
-                        $quantity += $cartDetails->Quantity;
-                        $sql = "UPDATE anonymous_$anonymousID SET Quantity = '$quantity' WHERE ProductID = '$productID'";
+                $sql = "SELECT Quantity FROM anonymous_$anonymousID WHERE ProductID = '$productID'";
+
+                if ($result = mysqli_query($conn, $sql)) {
+                    $row = mysqli_num_rows($result);
+                    if ($row == 0) {
+                        $sql = "INSERT INTO anonymous_$anonymousID (ProductID, ProductName, Price, Quantity)
+                                VALUES ('$productID', '$productName', '$productPrice', '$quantity')";
                         $result = mysqli_query($conn, $sql);
                     } else {
-                        echo 'Add Failed! Reached max stock of current product';
+                        $cartDetails = mysqli_fetch_object($result);
+                        if (($quantity + $cartDetails->Quantity) <= $productStock) {
+                            $quantity += $cartDetails->Quantity;
+                            $sql = "UPDATE anonymous_$anonymousID SET Quantity = '$quantity' WHERE ProductID = '$productID'";
+                            $result = mysqli_query($conn, $sql);
+                        } else {
+                            echo 'Add Failed! Reached max stock of current product';
+                        }
                     }
                 }
             }
         }
-        
     }
     header('Location: ../products.php');
     ob_end_flush();

@@ -14,13 +14,21 @@
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
     $sql = "SELECT * FROM user";
     $result = mysqli_query($conn, $sql);
-    $userCount = mysqli_num_rows($result) - 1;
+    if ($result) {
+        $userCount = mysqli_num_rows($result) - 1;
+    } else {
+        $userCount = 0;
+    }
     $_SESSION['userCount'] = $userCount;
 
     //Get transaction amount
     $sql = "SELECT * FROM transaction";
     $result = mysqli_query($conn, $sql);
-    $transactionCount = mysqli_num_rows($result);
+    if ($result) {
+        $transactionCount = mysqli_num_rows($result);
+    } else {
+        $transactionCount = 0;
+    }
     $_SESSION['transactionCount'] = $transactionCount;
 
     //Prevent normal user to visit admin dashboard
@@ -97,10 +105,14 @@
         $productName = $productPrice = $productStock = $productPicture = "";
         $productList = mysqli_query($conn, $productsql);
     }
-    //edit
+    //edit product
     include "editProduct.php";
-    //delete
+    //delete product
     include "deleteProduct.php";
+    //edit user
+
+    //delete user
+    include "deleteUser.php";
     mysqli_free_result($result);
 
 
@@ -116,9 +128,10 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="src/dashboardStyle.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .w3-quarter:hover {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+   
+   <style>
+        .w3-col:hover {
             cursor: pointer;
             opacity: 0.8;
         }
@@ -161,8 +174,8 @@
         </header>
 
         <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-quarter" onclick="window.location.href='dashboard.php'">
-                <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-col" style="width:20%;" onclick="window.location.href='dashboard.php'">
+                <div class="w3-container w3-red w3-padding-16 w3-round-xlarge">
                     <div class="w3-left"><i class="fa fa-list w3-xxxlarge"></i></div>
                     <div class="w3-right">
                         <h3><?php echo $_SESSION['productCount'] ?></h3>
@@ -171,8 +184,8 @@
                     <h4>Products</h4>
                 </div>
             </div>
-            <div class="w3-quarter" onclick="window.location.href='order.php'">
-                <div class="w3-container w3-blue w3-padding-16">
+            <div class="w3-col" style="width:20%;" onclick="window.location.href='order.php'">
+                <div class="w3-container w3-blue w3-padding-16 w3-round-xlarge">
                     <div class="w3-left"><i class="fa fa-shopping-bag w3-xxxlarge"></i></div>
                     <div class="w3-right">
                         <h3><?php echo $_SESSION['orderCount'] ?></h3>
@@ -181,8 +194,8 @@
                     <h4>Orders</h4>
                 </div>
             </div>
-            <div class="w3-quarter" onclick="window.location.href='transaction.php'">
-                <div class="w3-container w3-teal w3-padding-16">
+            <div class="w3-col" style="width:20%;" onclick="window.location.href='transaction.php'">
+                <div class="w3-container w3-teal w3-padding-16 w3-round-xlarge">
                     <div class="w3-left"><i class="fa fa-credit-card w3-xxxlarge"></i></div>
                     <div class="w3-right">
                         <h3><?php echo $_SESSION['transactionCount'] ?></h3>
@@ -191,14 +204,23 @@
                     <h4>Transaction</h4>
                 </div>
             </div>
-            <div class="w3-quarter" onclick="window.location.href='user.php'">
-                <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-col" style="width:20%;" onclick="window.location.href='user.php'">
+                <div class="w3-container w3-orange w3-text-white w3-padding-16 w3-round-xlarge">
                     <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                     <div class="w3-right">
                         <h3><?php echo $_SESSION['userCount'] ?></h3>
                     </div>
                     <div class="w3-clear"></div>
                     <h4>Users</h4>
+                </div>
+            </div>
+            <!--data visualization-->
+            <div class="w3-col" style="width:20%;" onclick="window.location.href='analytic.php'">
+                <div class="w3-container w3-indigo w3-text-white w3-padding-16 w3-round-xlarge">
+                    <div class="w3-left"><i class="fa fa-bar-chart w3-xxxlarge"></i></div>
+                    <div class="w3-right"><h3 style="visibility:hidden;">0</h3></div>
+                    <div class="w3-clear"></div>
+                    <h4>Analytics</h4>
                 </div>
             </div>
         </div>

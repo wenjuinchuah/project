@@ -11,14 +11,14 @@ function formValidation() {
     function errorHandle(idName, message) {
         document.getElementById(idName).style.borderColor = "red";
         document.getElementById(idName + "Error").innerHTML = message;
-        document.getElementById(idName + "Error").style.display = "block";
+        document.getElementById(idName + "Error").style.visibility = "visible";
         document.getElementById(idName).focus();
     }
 
     /* CorrectHandle */
     function correctHandle(idName) {
         document.getElementById(idName).style.borderColor = "green";
-        document.getElementById(idName + "Error").style.display = "none";
+        document.getElementById(idName + "Error").style.visibility = "hidden";
     }
 
     /* EmailHandle */
@@ -185,11 +185,13 @@ var space = document.getElementById("space");
 // When the user clicks on the password field, show the message box
 myInput.onfocus = function() {
     message.style.display = "block";
+    error.style.visibility = "hidden";
 }
 
 // When the user clicks outside of the password field, hide the message box
 myInput.onblur = function() {
     message.style.display = "none";
+    error.style.visibility = "visible";
 }
 
 // When the user starts to type something inside the password field
@@ -231,53 +233,4 @@ myInput.onkeyup = function() {
         length.classList.remove("valid");
         length.classList.add("invalid");
     }
-
-    
-
-
-    /*// Validate lowercase letters
-    if (myInput.value.match(lowerCaseLetters)) {  
-        letter.classList.remove("invalid");
-        letter.classList.add("valid");
-    } else {
-        letter.classList.remove("valid");
-        letter.classList.add("invalid");
-    }
-    
-    // Validate capital letters
-    if (myInput.value.match(upperCaseLetters)) {  
-        capital.classList.remove("invalid");
-        capital.classList.add("valid");
-    } else {
-        capital.classList.remove("valid");
-        capital.classList.add("invalid");
-    }
-
-    // Validate numbers
-    var numbers = /[0-9]/g;
-    if (myInput.value.match(numbers)) {  
-        number.classList.remove("invalid");
-        number.classList.add("valid");
-    } else {
-        number.classList.remove("valid");
-        number.classList.add("invalid");
-    }
-    
-    //Validate special character
-    if (myInput.value.match(specialCharRegex)) {
-        specialChar.classList.remove("invalid");
-        specialChar.classList.add("valid");
-    } else {
-        specialChar.classList.remove("valid");
-        specialChar.classList.add("invalid");
-    }
-
-    //Validate space
-    if (!myInput.value.match(space)) {
-        space.classList.remove("invalid");
-        space.classList.add("valid");
-    } else {
-        space.classList.remove("valid");
-        space.classList.add("invalid");
-    }*/
 }

@@ -3,11 +3,19 @@
     session_start();
     include '../validation/connectSQL.php';
 
-    //Remove Session Created
+    //Remove COOKIE Created
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
-    $anonymousID = $_SESSION['anonymousID'];
+    $anonymousID = $_COOKIE['anonymousID'];
     $sql = "DROP TABLE anonymous_$anonymousID";
     $result = mysqli_query($conn, $sql);
+    
+    if (isset($_COOKIE['anonymousID'])) {
+        unset($_COOKIE['anonymousID']);
+    }
+    
+    if (isset($_COOKIE['productID'])) {
+        unset($_COOKIE['productID']);
+    }
 
     header("location: ../index.php");
     session_reset();
