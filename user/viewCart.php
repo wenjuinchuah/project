@@ -346,12 +346,37 @@
             cursor:pointer;
         }
 
-        #payment-#submitButton {
-            margin: 10px 0;
+        #payment-container h2{
+            padding: 10px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #paymentMethodView #submit {
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: medium;
+            color:white;
+            background-color:#291ea8;
+            border:none;
+            width:100%;
+            margin: 5px auto;
             padding: 5px;
             text-align: center;
         }
 
+        #paymentMethodView i:hover, #paymentMethodView #submit:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        #methods div{
+            font-size:large;
+            display:inline-block;
+            margin: 20px auto 20px 40px;
+        }
+
+        
     </style>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -523,13 +548,15 @@
             <i class="fa fa-times" onclick="turnOff()"></i><br>
             <form action="../validation/paymentValidation.php" method="POST">
             <h2>Select Payment Method</h2>
-            <div>
-                <input type="radio" name="paymentMethod" id="cashOnDelivery" checked="true" value="1"></input>
-                <label for="cashOnDelivery">Cash On Delivery</label>
-            </div>
-            <div>
-                <input type="radio" name="paymentMethod" id="creditCard" value="2"></input>
-                <label for="creditCard">Credit Card</label>
+            <div id="methods">
+                <div>
+                    <input type="radio" name="paymentMethod" id="cashOnDelivery" checked="true" value="1"></input>
+                    <label for="cashOnDelivery">Cash On Delivery</label>
+                </div>
+                <div>
+                    <input type="radio" name="paymentMethod" id="creditCard" value="2"></input>
+                    <label for="creditCard">Credit Card</label>
+                </div>
             </div>
             <div id="submitButton">
                 <input type="submit" id="submit" name="submitPaymentMethod" value="Continue"></input>

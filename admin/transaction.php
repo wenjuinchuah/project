@@ -53,7 +53,7 @@
                 ?>
             </table>
             <div style="display:flex; justify-content: center; margin-top: 20px;">
-                <button class="openEdit" style="font-size: larger; font-weight: bold;">Generate Report</button>
+                <button class="openEdit" style="font-size: larger; font-weight: bold;"><a style="text-decoration: none" href="generatePdf.php">Generate Report</a></button>
             </div>
         </div>
         

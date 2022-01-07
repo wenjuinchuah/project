@@ -1,18 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Gardenia Bakeries (KL) Sdn Bhd</title>
-        <link rel="stylesheet" href="src/style.css">
-        <link rel="icon" href="src/icon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-
     <?php include 'header.php';  ?>
 
     <body>

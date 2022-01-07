@@ -98,7 +98,7 @@
             .addtoCart-container h2 {
                 padding: 10px 0;
                 text-align: center;
-                font-weight: bold;
+                font-weight: bold;  
             }
 
             .addtoCart-container input {
