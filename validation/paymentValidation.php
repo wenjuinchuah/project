@@ -5,6 +5,11 @@
     $total = $_SESSION['total'];
     $total = number_format($total, 2, '.', '');
 
+    //Navigation record
+    if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+        array_push($_SESSION['navigation'], array("Payment Page" => date("Y-m-d H:i:s")));
+    }
+
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
     $sql = "SELECT * FROM user_$userID ORDER BY ProductID";
     $result = mysqli_query($conn, $sql);
@@ -24,10 +29,16 @@
         $name = $_POST['name'];
         $email = $_POST['email'];
         $address = $_POST['address'];
-        $name = $_POST['name'];
-        $name = $_POST['name'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $zip = $_POST['zip'];
 
         $_SESSION['address'] = $address;
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+        $_SESSION['state'] = $state;
+        $_SESSION['city'] = $city;
+        $_SESSION['zip'] = $zip;
 
         if (isset($_POST['cardnumber'])) {
             $cardno = $_POST['cardnumber'];
@@ -36,10 +47,10 @@
             }
         }
         
-         
         include '../user/addOrder.php';
         include '../user/addTransaction.php';
-        include '../user/sendEmail.php';
+        include '../user/sendOrderDetails.php';
+        include '../user/sendInvoice.php';
         include '../user/removeCart.php';
         header('location:../index.php');
         ob_end_flush();
@@ -187,7 +198,7 @@
                             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
                             <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
                             <label for="city"><i class="fa fa-institution"></i> City</label>
-                            <input type="text" id="city" name="city" placeholder="New York">
+                            <input type="text" id="city" name="city" placeholder="Kuching">
 
                             <div class="row">
                                 <div class="col-50">
@@ -272,6 +283,7 @@
                         }
                     ?>
                     <input type="submit" id="submit" name="submit" value="Continue to checkout" class="btn">
+                    <a href="../index.php">Cancel</a>
                 </form>
                 </div>
             </div>

@@ -7,18 +7,10 @@ $paymentMethod = $_SESSION['paymentMethod'];
 
 $sender = 'aiyoyoteam@gmail.com';
 $recipient = $email;
-//$recipient = '74487@siswa.unimas.my';
 
 $subject = "Your Order From Gardenia Has Been Confirmed!";
 $headers = 'From:' . $sender . "\r\n";
-//$headers .= 'Cc: 75590@siswa.unimas.my' . "\r\n";
-//$headers .= 'Cc: 75107@siswa.unimas.my' . "\r\n";
-//$headers .= 'Cc: 75162@siswa.unimas.my' . "\r\n";
-//$headers .= 'Cc: 74487@siswa.unimas.my' . "\r\n";
 $headers .= "Content-type: text/html";
-
-//apparently need to use table to position stuff
-//$message = "hskfljsld";
 
 $message = "
 <html>
@@ -41,6 +33,11 @@ $message = "
             table{
                 width: 100%;
                 border-collapse: collapse;               
+            }
+
+            .header {
+                background-color: #fff;
+                opacity: 0.7;
             }
 
             .center{
@@ -107,7 +104,7 @@ $message = "
 
     <body mso-line-height-rule: exactly;>
     <div class='rb_box'>
-        <table>
+        <table id='header'>
             <tr>
             <td colspan= 3 class='center' ><img src='https://seeklogo.com/images/G/gardenia-logo-AB56A38F6F-seeklogo.com.png' alt='failed'/></td>
             </tr>

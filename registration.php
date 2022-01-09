@@ -5,16 +5,6 @@
 
 <head>
     <title>User Registration</title>
-    <link rel="stylesheet" href="src/style.css">
-    <link rel="icon" href="src/icon.png">
-
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/windows/32/000000/edit-user-male--v1.png">
-    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         /* View Container */
@@ -105,7 +95,7 @@
 
         #regform #i-password1, #regform #i-password2, #regform #i-password1-slash, #regform #i-password2-slash {
             position: relative;
-            top: 34px;
+            top: 36px;
             color: gray;
         }
 
@@ -114,15 +104,15 @@
         }
 
         #regform #i-password1-slash {
-            left: 200px;
+            left: 196.5px;
         } 
 
         #regform #i-password2 {
-            left: 158px;
+            left: 159px;
         } 
         
         #regform #i-password2-slash {
-            left: 138px;
+            left: 135.5px;
         }
 
         #regform #i-password1:hover, #regform #i-password2:hover, #regform #i-password1-slash:hover, #regform #i-password2-slash:hover {

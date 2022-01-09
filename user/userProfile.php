@@ -1,4 +1,9 @@
-<?php include 'userHeader.php'; ?>
+<?php include 'userHeader.php'; 
+    //Navigation record
+    if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+        array_push($_SESSION['navigation'], array("User Profile" => date("Y-m-d H:i:s")));
+    }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -15,8 +20,7 @@
                 box-shadow: 3px 3px 10px #17202A;
                 
                 /*background-image: url("https://i.pinimg.com/564x/62/f5/a5/62f5a5854bb2febeeb3944b378a40781.jpg");*/
-                background-image: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg");
-
+                background-image: url("../src/colorful-bg.jpg");
                 /* Center and scale the image nicely */
                 background-position: center;
                 background-repeat: no-repeat;
@@ -296,7 +300,7 @@
                 echo "<div style='margin: 5px 0'><span style='margin: 0 5px'>Current Password</span><input name='currentPassword' type='password'/></div>";
                 echo "<div id='error4' style='color:darkred;' ></div>";
                 if(isset($_SESSION['validation_currentPassword'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_currentPassword]</p>"; };
-                echo "<div style='margin: 5px 0'><span style='margin: 0 5px 0 27px'>New Password</span><input name='password' type='password'/></div>";
+                echo "<div style='margin: 5px 0'><span style='margin: 0 5px 0 27px'>New Password</span><input name='newpassword' type='password'/></div>";
                 echo "<div style='margin: 5px 0'><span style='margin-right: 5px'>Reenter Password</span><input name='confirmpassword' type='password'/></div>";
                 echo "<br><div id='error5' style='color:darkred;' ></div>";
                 if(isset($_SESSION['validation_password'])) { echo "<br><p style='color:darkred;' > $_SESSION[validation_password]</p><br>"; }; //for php validation

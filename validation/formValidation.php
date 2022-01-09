@@ -1,7 +1,7 @@
 <?php
-
     include '../user/userHeader.php';
 
+    ob_start();
     //Hide Undefine Message
     error_reporting(0);
 
@@ -96,7 +96,16 @@
             $emailError = 'Please enter a valid email!';
             $showError = errorHandle('$email', $submit);
         } else {
-            $showError = '';
+            include '../validation/connectSQL.php';
+            $sql = "SELECT * FROM user WHERE Email = '$email'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_num_rows($result);
+            if ($row !== 0) {
+                $emailError = 'Email exists, Please try another email!';
+                $showError = errorHandle('$email', $submit);
+            } else {
+                $showError = '';
+            }
         }
     };
 
@@ -197,9 +206,10 @@
             echo "Username exists!";
         }
         
-        mysqli_free_result($result);
-        $conn->close();
+        header('Location: ../index.php');
+        ob_end_flush();
     };
+
 ?>
 
 <!DOCTYPE html>
@@ -426,7 +436,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            visibility: <?=$successVisibility?>;
+            visibility: visible;
         }
 
         .success-container {
@@ -439,6 +449,7 @@
         }
 
         .success-container h2 {
+            text-align: center;
             padding: 20px 0;
         }
 
@@ -465,6 +476,7 @@
             font-size: large;
             text-align: center;
             margin: auto;
+            padding: 5px 0;
             width: 95%;
         }
 

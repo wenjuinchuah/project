@@ -63,20 +63,17 @@ table tr:nth-child(even) {
 }
 
 /*Add Edit Product*/
-.addEditView, #addUserView, #editOrderStatusView {
+.addEditView, #addUserView, #editUserView, #editOrderStatusView {
     background-color: #d3d3d3a0;
     margin: 0;
     padding: 0;
     position: fixed;
     top: 0;
     width: 100%;
-    height: 100%;
-    align-content: center;
-    justify-items: center;
     display: none;
 }
 
-#addUserView {
+#addUserView, #editUserView {
     position: absolute !important;
 }
 
@@ -112,7 +109,7 @@ table tr:nth-child(even) {
     font-weight: normal;
 }
 
-.addProductView-container label, .addUserView-container label {
+.addProductView-container label, .userView-container label {
     font-weight: bold;
 }
 
@@ -194,4 +191,217 @@ table tr:nth-child(even) {
     background-color: rgb(197, 34, 34);
     box-shadow: 0 5px #666;
     transform: translateY(2px);
+}
+
+.userView-container {
+    justify-content: center;
+    align-content: center;
+}
+
+/* Form */
+.regform {
+    width: 400px;
+    margin: 100px auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/* Title */
+.regform h2 {
+    text-align: center;
+    padding: 10px;
+}
+
+.regform div {
+    margin: 15px 10px;
+    padding-bottom: 10px;
+}
+
+.regform label {
+    padding: 10px 0;
+}
+
+.regform small {
+    font-size: 12px;
+    padding-left: 5px;
+    color: red;
+    position: absolute;
+    visibility: hidden;
+}
+
+.regform input, .regform select {
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    background-color: #f1f1f1;
+}
+
+.regform i:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+/* Mobile */
+.regform .mobile-container {
+    margin: 0;
+    padding: 0;
+}
+
+.regform .mobile-container label {
+    display: block;
+}
+
+.regform #code, .regform #editcode {
+    display: inline-block;
+    width: 48px;
+    pointer-events: none;
+}
+
+.regform #mobile, .regform #editmobile {
+    display: inline-block;
+    width: 308px;
+}
+
+.regform #mobileError {
+    display: block;
+}
+
+/* Password */
+.regform .password-container {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.regform #i-password1, .regform #i-password2, .regform #i-password1-slash, .regform #i-password2-slash,
+.regform #i-password1-edit, .regform #i-password2-edit, .regform #i-password1-slash-edit, .regform #i-password2-slash-edit {
+    position: relative;
+    top: 36px;
+    color: gray;
+}
+
+.regform #i-password1, .regform #i-password1-edit {
+    left: 265px;
+}
+
+.regform #i-password1-slash, .regform #i-password1-slash-edit {
+    left: 243.5px;
+} 
+
+.regform #i-password2, .regform #i-password2-edit {
+    left: 206px;
+    top: 37px;
+} 
+
+.regform #i-password2-slash, .regform #i-password2-slash-edit {
+    left: 184.5px;
+    top: 37px;
+}
+
+.regform #i-password1:hover, .regform #i-password2:hover, .regform #i-password1-slash:hover, .regform #i-password2-slash:hover,
+.regform #i-password1-edit:hover, .regform #i-password2-edit:hover, .regform #i-password1-slash-edit:hover, .regform #i-password2-slash-edit:hover {
+    cursor: pointer;
+    color: #000;
+}
+
+.regform #i-password1-slash, .regform #i-password2-slash, .regform #i-password1-slash-edit, .regform #i-password2-slash-edit {
+    visibility: hidden;
+}
+
+/* Gender */
+.regform .gender-container {
+    margin: 0;
+    padding: 0;
+}
+
+.regform .gender-container input {
+    display: inline-block;
+    width: 15px;
+}
+
+.regform .gender-container label, .checkbox-container label {
+    position: relative;
+    bottom: 9px;
+    margin-right: 10px;
+}
+
+/* State */
+.regform select {
+    width: 100%;
+    height: 32px;
+
+    /* Removes the default <select> styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Positions background arrow image */
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAh0lEQVQ4T93TMQrCUAzG8V9x8QziiYSuXdzFC7h4AcELOPQAdXYovZCHEATlgQV5GFTe1ozJlz/kS1IpjKqw3wQBVyy++JI0y1GTe7DCBbMAckeNIQKk/BanALBB+16LtnDELoMcsM/BESDlz2heDR3WePwKSLo5eoxz3z6NNcFD+vu3ij14Aqz/DxGbKB7CAAAAAElFTkSuQmCC');
+    background-repeat: no-repeat;
+    background-position: 335px center;
+}
+
+/* t&c */
+.regform .checkbox-container {
+   margin-top: 0;
+}
+
+.regform .checkbox-container input{
+    display: inline-block;
+    width: 15px;
+}
+
+.regform .checkbox-container label {
+    font-size: 15px;
+}
+
+.regform .checkbox-container u {
+    cursor: pointer;
+    color: purple;
+}
+
+.regform .checkbox-container small {
+    display: block;
+}
+
+/* Button*/
+.regform .button {
+    margin: 15px 10px;
+}
+
+.regform .button input {
+    display: inline-block;
+    height: 32px;
+}
+
+.regform #reset {
+    width: 20%;
+    font-weight: bold;
+    background-color: rgb(230, 89, 84);
+    color: #fff;
+}
+
+.regform #submit, .regform #edit {
+    width: 78.6%;
+    background-color: #2b323d;
+    color: #fff;
+    font-weight: bold;
+}
+
+.regform .resetPassword {
+    width: calc(40% - 2px) !important;
+}
+
+.regform #edit {
+    width: calc(60% - 2px);
+}
+
+.regform #submit:hover, .regform #edit:hover, .regform #reset:hover {
+    opacity: 70%;
+    cursor: pointer;
 }

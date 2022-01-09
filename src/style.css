@@ -9,7 +9,7 @@ body {
 
 header {
     background: linear-gradient(#CE0101 5%, white 5%, white 10%, #110971 10%, #110971 15%, white 15%);
-    border-bottom: 5px solid rgb(207, 207, 207);
+    border-bottom: 5px solid rgb(187, 187, 187);
     display: flex;
     height: 160px;
     box-shadow: 0px 0px 10px rgb(65, 65, 65);
@@ -78,9 +78,17 @@ nav {
 }
 
 .dropdown,
-.language,
 .signIn {
     margin: auto;
+}
+
+.language {
+    margin: auto 25px;
+    margin-right: 80px;
+}
+
+.language i {
+    padding: 20px 0 ;
 }
 
 .language a {
@@ -105,7 +113,7 @@ nav {
 
 .dropdown-language {
     min-width: auto;
-    top: 105px;
+    right: 1%;
 }
 
 .dropdown-signIn form {
@@ -441,7 +449,7 @@ main {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg");
+    background-image: url("colorful-bg.jpg");
     transition: 0.5s;
     z-index: 1;
 }

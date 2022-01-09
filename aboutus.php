@@ -8,12 +8,19 @@
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preload" href="src/colorful-bg.jpg" as="image">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
-    <?php include 'header.php'; ?>
+    <?php include 'header.php'; 
+
+        //Navigation record
+        if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+            array_push($_SESSION['navigation'], array("About Us" => date("Y-m-d H:i:s")));
+        }
+    ?>
 
     <body>
         <main>

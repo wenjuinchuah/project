@@ -4,6 +4,11 @@
     include '../validation/connectSQL.php';
     include '../database/createCartTable.php';
 
+    //Navigation record
+    if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+        array_push($_SESSION['navigation'], array("Shopping Cart" => date("Y-m-d H:i:s")));
+    }
+
     if (isset($_COOKIE['anonymousID'])) {
         $userType = $_SESSION['role'];
         $anonymousID = $_COOKIE['anonymousID'];
@@ -90,7 +95,7 @@
                 $path = '../productPic/'. $product['image'];
                 $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
                 echo "<tr id='item$row[0]'>
-                    <td><i class='fa fa-trash-o fa-lg' onclick='removeItem($row[0])'></i></td>
+                    <td></i><i class='fa-solid fa-trash-can' onclick='removeItem($row[0])'></i></td>
                     <td>$row[0]</td>
                     <td><img src='$path' width='auto' height='120px'/></td>
                     <td>$row[1]</td>

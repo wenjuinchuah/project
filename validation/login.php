@@ -33,6 +33,9 @@
             $_SESSION['role'] = $user['UserType'];
             $_SESSION['userID'] = $user['UserID'];
             $_SESSION['name'] = $user['FirstName'].$user['LastName'];
+
+            //For navigation tracking
+            $_SESSION['navigation'][0] = array("Login" => date("Y-m-d H:i:s"));
         } else {
             $count = 0;
         }

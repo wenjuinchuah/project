@@ -30,5 +30,5 @@
             }
         }
     }
-    header('order.php');
+    header('Location: order.php');
 ?>

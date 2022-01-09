@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <?php include 'header.php';  ?>
+    <?php include 'header.php';
+    
+    //Navigation record
+    if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+        array_push($_SESSION['navigation'], array("Home Page" => date("Y-m-d H:i:s")));
+    }
+
+    ?>
 
     <body>
         <main>

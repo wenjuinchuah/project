@@ -18,16 +18,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Gardenia Bakeries (KL) Sdn Bhd</title>
-        <link rel="stylesheet" href="../src/style.css">
-        <link rel="icon" href="../src/icon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardenia Bakeries (KL) Sdn Bhd</title>
+    <link rel="stylesheet" href="../src/style.css">
+    <link rel="icon" href="../src/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
         <style>
             small {
@@ -116,7 +117,7 @@
                                         <small id="passwordError"><?php echo $passwordError ?></small>
                                     <?php } ?>
                                 </div>
-                                <input type="submit" name="submit" id="signInButton" value="Login"/>
+                                <input type="submit" name="login" id="signInButton" value="Login"/>
                                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
                                     <p>Don't have an account? <a href="../registration.php">Sign Up</a> now!</p>
                                 </div>
@@ -131,7 +132,7 @@
                     </div>
                 </ul>
                 <div class = "language">
-                    <button class="dropbtn"><img src="../src/globe.png" alt="Globe"></button>
+                    <button class="dropbtn"><i class="fa fa-globe-asia"></i></button>
                     <div class="dropdown-language">
                         <a href="#">English</a>
                         <a href="#">B. Melayu</a>

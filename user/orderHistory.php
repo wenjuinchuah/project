@@ -169,7 +169,6 @@
                     <thead>
                         <tr>
                             <th>Order ID</th>
-                            <th>User ID</th>
                             <th>Address</th>
                             <th>Payment Method</th>
                             <th>Payment Timestamp</th>
@@ -191,7 +190,6 @@
                                 }
                                 echo "<tr>
                                         <td>$orderDetails[orderID]</td>
-                                        <td>$orderDetails[userID]</td>
                                         <td>$orderDetails[Address]</td>
                                         <td>$paymentMethod</td>
                                         <td>$orderDetails[PaymentDate]</td>

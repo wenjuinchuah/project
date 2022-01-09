@@ -128,7 +128,7 @@ if($type == 'name'){
     header('Location: userProfile.php');
 }else if($type == 'password'){
     $currentPassword = $_POST['currentPassword'];
-    $password1 = $_POST['password'];
+    $password1 = $_POST['newpassword'];
     $password2 = $_POST['confirmpassword'];
 
     //Password Input Validation
@@ -173,17 +173,13 @@ if($type == 'name'){
                     $_SESSION['validation_password'] = $password2Error;
                     header('Location: userProfile.php');
                 } else {
-                    unset($_SESSION['validation_password']);
+                    $password = password_hash($password1, PASSWORD_DEFAULT);
+                    $sql = "UPDATE user SET Password='$password' WHERE Email='$loginuser'";
+                    mysqli_query($conn, $sql);
+                    header('Location: userProfile.php');
                 }
             }
         }
     };
-
-    if(!isset($_SESSION['validation_password'])){
-        $password = password_hash($password1, PASSWORD_DEFAULT);
-        $sql = "UPDATE user SET Password='$password' WHERE Email='$loginuser'";
-        mysqli_query($conn, $sql);
-        header('Location: userProfile.php');
-    }
 }
 ?>

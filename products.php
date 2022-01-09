@@ -1,4 +1,10 @@
-<?php include 'header.php'; ?>
+<?php include 'header.php'; 
+
+//Navigation record
+if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
+    array_push($_SESSION['navigation'], array("Product Page" => date("Y-m-d H:i:s")));
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -7,7 +13,8 @@
         <link rel="stylesheet" href="src/style.css">
         <link rel="icon" href="src/icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+        
+        <link rel="preload" href="src/colorful-bg.jpg" as="image">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -31,7 +38,7 @@
                 box-shadow: 3px 3px 10px #17202A;
                 
                 /*background-image: url("https://i.pinimg.com/564x/62/f5/a5/62f5a5854bb2febeeb3944b378a40781.jpg");*/
-                background-image: url("https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Colorful-Geometric-Simple-Background-Image.jpg");
+                background-image: url("src/colorful-bg.jpg");
 
                 /* Center and scale the image nicely */
                 background-position: center;
@@ -180,7 +187,7 @@
                 height:300px;
             }
         </style>
-
+            
     </head>
 
     <body>
