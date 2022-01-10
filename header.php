@@ -1,6 +1,14 @@
 <?php
     session_start();
+    ob_start();
     include 'validation/loginValidation.php';
+    //If admin then goto admin dashboard
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == 'admin') {
+            header('Location: admin/dashboard.php');
+            ob_end_flush();
+        }
+    }
     include 'validation/connectSQL.php';
     include 'database/createCartDb.php';
     include 'database/createOrderDb.php';
@@ -29,17 +37,7 @@
             }
         }
     }
-    //session_destroy();      
-    
-    //is there a reason for this to be here, cuz if destroy session here everytime logged-in user go product page, they get "disconnected"
-    //cus there are session_start() everywhere and error “session_start(): Ignoring session_start() because a session is already active will pop out
-    //or can do 
 
-    // if(!isset($_SESSION)) { 
-    //   session_start(); 
-    // } 
-
-    //so if there is a session started then it wont run session_start() again
     if (isset($_SESSION['userID'])) {
         $userID = $_SESSION['userID'];
         
@@ -149,6 +147,9 @@
                                 <?php if (isset($passwordError)) {?>
                                 <small id="passwordError"><?php echo $passwordError ?></small>
                                 <?php } ?>
+                            </div>
+                            <div style="font-size: smaller; padding: 5px 0;">
+                                <a href="./resetPassword.php">Forgot Password?</a>
                             </div>
                             <input type="submit" name="login" id="signInButton" value="Login" />
                             <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">

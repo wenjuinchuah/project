@@ -5,8 +5,8 @@ if(isset($_POST['deleteUser'])){
     $sql = "DELETE FROM user WHERE userID='$id'";
     if (mysqli_query($conn, $sql) === TRUE) {
         header('Location: user.php');
-    }else {
+    } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
-    }   
+    }
 }
 ?>

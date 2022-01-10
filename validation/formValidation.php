@@ -9,16 +9,19 @@
     $showError = $successVisibility = 'hidden';
 
     //Declaring Variables
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
-    $password1 = $_POST['password1'];
-    $password2 = $_POST['password2'];
-    $tnc = $_POST['t&c'];
-    $submit = $_POST['register'];
-    $state = $_POST['state'];
-    $gender = $_POST['gender'];
+    if ($_POST['register']) {
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $email = $_POST['email'];
+        $mobile = $_POST['mobile'];
+        $password1 = $_POST['password1'];
+        $password2 = $_POST['password2'];
+        $tnc = $_POST['t&c'];
+        $submit = $_POST['register'];
+        $state = $_POST['state'];
+        $gender = $_POST['gender'];
+        $userType = $_POST['role'];
+    }
 
     //Function declaration  
     function errorHandle($idName, $state) {
@@ -165,11 +168,6 @@
         }
     };
 
-    //Gender
-    if ($gender == '') {
-        $gender = 'Male';
-    }
-
     //T&C Checkedbox Validation (when checkbox checked, the value is set to 'value1')
     //Hence, we check for the string $tnc == $_POST['value1']
     if ($tnc != 'value1') {
@@ -194,8 +192,8 @@
             //Hash Password
             $password1 = password_hash($password1, PASSWORD_DEFAULT);
             //insert data into mySQL
-            $sql = "INSERT INTO user (FirstName, LastName, Email, Mobile, State, Gender, Password)
-                VALUES ('$fname', '$lname', '$email', '60$mobile', '$state', '$gender', '$password1')";
+            $sql = "INSERT INTO user (FirstName, LastName, Email, Mobile, State, Gender, Password, UserType)
+                VALUES ('$fname', '$lname', '$email', '60$mobile', '$state', '$gender', '$password1', '$userType')";
 
             if ($conn->query($sql) === TRUE) {
                 $successVisibility = 'visible';

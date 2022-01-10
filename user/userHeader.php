@@ -1,5 +1,12 @@
 <?php
     include '../validation/loginValidation.php';
+    //If admin then goto admin dashboard
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == 'admin') {
+            header('Location: ../admin/dashboard.php');
+            ob_end_flush();
+        }
+    }
     include '../validation/connectSQL.php';
     include '../database/createCartDb.php';
     include '../database/createOrderDb.php';
@@ -12,7 +19,6 @@
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -116,6 +122,9 @@
                                     <?php if (isset($passwordError)) {?>
                                         <small id="passwordError"><?php echo $passwordError ?></small>
                                     <?php } ?>
+                                </div>
+                                <div style="font-size: smaller; padding: 5px 0;">
+                                    <a href="./resetPassword.php">Forgot Password?</a>
                                 </div>
                                 <input type="submit" name="login" id="signInButton" value="Login"/>
                                 <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">

@@ -25,11 +25,6 @@
             //Get user role
             $user = mysqli_fetch_assoc($result);
 
-            //If admin then goto admin dashboard
-            if ($user['UserType'] == 'admin') {
-                header('Location: ../project/admin/dashboard.php');
-            }
-
             $_SESSION['role'] = $user['UserType'];
             $_SESSION['userID'] = $user['UserID'];
             $_SESSION['name'] = $user['FirstName'].$user['LastName'];

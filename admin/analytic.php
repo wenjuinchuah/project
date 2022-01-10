@@ -40,6 +40,21 @@
         // echo $state[$i] ."->". $stateUser[$i]."</br>";
         $i++;
     }
+
+    //test
+
+    $i = 0; $ctr = 6;
+    $sum = $dates = array();
+    while($i<7){
+        $dates[$i] = date("Y-m-d",strtotime("now - ".$ctr."days"));
+        $sql = "SELECT SUM(Total) AS sumValue FROM transaction WHERE CAST(TransactionDate as DATE) = '$dates[$i]' ";
+        $result = mysqli_query($conn,$sql);
+        $run = mysqli_fetch_assoc($result);
+        $sum[$i] = round($run["sumValue"],2);
+        // echo $dates[$i]."->".$sum[$i] . "<br>";
+        $dates[$i] = date("M-d",strtotime("now - ".$ctr."days"));
+        $i++; $ctr--;
+    }  
     
 ?> 
 
@@ -91,9 +106,9 @@
             </div>
         </div>
         <div class="w3-half">
-            <h4>Chart Title</h4>
+            <h4>Past 7 Days Sales (RM)</h4>
             <div class="chartContainer w3-padding-16">
-                <div id="chart4"></div>
+                <canvas id="chart4"></div>
             </div>
         </div>
     </div>    
@@ -123,6 +138,10 @@
         //Encode data into JSON format
         id = <?php echo json_encode($id); ?>;
         sales = <?php echo json_encode($sales); ?>; 
+
+        var maxValue = sales.reduce(function(a,b){
+            return Math.max(a,b);
+        },0);
         //Setup data
         const data = {
             labels: id,
@@ -162,8 +181,8 @@
                         }
                     },
                     y: {
-                        suggestedMin:0,
-                        suggestedMax:10,
+                        min:0,
+                        max:maxValue+1,
                         title: {
                             display: true,
                             text: 'Sold Quantity'
@@ -231,7 +250,7 @@
             document.getElementById("chart2"),
             config2
         );
-
+        
         //User state
         var i = 0;
         state = <?php echo json_encode($state); ?>;
@@ -273,6 +292,67 @@
             var chart = new google.visualization.GeoChart(document.getElementById('chart3'));
             chart.draw(data3,options);
         }
+
+        //test
+        dates = <?php echo json_encode($dates); ?>;
+        sum = <?php echo json_encode($sum); ?>;
+
+        const year = new Date().getFullYear();
+        var maxSum = sum.reduce(function(a,b){
+            return Math.max(a,b);
+        },0);
+        const data4 = {
+            labels: dates,
+            datasets: [{
+                label:'Sales (RM)',
+                data: sum,
+                fill:false,
+                borderColor: '#110971',
+                borderWidth: 1,
+                tension:0.1
+            }]
+        };
+
+        const config4 = {
+            type: 'line',
+            data: data4,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date (' +year+ ')',
+                        }
+                    },
+                    y: {
+                        min:0,
+                        max: Math.ceil(maxSum+5),
+                        title: {
+                            display: true,
+                            text: 'Sales (RM)'
+                        },
+                        ticks:{
+                            stepSize:5
+                        }
+                    }
+                },
+                plugins:{
+                    datalabels:{
+                        anchor: 'end',
+                        align: 'end'
+                    }
+                }
+            },
+            plugins: [ChartDataLabels], 
+        };
+        //Render
+        const chart4 = new Chart(
+            document.getElementById("chart4"),
+            config4
+        );
+        
     </script>
 
 </body>

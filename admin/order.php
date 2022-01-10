@@ -9,34 +9,38 @@
 <html>
     <head>
         <style>
-            #editOrderStatusView .editOrderStatusView-container {
-                box-shadow: ;
-            }
-        
-            #editOrderStatusView i:hover, #editOrderStatusView #update:hover {
-                opacity: 0.7;
-                cursor: pointer;
+            #editOrderStatusView textarea {
+                resize: none;
+                width: 100%;
+                border-radius: 5px;
+                border: 1px solid lightgray;
+                background-color: #f1f1f1;
+                padding: 0 10px;
             }
 
             #editOrderStatusView label {
-                font-size: medium;
-            }
-
-            #editOrderStatusView textarea {
-                resize: none;
-                width: 212px;
+                padding: 0;
             }
 
             #editOrderStatusView input {
-                padding-left: 5px;
+                margin: 0;
+            }
+
+            #editOrderStatusView select {
+                width: 100%;
             }
 
             #editOrderStatusView #update {
                 margin-bottom: 20px;
             }
 
+            #editOrderStatusView table {
+                width: 100%;
+            }
+
             #editOrderStatusView td {
                 text-align: end;
+                padding-right: 5px;
             }
         </style>
     </head>
@@ -97,47 +101,37 @@
 
     <!--Edit Order Status View -->
     <div id="editOrderStatusView">
-        <div class="editOrderStatusView-container" style="background-color: #fff; ">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffOrderStatusUpdate()"></i>
-            <form action="updateOrderStatus.php" method="POST" enctype="multipart/form-data">
+        <div class="userView-container">
+            <form class="regform" action="updateOrderStatus.php" method="POST" enctype="multipart/form-data">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffOrderStatusUpdate()"></i>
                 <h2>Update Order Status</h2>
-                <table style="background-color: #fff">
+                <table>
                     <tr>
-                        <div>
-                            <td><label>Order ID</label></td>
-                            <td><input type="text" id="orderID" name="orderID" disabled/></td>
-                        </div>
+                        <td><label>Order ID</label></td>
+                        <td><input type="text" id="orderID" name="orderID" disabled/></td>
                     </tr>
                     <tr style="background-color: #fff">
-                        <div style="margin-top: 10px">
-                            <td><label>UserID</label></td>
-                            <td><input type="text" id="userID" name="userID" disabled/></td>
-                        </div>
+                        <td><label>UserID</label></td>
+                        <td><input type="text" id="userID" name="userID" disabled/></td>
                     </tr>
                     <tr>
-                        <div style="margin-top: 10px">
-                            <td><label">Address</label></td>
-                            <td><textarea id="address" name="address" disabled></textarea></td>
-                        </div>
+                        <td><label>Address</label></td>
+                        <td><textarea id="address" name="address" disabled></textarea></td>
                     </tr>
                     <tr style="background-color: #fff">
-                        <div style="margin-top: 10px">
-                            <td><label>Payment Method</label></td>
-                            <td><input type="text" id="paymentMethod" name="paymentMethod" disabled/></td>
-                        </div>
+                        <td><label>Payment Method</label></td>
+                        <td><input type="text" id="paymentMethod" name="paymentMethod" disabled/></td>
                     </tr>
                     <tr>
-                        <div style="margin-top: 10px">
-                            <td><label>Order Status</label></td>
-                            <td><select style="width: 212px; height: 33px" name="status">
-                                    <option value="1">Waiting for Dispatch</option>
-                                    <option value="2">Shipped</option>
-                            </select></td>
-                        </div>
+                        <td><label>Order Status</label></td>
+                        <td><select name="status">
+                                <option value="1">Waiting for Dispatch</option>
+                                <option value="2">Shipped</option>
+                        </select></td>
                     </tr>
                 </table>
-                <div class="button" style="display: flex; justify-content: center;">
-                    <input style="width: 350px; border: none; border-radius: 5px; background-color: darkgreen; height: 30px; color: #fff; font-weight: bold;" type="submit" id="update" name="update" value="Confirm"></input>
+                <div>
+                    <input type="submit" class="edit" name="update" value="Confirm"></input>
                 </div>
             </form>
         </div>

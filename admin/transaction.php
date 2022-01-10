@@ -70,7 +70,7 @@
             </table>
             <?php $_SESSION['transactionCount'] = $count; echo "<p>Total Transaction Count: <b>$count</b></p>";?>
             <div style="display:flex; justify-content: center; margin-top: 20px;">
-                <button class="openEdit" style="font-size: larger; font-weight: bold;"><a style="text-decoration: none" target="_blank" href="generatePdf.php">Generate Report</a></button>
+                <a class="openEdit" style="font-size: larger; font-weight: bold; text-decoration: none" target="_blank" href="generatePdf.php">Generate Report</a>
             </div>
         </div>
         

@@ -22,8 +22,10 @@
         unset($_COOKIE['productID']);
     }
 
-    //Direct back to index.php iff role == admin
+    //Direct back to index.php if role == admin
     if ($_SESSION['role'] == 'admin') {
+        session_unset();
+        session_destroy();
         header('Location: ../index.php');
     }
 

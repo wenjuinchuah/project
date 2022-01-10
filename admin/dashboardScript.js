@@ -28,6 +28,10 @@ function turnOffDelete(){
 //addUser View
 function addUser() {
     document.getElementById("addUserView").style.display = "block";
+    //Calculate table height
+    let html = document.body.scrollHeight;
+    html += 60;
+    document.getElementById("addUserView").style.height = html + 'px';
 }
 
 function turnOffUserView() {
@@ -56,11 +60,11 @@ function turnOffUserEditView() {
 }
 
 //deleteUser View
-function deleteUser(){
+function deleteUser() {
     document.getElementById("deleteUserView").style.display = "block";
 }
 
-function turnOffUserDelete(){
+function turnOffUserDelete() {
     document.getElementById("deleteUserView").style.display = "none";
 }
 

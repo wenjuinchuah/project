@@ -96,7 +96,7 @@
                                 <td>$admin[UserType]</td>
                                 <td><button type='button' class='openEdit' name='openEdit' onclick=\"editUser('$admin[UserID]', '$admin[FirstName]', '$admin[LastName]', '$admin[Email]', '$mobile', '$admin[State]', '$admin[Gender]', '$admin[UserType]')\">
                                 <i class='fas fa-edit'></i></button></td>
-                                <td><button type='button' class='openDelete' name='openDelete' onclick='deleteUser()'>	
+                                <td><button type='button' class='openDelete' name='openDelete' onclick=\"deleteUser()\">	
                                 <i class='fa-solid fa-trash-can'></i></button></td>
                             </tr>";
                         ?>
@@ -116,7 +116,7 @@
 
     <!--Add User View-->
     <div id="addUserView">
-        <div class="userView-container">                                                                                             <!-- change dy-->
+        <div class="userView-container">
             <form class="regform" id="regform" action="../validation/formValidation.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidation()">
             <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserView()"></i>
                 <h2>Add New User</h2>
@@ -191,6 +191,15 @@
                     <input type="password" id="password2" name="password2" placeholder="Confirm Password" />
                     <small id="password2Error">Error message</small>
                 </div>
+                <div>
+                    <label>User Role</label>
+                    <div class="role-container">
+                        <input type="radio" id="user" name="role" value="user" checked="true" />
+                        <label for="user">User</label>
+                        <input type="radio" id="admin" name="role" value="admin" />
+                        <label for="admin">Admin</label>
+                    </div>
+                </div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="t&c" name="t&c" value="value1" />
                     <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
@@ -209,7 +218,7 @@
     <div id="editUserView">
         <div class="userView-container">
             <form class="regform" id="editform" action="editUser.php" method="POST" enctype="multipart/form-data">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserEditView()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserEditView()"></i>
                 <h2>Edit User Profile</h2>
                 <div style='display: none'>
                     <label>UserID</label>
@@ -275,31 +284,32 @@
                     <select name="userType" id="userType">
                         <option value="user">User</option>
                         <option value="admin">Admin</option>
-                        
                     </select>
                 </div>
                 <div class="button">
                     <input type="submit" id="reset" class="resetPassword" name='resetPassword' value="Reset Password"></input>
                     <input type="submit" id="edit" name="editUser" value="Confirm Edit"></input>
+                </div>
             </form>
+        </div>
     </div>
 
     <!--Delete view -->
-    <div class='addEditView' id="deleteUserView">
-        <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserDelete()"></i>
-            <form action="" method="POST">
-                <input type="hidden" id="deleteID" name="deleteID">
+    <div id="deleteUserView">
+        <div class="userView-container">
+            <form class="regform" action="" method="POST">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserDelete()"></i>
+                <input type="hidden" id="deleteID" name="deleteID"></input>
                 <h2>Delete User</h2>
                 <div style="text-align: center">
-                    <i class="fa fa-exclamation-circle" style="font-size:250px"></i>             
+                    <i class="fa fa-exclamation-triangle fa-9x" style="color: rgb(230, 89, 84)"></i>             
                 </div>
                 <div style="text-align:center;">
                     <h4>Data can't be restored once deleted. </h4>
                     <h4>Are you sure?</h4>
-                 </div>
+                </div>
                 <div class="button">
-                    <input type="submit" id="deleteUser" name="deleteUser" value="Confirm"></input>
+                    <input type="submit" class='delete' name="deleteUser" value="Confirm"></input>
                 </div>
             </form>
         </div>

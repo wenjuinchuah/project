@@ -63,98 +63,23 @@ table tr:nth-child(even) {
 }
 
 /*Add Edit Product*/
-.addEditView, #addUserView, #editUserView, #editOrderStatusView {
+#addProductView, #editProductView, #deleteProductView, .addEditView, #addUserView, #editUserView, #deleteUserView, #editOrderStatusView {
     background-color: #d3d3d3a0;
     margin: 0;
     padding: 0;
     position: fixed;
     top: 0;
     width: 100%;
+    height: 100%;
     display: none;
 }
 
-#addUserView, #editUserView {
-    position: absolute !important;
+#addUserView {
+    position: absolute;
 }
 
-.addProductView-container, .editOrderStatusView-container {
-    background-color: rgb(168, 168, 168);
-    margin: 100px auto;
-    padding: 10px 20px;
-    height: auto;
-    max-width: 400px;
-    min-width: 400px;
-    border-radius: 10px;
-}
-
-.addProductView-container h2, .editOrderStatusView-container h2 {
-    padding: 10px 0;
-    text-align: center;
+.userView-container label {
     font-weight: bold;
-}
-
-.addProductView-container input {
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: medium;
-    margin: 5px auto;
-    padding-left: 5px;
-    width: 100%;
-    height: 30px;
-}
-
-.addProductView-container input::placeholder {
-    color: darkgray;
-    font-weight: normal;
-}
-
-.addProductView-container label, .userView-container label {
-    font-weight: bold;
-}
-
-.addProductView-container .priceLabel,
-.addProductView-container .stockLabel {
-    display: block;
-}
-
-.addProductView-container .currency,
-.addProductView-container .price {
-    display: inline-block;
-    width: 35px;
-    background-color: #fff;
-    border-radius: 5px 0 0 5px;
-}
-
-.addProductView-container #productPrice,
-.addProductView-container #editPrice {
-    width: calc(100% - 39px);
-    border-radius: 0 5px 5px 0;
-}
-
-.addProductView-container .button {
-    margin: 20px 0;
-}
-
-.addProductView-container #submit,
-.addProductView-container #edit {
-    height: 40px;
-    color: #fff;
-    background-color: #000;
-}
-
-.addProductView-container #submit:hover,
-.addProductView-container i:not(.fa-exclamation-circle):hover {
-    opacity: 0.7;
-    cursor: pointer;
-}
-
-.addProductView-container i:not(.fa-exclamation-circle):hover {
-    color: #fff;
-}
-
-.addProductView-container::selection(.fa-exclamation-circle){
-    text-align: center;
 }
 
 .openEdit, .openDelete {
@@ -241,7 +166,27 @@ table tr:nth-child(even) {
     background-color: #f1f1f1;
 }
 
-.regform i:hover {
+.regform #editPicture, .regform #productPicture {
+    background-color: #fff;
+    border: none;
+}
+
+.regform .priceLabel {
+    display: block;
+}
+
+.regform .currency, .regform .price {
+    display: inline-block !important;
+    width: 45px;
+    border-radius: 5px 0 0 5px;
+}
+
+.regform .price {
+    border-radius: 0 5px 5px 0;
+    width: calc(100% - 49px);
+}
+
+.regform .fa.fa-times:hover {
     cursor: pointer;
     opacity: 0.7;
 }
@@ -314,17 +259,17 @@ table tr:nth-child(even) {
 }
 
 /* Gender */
-.regform .gender-container {
+.regform .gender-container, .regform .role-container {
     margin: 0;
     padding: 0;
 }
 
-.regform .gender-container input {
+.regform .gender-container input, .regform .role-container input {
     display: inline-block;
     width: 15px;
 }
 
-.regform .gender-container label, .checkbox-container label {
+.regform .gender-container label, .regform .role-container label, .checkbox-container label {
     position: relative;
     bottom: 9px;
     margin-right: 10px;
@@ -386,7 +331,12 @@ table tr:nth-child(even) {
     color: #fff;
 }
 
-.regform #submit, .regform #edit {
+.regform .delete, .regform .edit, .regform #addProduct {
+    background-color: #2b323d;
+    width: 100% !important;
+}
+
+.regform #submit, .regform #edit, .regform .delete, .regform .edit, .regform #addProduct, .regform #update {
     width: 78.6%;
     background-color: #2b323d;
     color: #fff;
@@ -401,7 +351,7 @@ table tr:nth-child(even) {
     width: calc(60% - 2px);
 }
 
-.regform #submit:hover, .regform #edit:hover, .regform #reset:hover {
+.regform #submit:hover, .regform #edit:hover, .regform .edit:hover, .regform #reset:hover, .regform .delete:hover, .regform #addProduct:hover, .regform #addProduct:hover {
     opacity: 70%;
     cursor: pointer;
 }

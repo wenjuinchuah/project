@@ -1,6 +1,23 @@
-<!--The gardenia order, order details, and transaction do not sync, clear all to remake?-->
-<!-- Can, just delete all database, leave table user and products enough, then try n see works onot -->
-<?php include 'adminHeader.php'; ?>
+<?php 
+    include 'adminHeader.php';
+    //remove anonymous cart
+    if (isset($_SESSION['anonymousiD'])) {
+        $anonymousID = $_SESSION['anonymousID'];
+        $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
+        $sql = "SELECT * FROM anonymous_$anonymousID";
+        if ($result = mysqli_query($conn, $sql)) {
+            $sql = "DROP TABLE anonymous_$anonymousID";
+            $result = mysqli_query($conn, $sql);
+            if (isset($_COOKIE['anonymousID'])) {
+                unset($_COOKIE['anonymousID']);
+            }
+            
+            if (isset($_COOKIE['productID'])) {
+                unset($_COOKIE['productID']);
+            }
+        }
+    }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -58,10 +75,10 @@
     </div>
 
     <!--Add Product View-->
-    <div class='addEditView' id="addProductView">
-        <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i>
-            <form action="" method="POST" enctype="multipart/form-data">
+    <div id="addProductView">
+        <div class="userView-container">
+            <form class="regform" action="" method="POST" enctype="multipart/form-data">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i>
                 <h2>Add New Product</h2>
                 <div>
                     <label>Product Name</label>
@@ -93,7 +110,7 @@
                     <?php } ?>
                 </div>
                 <div class="button">
-                    <input type="submit" id="submit" name="submit" value="Add Product"></input>
+                    <input type="submit" id="addProduct" name="addProduct" value="Add Product"></input>
                 </div>
             </form>
         </div>
@@ -101,10 +118,10 @@
     
     
     <!--Edit Product View -->
-    <div class='addEditView' id="editProductView">
-        <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffEdit()"></i>
-            <form action="" method="POST" enctype="multipart/form-data">
+    <div id="editProductView">
+        <div class="userView-container">
+            <form class="regform" action="" method="POST" enctype="multipart/form-data">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffEdit()"></i>
                 <h2>Edit Product</h2>
                 <input type="hidden" id="editID" name="editID">
                 <input type="hidden" id="oriPic" name="oriPic"> 
@@ -138,28 +155,28 @@
                     <?php } ?>
                 </div>
                 <div class="button">
-                    <input type="submit" id="edit" name="edit" value="Edit Product"></input>
+                    <input type="submit" class="edit" name="edit" value="Edit Product"></input>
                 </div>
             </form>
         </div>
     </div>
 
     <!--Delete view -->
-    <div class='addEditView' id="deleteProductView">
-        <div class="addProductView-container">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffDelete()"></i>
-            <form action="" method="POST">
+    <div id="deleteProductView">
+        <div class="userView-container">
+            <form class='regform' action="" method="POST">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffDelete()"></i>
                 <input type="hidden" id="deleteID" name="deleteID">
                 <h2>Delete Product</h2>
                 <div style="text-align: center">
-                    <i class="fa fa-exclamation-circle" style="font-size:250px"></i>             
+                    <i class="fa fa-exclamation-triangle fa-9x" style="color: rgb(230, 89, 84)"></i>             
                 </div>
                 <div style="text-align:center;">
                     <h4>Data can't be restored once deleted. </h4>
                     <h4>Are you sure?</h4>
                  </div>
                 <div class="button">
-                    <input type="submit" id="delete" name="delete" value="Confirm"></input>
+                    <input type="submit" class="delete" name="delete" value="Confirm"></input>
                 </div>
             </form>
         </div>

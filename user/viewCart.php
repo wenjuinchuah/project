@@ -1,5 +1,8 @@
 <?php
-    session_start();
+    //hide error_reporting
+    error_reporting(0);
+    
+    include 'userHeader.php';
     include '../validation/loginValidation.php';
     include '../validation/connectSQL.php';
     include '../database/createCartTable.php';
@@ -445,8 +448,6 @@
         });
     </script>
 </head>
-
-<?php include 'userHeader.php' ?>
 
 <body>
     <h2 class="sub-title pacifico_L">Shopping Cart</h2>
