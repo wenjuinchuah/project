@@ -82,6 +82,22 @@
                 color: #CE0101;
             }
 
+            .order .received {
+                width: 150px;
+            }
+
+            .order .received:hover {
+                cursor: pointer;
+                opacity: 0.7;
+            }
+
+            .order .received p {
+                background-color: #2b323d;
+                padding: 10px;
+                border-radius: 50px;
+                color: #fff;
+            }
+
             #orderListView a {
                 font-family: 'Balsamiq Sans', cursive;
                 font-size: larger;
@@ -173,7 +189,8 @@
                             <th>Payment Method</th>
                             <th>Payment Timestamp</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
+                            <th>More</th>
                         </tr>
                     </thead>
                     <?php
@@ -188,12 +205,18 @@
                                 } else {
                                     $paymentMethod = 'Payment Failed';
                                 }
+                                if ($orderDetails['Status'] == 'To Ship') {
+                                    $updateStatus = 'Return/Refund';
+                                } else if ($orderDetails['Status'] == 'To Receive') {
+                                    $updateStatus = 'Order Received';
+                                }
                                 echo "<tr>
                                         <td>$orderDetails[orderID]</td>
                                         <td>$orderDetails[Address]</td>
                                         <td>$paymentMethod</td>
                                         <td>$orderDetails[PaymentDate]</td>
                                         <td>$orderDetails[Status]</td>
+                                        <td class='received' onclick='status(\"$orderID[$index]\", \"$updateStatus\")'><p>$updateStatus</p></td>
                                         <td class='details' onclick='expand(\"$orderID[$index]\")'>More Details >></td>
                                     </tr>";
                                 $index++;
@@ -328,6 +351,10 @@
             }
 
             document.getElementById("orderID").style.width = tableWidth + 'px';
+        }
+
+        function status(orderID, status) {
+            confirm("You are not allow to make any changes after this. Are you sure?");
         }
     </script>
 </html>

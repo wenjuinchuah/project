@@ -149,7 +149,7 @@
                                 <?php } ?>
                             </div>
                             <div style="font-size: smaller; padding: 5px 0;">
-                                <a href="./resetPassword.php">Forgot Password?</a>
+                                <a href="user/forgotPassword.php">Forgot Password?</a>
                             </div>
                             <input type="submit" name="login" id="signInButton" value="Login" />
                             <div style="font-family: Arial, Helvetica, sans-serif; font-size: smaller;">
