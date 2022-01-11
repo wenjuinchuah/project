@@ -81,6 +81,17 @@
                 //create date from timestamp
                 $transactiondate = date("Y/m/d", strtotime($transaction['TransactionDate']));
 
+                //look for any cancelled order
+                $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+                if ($orderResult = mysqli_query($conn, $sql)) {
+                    if ($order = mysqli_fetch_assoc($orderResult)) {
+                        if ($order['Status'] == 'Cancelled') {
+                            continue; //continue next searching if found cancelled order
+                        }
+                    }
+                }
+
                 //compare date
                 if($transactiondate == $currentdate) {
                     $paymentMethod = $transaction['PaymentMethod'];
@@ -106,6 +117,17 @@
             while ($transaction = mysqli_fetch_assoc($result)) {
                 //create date from timestamp
                 $transactiondate = date("Y/m/d", strtotime($transaction['TransactionDate']));
+
+                //look for any cancelled order
+                $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+                if ($orderResult = mysqli_query($conn, $sql)) {
+                    if ($order = mysqli_fetch_assoc($orderResult)) {
+                        if ($order['Status'] == 'Cancelled') {
+                            continue; //continue next searching if found cancelled order
+                        }
+                    }
+                }
 
                 //compare date
                 if($transactiondate > $FirstDay && $transactiondate <= $LastDay) {
@@ -133,6 +155,17 @@
                 //create date from timestamp
                 $transactiondate = date("F Y", strtotime($transaction['TransactionDate']));
 
+                //look for any cancelled order
+                $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+                if ($orderResult = mysqli_query($conn, $sql)) {
+                    if ($order = mysqli_fetch_assoc($orderResult)) {
+                        if ($order['Status'] == 'Cancelled') {
+                            continue; //continue next searching if found cancelled order
+                        }
+                    }
+                }
+
                 //compare date
                 if($transactiondate == $currentdate) {
                     $paymentMethod = $transaction['PaymentMethod'];
@@ -156,6 +189,17 @@
         } else {
             //all time
             while ($transaction = mysqli_fetch_assoc($result)) {
+                //look for any cancelled order
+                $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+                if ($orderResult = mysqli_query($conn, $sql)) {
+                    if ($order = mysqli_fetch_assoc($orderResult)) {
+                        if ($order['Status'] == 'Cancelled') {
+                            continue; //continue next searching if found cancelled order
+                        }
+                    }
+                }
+                
                 $total = number_format($transaction['Total'], 2, '.', '');
                 $transactionID = str_pad($transaction['TransactionID'], 4, 0, STR_PAD_LEFT);
                 if ($transaction['PaymentMethod'] == 'COD') {

@@ -1,7 +1,7 @@
 <?php 
     include 'adminHeader.php';
     //remove anonymous cart
-    if (isset($_SESSION['anonymousiD'])) {
+    if (isset($_SESSION['anonymousID'])) {
         $anonymousID = $_SESSION['anonymousID'];
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
         $sql = "SELECT * FROM anonymous_$anonymousID";
@@ -21,6 +21,22 @@
 
 <!DOCTYPE html>
 <html>
+    <head>
+        <style>
+            .regform div {
+                padding: 0;
+                margin: 0 15px;
+            }
+
+            .regform label {
+                display: block;
+            }
+
+            .regform input {
+                margin: auto;
+            }
+        </style>
+    </head>
     <body class="w3-light-grey">
         <!--Products-->
         <div style="margin-left: 15px;">
@@ -186,23 +202,23 @@
     <script src="dashboardScript.js"></script>
     <script>
         function addStock(id){
-                const xmlhttp = new XMLHttpRequest();
-                var x = document.getElementById("product"+id);
-                xmlhttp.onload = function(){
-                    x.innerHTML = this.responseText;
-                }
-                xmlhttp.open("GET", "editStock.php?action=add&id=" + id);
-                xmlhttp.send();
+            const xmlhttp = new XMLHttpRequest();
+            var x = document.getElementById("product"+id);
+            xmlhttp.onload = function(){
+                x.innerHTML = this.responseText;
+            }
+            xmlhttp.open("GET", "editStock.php?action=add&id=" + id);
+            xmlhttp.send();
         }
 
         function minusStock(id){
-                const xmlhttp = new XMLHttpRequest();
-                var x = document.getElementById("product"+id);
-                xmlhttp.onload = function(){
-                    x.innerHTML = this.responseText;
-                }
-                xmlhttp.open("GET", "editStock.php?action=minus&id=" + id);
-                xmlhttp.send();
+            const xmlhttp = new XMLHttpRequest();
+            var x = document.getElementById("product"+id);
+            xmlhttp.onload = function(){
+                x.innerHTML = this.responseText;
+            }
+            xmlhttp.open("GET", "editStock.php?action=minus&id=" + id);
+            xmlhttp.send();
         }
     </script>
 

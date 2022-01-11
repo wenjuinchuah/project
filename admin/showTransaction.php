@@ -33,6 +33,17 @@ if($category == 'daily'){
             //create date from timestamp
             $transactiondate = date("Y/m/d", strtotime($transaction['TransactionDate']));
 
+            //look for any cancelled order
+            $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+            if ($orderResult = mysqli_query($conn, $sql)) {
+                if ($order = mysqli_fetch_assoc($orderResult)) {
+                    if ($order['Status'] == 'Cancelled') {
+                        continue; //continue next searching if found cancelled order
+                    }
+                }
+            }
+
             //compare date
             if($transactiondate == $currentdate){
                 $paymentMethod = $transaction['PaymentMethod'];
@@ -71,6 +82,17 @@ if($category == 'daily'){
         //create date from timestamp
         $transactiondate = date("Y/m/d", strtotime($transaction['TransactionDate']));
 
+        //look for any cancelled order
+        $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+        if ($orderResult = mysqli_query($conn, $sql)) {
+            if ($order = mysqli_fetch_assoc($orderResult)) {
+                if ($order['Status'] == 'Cancelled') {
+                    continue; //continue next searching if found cancelled order
+                }
+            }
+        }
+
         //compare date
         if($transactiondate > $FirstDay && $transactiondate <= $LastDay){
             $paymentMethod = $transaction['PaymentMethod'];
@@ -107,6 +129,17 @@ if($category == 'daily'){
         while($transaction = mysqli_fetch_assoc($result)){
             //create date from timestamp
             $transactiondate = date("F Y", strtotime($transaction['TransactionDate']));
+            
+            //look for any cancelled order
+            $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+            if ($orderResult = mysqli_query($conn, $sql)) {
+                if ($order = mysqli_fetch_assoc($orderResult)) {
+                    if ($order['Status'] == 'Cancelled') {
+                        continue; //continue next searching if found cancelled order
+                    }
+                }
+            }
 
             //compare date
             if($transactiondate == $currentdate){
@@ -135,10 +168,22 @@ if($category == 'daily'){
             $_SESSION['grandTotal'] = $grandTotal;
         }
     }
-}else if($category == 'all'){
+}else if ($category == 'all') {
     $grandTotal = 0;
     echo  "<h3 style='text-align:center; font-weight:bold;'>All Time Transaction Record</h3>";
+    
     while ($transaction = mysqli_fetch_assoc($result)) { 
+        //look for any cancelled order
+        $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+        if ($orderResult = mysqli_query($conn, $sql)) {
+            if ($order = mysqli_fetch_assoc($orderResult)) {
+                if ($order['Status'] == 'Cancelled') {
+                    continue; //continue next searching if found cancelled order
+                }
+            }
+        }
+
         $paymentMethod = $transaction['PaymentMethod'];
         if ($paymentMethod == 'COD') {
             $paymentMethod = 'Cash On Delivery';
@@ -178,6 +223,6 @@ echo "<tr>
     $_SESSION['transactionCount'] = $count;
     echo "<p>Total Transaction Count: <b>$count</b></p>
     <div style='display:flex; justify-content: center; margin-top: 20px;'>
-        <button class='openEdit' style='font-size: larger; font-weight: bold;'><a style='text-decoration: none' href='generatePdf.php' target='_blank'>Generate Report</a></button>
+        <a class='openEdit' style='font-size: larger; font-weight: bold; text-decoration: none' target='_blank' href='generatePdf.php'>Generate Report</a>
     </div>";
 ?>

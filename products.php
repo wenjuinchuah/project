@@ -9,18 +9,8 @@ if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Products</title>
-        <link rel="stylesheet" href="src/style.css">
-        <link rel="icon" href="src/icon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <title>Products</title>        
         <link rel="preload" href="src/colorful-bg.jpg" as="image">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <style>
             main {
                 background: linear-gradient( to top , rgb(241, 241, 241)90%, rgb(196, 196, 196));
@@ -32,12 +22,9 @@ if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
                 position: relative; 
                 padding: 20px;
                 margin-bottom: 3px;
-                /* left: 50%; 
-                transform: translateX(-50%); */
 
                 box-shadow: 3px 3px 10px #17202A;
                 
-                /*background-image: url("https://i.pinimg.com/564x/62/f5/a5/62f5a5854bb2febeeb3944b378a40781.jpg");*/
                 background-image: url("src/colorful-bg.jpg");
 
                 /* Center and scale the image nicely */

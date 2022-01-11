@@ -1,5 +1,7 @@
 <?php
     ob_start();
+    date_default_timezone_set("Asia/Kuala_Lumpur"); //set time zone
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // username and password sent from form 
         $usernameData = mysqli_real_escape_string($conn,$_POST['username']);

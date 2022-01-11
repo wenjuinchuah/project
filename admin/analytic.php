@@ -41,7 +41,7 @@
         $i++;
     }
 
-    //test
+    //7days Sales
 
     $i = 0; $ctr = 6;
     $sum = $dates = array();
@@ -84,7 +84,7 @@
             margin: 10px;
         }
 
-        #chart3{
+        #chart4{
             height:400px;
             width:600px;
             margin:auto;
@@ -108,7 +108,7 @@
         <div class="w3-half">
             <h4>Past 7 Days Sales (RM)</h4>
             <div class="chartContainer w3-padding-16">
-                <canvas id="chart4"></div>
+                <canvas id="chart2"></div>
             </div>
         </div>
     </div>    
@@ -117,13 +117,13 @@
         <div class="w3-half">
             <h4>User Gender Proportion</h4>
             <div class="chartContainer w3-padding-16">
-                <canvas id="chart2"></canvas>
+                <canvas id="chart3"></canvas>
             </div>
         </div>
         <div class="w3-half">
             <h4>User Demographic (State)</h4>
             <div class="chartContainer w3-padding-16">
-                <div id="chart3"></div>
+                <div id="chart4"></div>
             </div>
         </div>
     </div>
@@ -135,6 +135,7 @@
     </footer>
 
     <script>
+        //Best selling products
         //Encode data into JSON format
         id = <?php echo json_encode($id); ?>;
         sales = <?php echo json_encode($sales); ?>; 
@@ -202,106 +203,15 @@
         );
 
 
-        //Gender proportion
-        male = <?php echo json_encode($male); ?>;
-        female = <?php echo json_encode($female); ?>;
-
-        const data2 = {
-            labels: ['Male','Female'],
-            datasets:[{
-                label: 'Gender',
-                data:[male,female],
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                ],
-                hoverOffset: 4 
-            }]
-        };
-
-        const config2 = {
-            type:'doughnut',
-            data:data2,
-            options: {
-                responsive:true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: {
-                        enabled: false
-                    },
-                    datalabels: {
-                        formatter: (value, context) => {
-                            const datapoints = context.chart.data.datasets[0].data;
-                            function sum(total,datapoint){
-                                return total+datapoint;
-                            }
-                            const totalValue = datapoints.reduce(sum,0);
-                            const percentage = (value/totalValue * 100).toFixed(2);
-                            return `${percentage}%`;
-                       },
-                        color: '#fff',
-                    }
-                }
-            },
-            plugins: [ChartDataLabels]
-        };
-        
-        const chart2 = new Chart(
-            document.getElementById("chart2"),
-            config2
-        );
-        
-        //User state
-        var i = 0;
-        state = <?php echo json_encode($state); ?>;
-        stateUser = <?php echo json_encode($stateUser); ?>; 
-        google.charts.load('visualization', '1', {'packages': ['geochart']});
-        google.charts.setOnLoadCallback(drawRegionsMap);
-        function drawRegionsMap() {
-            var data3 = new google.visualization.DataTable();
-            data3.addColumn('string', 'State');
-            data3.addColumn('number', 'Data');
-            data3.addRows([
-                [{v:'MY-01', f:' Johor'},stateUser[0]],
-                [{v:'MY-02', f:' Kedah'}, stateUser[1]],
-                [{v:'MY-03', f:' Kelantan'}, stateUser[2]],
-                [{v:'MY-04', f:' Melaka'}, stateUser[3]],
-                [{v:'MY-05', f:' Negeri Sembilan'}, stateUser[4]],
-                [{v:'MY-06', f:' Pahang'}, stateUser[5]],
-                [{v:'MY-08', f:' Perak'}, stateUser[6]],
-                [{v:'MY-09', f:' Perlis'}, stateUser[7]],
-                [{v:'MY-07', f:' Pulau Pinang'}, stateUser[8]],
-                [{v:'MY-12', f:' Sabah'}, stateUser[9]],
-                [{v:'MY-13', f:' Sarawak'}, stateUser[10]],
-                [{v:'MY-10', f:' Selangor'}, stateUser[11]],
-                [{v:'MY-11', f:' Terengganu'}, stateUser[12]],
-                [{v:'MY-14', f:' Wilayah Persekutuan Kuala Lumpur'}, stateUser[13]],
-                [{v:'MY-15', f:' Wilayah Persekutuan Labuan'}, stateUser[14]],
-                [{v:'MY-16', f:' Wilayah Persekutuan Putrajaya'},stateUser[15]],
-            ]);
-
-            var options = {
-                region: 'MY',
-                displayMode: 'regions',
-                resolution: 'provinces',
-                // backgroundColor: '#81d4fa', 
-                colorAxis: {colors:['e4f8ff','#3d309c']},
-                datalessRegionColor: 'lightgrey',
-            };
-
-            var chart = new google.visualization.GeoChart(document.getElementById('chart3'));
-            chart.draw(data3,options);
-        }
-
-        //test
-        dates = <?php echo json_encode($dates); ?>;
+         //Past 7 days sales
+         dates = <?php echo json_encode($dates); ?>;
         sum = <?php echo json_encode($sum); ?>;
 
         const year = new Date().getFullYear();
         var maxSum = sum.reduce(function(a,b){
             return Math.max(a,b);
         },0);
-        const data4 = {
+        const data2 = {
             labels: dates,
             datasets: [{
                 label:'Sales (RM)',
@@ -309,13 +219,13 @@
                 fill:false,
                 borderColor: '#110971',
                 borderWidth: 1,
-                tension:0.1
+                tension:0.3
             }]
         };
 
-        const config4 = {
+        const config2 = {
             type: 'line',
-            data: data4,
+            data: data2,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -348,11 +258,103 @@
             plugins: [ChartDataLabels], 
         };
         //Render
-        const chart4 = new Chart(
-            document.getElementById("chart4"),
-            config4
+        const chart2 = new Chart(
+            document.getElementById("chart2"),
+            config2
+        );
+
+
+        //Gender proportion
+        male = <?php echo json_encode($male); ?>;
+        female = <?php echo json_encode($female); ?>;
+
+        const data3 = {
+            labels: ['Male','Female'],
+            datasets:[{
+                label: 'Gender',
+                data:[male,female],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                ],
+                hoverOffset: 4 
+            }]
+        };
+
+        const config3 = {
+            type:'doughnut',
+            data:data3,
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        enabled: false
+                    },
+                    datalabels: {
+                        formatter: (value, context) => {
+                            const datapoints = context.chart.data.datasets[0].data;
+                            function sum(total,datapoint){
+                                return total+datapoint;
+                            }
+                            const totalValue = datapoints.reduce(sum,0);
+                            const percentage = (value/totalValue * 100).toFixed(2);
+                            return `${percentage}%`;
+                       },
+                        color: '#fff',
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        };
+        
+        const chart3 = new Chart(
+            document.getElementById("chart3"),
+            config3
         );
         
+        //User state
+        var i = 0;
+        state = <?php echo json_encode($state); ?>;
+        stateUser = <?php echo json_encode($stateUser); ?>; 
+        google.charts.load('visualization', '1', {'packages': ['geochart']});
+        google.charts.setOnLoadCallback(drawRegionsMap);
+        function drawRegionsMap() {
+            var data4 = new google.visualization.DataTable();
+            data4.addColumn('string', 'State');
+            data4.addColumn('number', 'Data');
+            data4.addRows([
+                [{v:'MY-01', f:' Johor'},stateUser[0]],
+                [{v:'MY-02', f:' Kedah'}, stateUser[1]],
+                [{v:'MY-03', f:' Kelantan'}, stateUser[2]],
+                [{v:'MY-04', f:' Melaka'}, stateUser[3]],
+                [{v:'MY-05', f:' Negeri Sembilan'}, stateUser[4]],
+                [{v:'MY-06', f:' Pahang'}, stateUser[5]],
+                [{v:'MY-08', f:' Perak'}, stateUser[6]],
+                [{v:'MY-09', f:' Perlis'}, stateUser[7]],
+                [{v:'MY-07', f:' Pulau Pinang'}, stateUser[8]],
+                [{v:'MY-12', f:' Sabah'}, stateUser[9]],
+                [{v:'MY-13', f:' Sarawak'}, stateUser[10]],
+                [{v:'MY-10', f:' Selangor'}, stateUser[11]],
+                [{v:'MY-11', f:' Terengganu'}, stateUser[12]],
+                [{v:'MY-14', f:' Wilayah Persekutuan Kuala Lumpur'}, stateUser[13]],
+                [{v:'MY-15', f:' Wilayah Persekutuan Labuan'}, stateUser[14]],
+                [{v:'MY-16', f:' Wilayah Persekutuan Putrajaya'},stateUser[15]],
+            ]);
+
+            var options = {
+                region: 'MY',
+                displayMode: 'regions',
+                resolution: 'provinces',
+                // backgroundColor: '#81d4fa', 
+                colorAxis: {colors:['e4f8ff','#3d309c']},
+                datalessRegionColor: 'lightgrey',
+            };
+
+            var chart4 = new google.visualization.GeoChart(document.getElementById('chart4'));
+            chart4.draw(data4,options);
+        }
+
     </script>
 
 </body>

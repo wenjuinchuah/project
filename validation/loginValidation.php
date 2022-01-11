@@ -27,27 +27,38 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $sql = "SELECT Email FROM user WHERE Email = '$username'";
-            $result = mysqli_query($conn,$sql);
-            $row = mysqli_num_rows($result);
-
-            if ($row == 0) {
-                $nameError = "Email does not exist";
-                $showError = "visible";
-            } 
-
-            $sql = "SELECT * FROM user WHERE Email = '$username'";
-            $getpdResult = mysqli_query($conn,$sql);
-            $userDetails = mysqli_fetch_assoc($getpdResult);
-
-            if (!password_verify($password, $userDetails['Password'])) {
-                $passwordError = "Invalid password!";
-                $showError = "visible";
+            //filter username before check with database
+            if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+                $sql = "SELECT Email FROM user WHERE Email = '$username'";
+                $result = mysqli_query($conn,$sql);
+                $row = mysqli_num_rows($result);
+    
+                if ($row == 0) {
+                    $nameError = "Email does not exist";
+                    $showError = "visible";
+                } 
+    
+                $sql = "SELECT * FROM user WHERE Email = '$username'";
+                $getpdResult = mysqli_query($conn,$sql);
+                $userDetails = mysqli_fetch_assoc($getpdResult);
+    
+                if (isset($userDetails['Password'])) {
+                    if (!password_verify($password, $userDetails['Password'])) {
+                        $passwordError = "Invalid password!";
+                        $showError = "visible";
+                    }
+                }
+            } else {
+                if (empty($username)) {
+                    $nameError = "Email cannot be blank!";
+                    $showError = 'visible';
+                } else {
+                    $nameError = "Invalid email address!";
+                    $showError = 'visible';
+                }
             }
-            if (empty($username)) {
-                $nameError = "Email cannot be blank!";
-                $showError = 'visible';
-            }
+            
+            
             if (empty($password)) {
                 $passwordError = "Password cannot be blank!";
                 $showError = 'visible';

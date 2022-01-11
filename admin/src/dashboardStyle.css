@@ -291,6 +291,14 @@ table tr:nth-child(even) {
     background-position: 335px center;
 }
 
+.regform select#status {
+    background-position: 190px center;
+}
+
+.regform select#status:hover {
+    cursor: pointer;
+}
+
 /* t&c */
 .regform .checkbox-container {
    margin-top: 0;

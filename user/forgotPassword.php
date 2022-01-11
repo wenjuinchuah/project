@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include '../validation/connectSQL.php';
     global $showError;
 
@@ -8,19 +9,26 @@
             $errorMessage = 'Please filled in the email address!';
         } else {
             $email = $_POST['checkEmail'];
-            $sql = "SELECT * FROM user WHERE Email = '$email'";
-            if ($result = mysqli_query($conn, $sql)) {
-                $row = mysqli_num_rows($result);
-                if ($row == 1) {
-                    $showError = 'hidden';
-                    $errorMessage = '';
-                    $_SESSION['email'] = $email;
-                    header('Location: resetPassword.php');
-                    ob_end_flush();
-                } else {
-                    $showError = 'visible';
-                    $errorMessage = 'Email address not found, Please try again!';
+
+            //filter email before check with database 
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $sql = "SELECT * FROM user WHERE Email = '$email'";
+                if ($result = mysqli_query($conn, $sql)) {
+                    $row = mysqli_num_rows($result);
+                    if ($row == 1) {
+                        $showError = 'hidden';
+                        $errorMessage = '';
+                        $_SESSION['email'] = $email;
+                        header('Location: resetPassword.php');
+                        ob_end_flush();
+                    } else {
+                        $showError = 'visible';
+                        $errorMessage = 'Email address not found, Please try again!';
+                    }
                 }
+            } else {
+                $showError = 'visible';
+                $errorMessage = 'Invalid email address, Please try again!';
             }
         }
     } else {

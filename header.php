@@ -2,6 +2,9 @@
     session_start();
     ob_start();
     include 'validation/loginValidation.php';
+
+    date_default_timezone_set("Asia/Kuala_Lumpur"); //set time zone
+
     //If admin then goto admin dashboard
     if (isset($_SESSION['role'])) {
         if ($_SESSION['role'] == 'admin') {
@@ -118,7 +121,7 @@
                     <button class="dropbtn">
                         <?php if ($isLogin == true) { 
                             echo "<div style='display: flex'>";
-                            echo "<p style='padding-top: 7px'>Hi, ".$row['FirstName']."!</p>";
+                            echo "<p style='padding-top: 8px'>Hi, ".$row['FirstName']."!</p>";
 
                             if(empty($row['pic_path'])){
                                 //$path = "../src/icon.png";

@@ -1,5 +1,3 @@
-<!--The gardenia order, order details, and transaction do not sync, clear all to remake?-->
-<!-- can, delete all database, leave table user and products enough -->
 <?php
     session_start();
     include '../validation/connectSQL.php';
@@ -91,11 +89,37 @@
                 opacity: 0.7;
             }
 
+            .order .received:hover p {
+                background-color: green;
+            }
+
             .order .received p {
                 background-color: #2b323d;
                 padding: 10px;
                 border-radius: 50px;
                 color: #fff;
+            }
+
+            .order tr #done p {
+                background-color: #F0F0F0;
+                border: none !important;
+                color: gray;
+            }
+
+            .order tr #done:hover, .order tr #done p:hover {
+                opacity: 1;
+                cursor: default;
+            }
+
+            .order tr #done:hover p, .order tr:hover #done p, .order tr:nth-child(odd) #done:hover p, .order tr:nth-child(odd):hover #done p {
+                opacity: 1 !important;
+                background-color: #ddd;
+            }
+
+            .order tr:nth-child(odd) #done p {
+                background-color: #fff;
+                border: none !important;
+                color: gray;
             }
 
             #orderListView a {
@@ -209,15 +233,23 @@
                                     $updateStatus = 'Return/Refund';
                                 } else if ($orderDetails['Status'] == 'To Receive') {
                                     $updateStatus = 'Order Received';
+                                } else if ($orderDetails['Status'] == 'Received') {
+                                    $updateStatus = 'Completed';
+                                } else {
+                                    $updateStatus = 'Cancelled';
                                 }
                                 echo "<tr>
                                         <td>$orderDetails[orderID]</td>
                                         <td>$orderDetails[Address]</td>
                                         <td>$paymentMethod</td>
                                         <td>$orderDetails[PaymentDate]</td>
-                                        <td>$orderDetails[Status]</td>
-                                        <td class='received' onclick='status(\"$orderID[$index]\", \"$updateStatus\")'><p>$updateStatus</p></td>
-                                        <td class='details' onclick='expand(\"$orderID[$index]\")'>More Details >></td>
+                                        <td id='status-$orderDetails[orderID]'>$orderDetails[Status]</td>";
+                                        if ($updateStatus == 'Return/Refund' || $updateStatus == 'Order Received') {
+                                            echo "<td class='received' onclick='status(\"$orderID[$index]\", \"$updateStatus\")'><p>$updateStatus</p></td>";
+                                        } else {
+                                            echo "<td class='received' id='done'><p>$updateStatus</p></td>";
+                                        }
+                                        echo "<td class='details' onclick='expand(\"$orderID[$index]\")'>More Details >></td>
                                     </tr>";
                                 $index++;
                             }
@@ -354,7 +386,17 @@
         }
 
         function status(orderID, status) {
-            confirm("You are not allow to make any changes after this. Are you sure?");
+            if (status == 'Received' || status == 'Return/Refund') {
+                if (confirm("You are not allow to make any changes after this. Are you sure?")) {
+                    const xmlhttp = new XMLHttpRequest();
+                    var x = document.getElementById("status-" + orderID);
+                    xmlhttp.onload = function() {
+                        x.innerHTML = this.responseText;
+                    }
+                    xmlhttp.open("GET", "updateStatus.php?id=" + orderID);
+                    xmlhttp.send();
+                }   
+            }     
         }
     </script>
 </html>

@@ -1,6 +1,7 @@
 <?php
     session_start();
     include '../validation/connectSQL.php';
+    date_default_timezone_set("Asia/Kuala_Lumpur"); //set time zone
 
     //Navigation record
     if (isset($_SESSION['navigation'])) {
@@ -23,7 +24,7 @@
     }
 
     //Direct back to index.php if role == admin
-    if ($_SESSION['role'] == 'admin') {
+    if ($_SESSION['role'] == 'admin' || empty($_SESSION['role'])) {
         session_unset();
         session_destroy();
         header('Location: ../index.php');
@@ -39,57 +40,83 @@
 
 <head>
     <style>
-        table, td, th{
-            border: solid black;
+        #logout {
+            padding: 20px 0;
+        }
+
+        #logout div {
+            margin: 10px auto;
+        }
+
+        #logout table {
+            width: 500px;
+            background-color: #fff;
             border-collapse: collapse;
         }
 
-        th, td{
-            padding: 0 30px;
+        #logout table, #logout table td, #logout table th {
+            border: 2px solid #000;
+        }
+
+        #logout table tr {
+            height: 40px;
+        }
+
+        #logout table th, #logout table td {
+            width: 50%;
             font-size: large;
+        }
+
+        #logout table #name {
+            padding-left: 60px;
+        }
+
+        #logout table #time {
+            text-align: center;
         }
     </style>
 
 </head>
 
 <body>
-    <?php
-    echo
-    "
-    <br>
-    <div align='center'>
-    <h2> Thank you so much for browsing our website! </h2>
-    <h2> Here is your navigation record for this session. </h2>
-    </div>
-    <br>
-    <table style='margin-left: auto; margin-right: auto;'>
-        <tr>
-            <th> Page Visited </th>
-            <th> Timestamp </th>
-        </tr>
-    ";
-
-    foreach ($navigation as $page){
-        foreach($page as $name => $time){
-            echo
-            "
-            <tr>
-                <td> $name</td>
-                <td> $time</td>
-            </tr>
+    <main>
+        <?php
+            echo "
+            <div id='logout'>
+                <div align='center'>
+                    <h2> Thank you so much for browsing our website! </h2>
+                    <h2> Here is your navigation record for this session. </h2>
+                </div>
+                <table style='margin-left: auto; margin-right: auto;'>
+                    <tr>
+                        <th> Page Visited </th>
+                        <th> Timestamp </th>
+                    </tr>
             ";
-        }
-    }
-    echo "</table><br>";
 
-    echo "<div align='center'>
-            <h2> Hope to see you again soon! </h2>
-          </div></br>";
-    ?>
+            foreach ($navigation as $page){
+                foreach($page as $name => $time){
+                    echo
+                    "
+                    <tr>
+                        <td id='name'> $name</td>
+                        <td id='time'> $time</td>
+                    </tr>
+                    ";
+                }
+            }
+            echo "</table>";
 
-    <div style="display: flex; justify-content: center; margin: 20px auto 40px">
-        <p>Redirecting back to home page in <span id="countdown">4</span> seconds...</p>
-    </div>
+            echo "<div align='center'>
+                    <h2> Hope to see you again soon! </h2>
+                </div>";
+        ?>
+
+            <div style="display: flex; justify-content: center; margin: 20px auto 40px">
+                <p>Redirecting back to <a href='../index.php'>homepage</a> in <span id="countdown">6</span> seconds...</p>
+            </div>
+        </div>
+    </main>
 
     <footer>
         <div class="footer-container">
@@ -132,12 +159,12 @@
 
     <script>
         //Countdown 4 seconds
-        startCountdown(3);
+        startCountdown(5);
 
         //Set Logout Page Timeout for 3 seconds (Wait 3 seconds before direct back to index.php)
         setTimeout(function() {
             window.location.href = '../index.php';
-        }, 4000);
+        }, 6000);
 
         function startCountdown(seconds) {
             let counter = seconds;

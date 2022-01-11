@@ -36,7 +36,18 @@
                 $count = 0;
                 $grandTotal = 0;
                     echo  "<h3 style='text-align:center; font-weight:bold;'>All Time Transaction Record</h3>";
-                    while ($transaction = mysqli_fetch_assoc($result)) { 
+                    while ($transaction = mysqli_fetch_assoc($result)) {
+                        //look for any cancelled order
+                        $sql = "SELECT * FROM order_details WHERE orderID = 'order_$transaction[OrderID]'";
+                        
+                        if ($orderResult = mysqli_query($conn, $sql)) {
+                            if ($order = mysqli_fetch_assoc($orderResult)) {
+                                if ($order['Status'] == 'Cancelled') {
+                                    continue; //continue next searching if found cancelled order
+                                }
+                            }
+                        }
+
                         $paymentMethod = $transaction['PaymentMethod'];
                         if ($paymentMethod == 'COD') {
                             $paymentMethod = 'Cash On Delivery';

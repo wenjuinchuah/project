@@ -9,6 +9,10 @@
 <html>
     <head>
         <style>
+            .regform #status {
+                background-color: #fff;
+            }
+
             #editOrderStatusView textarea {
                 resize: none;
                 width: 100%;
@@ -124,9 +128,9 @@
                     </tr>
                     <tr>
                         <td><label>Order Status</label></td>
-                        <td><select name="status">
-                                <option value="1">Waiting for Dispatch</option>
-                                <option value="2">Shipped</option>
+                        <td><select id="status" name="status">
+                                <option value="1">To Ship</option>
+                                <option value="2">To Receive</option>
                         </select></td>
                     </tr>
                 </table>
