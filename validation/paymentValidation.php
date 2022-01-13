@@ -186,13 +186,13 @@
         <div class="row">
             <div class="col-75">
                 <div class="container">
-                <form action="" method="POST">
+                <form action="" method="POST" onsubmit="return formValidation()">
                 
                     <div class="row">
                         <div class="col-50">
                             <h3>Billing Address</h3>
                             <label for="name"><i class="fa fa-user"></i> Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="John M. Doe">
+                            <input type="text" id="name" name="name" placeholder="John M. Doe" > 
                             <label for="email"><i class="fa fa-envelope"></i> Email</label>
                             <input type="text" id="email" name="email" placeholder="john@example.com">
                             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
@@ -324,7 +324,7 @@
 
                 // format in same input field 
                 $(this).val(newval);     
-            });   
+            });
         </script>
     </body>
 

@@ -26,7 +26,7 @@ if (isset($_POST['edit'])) {
     }
     if(empty($_FILES["editPicture"]["name"])){
         //if user didn't choose a picture, use the original pic name
-        $editPicture = $_POST['oriPic'];
+        $editPicture = str_replace("../productPic/","",$_POST['oriPic']);
         $boolNewPic = false;
     }else{
         //validate fake/real image

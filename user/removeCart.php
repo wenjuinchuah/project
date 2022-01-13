@@ -7,9 +7,7 @@
 
     $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
     if ($conn) {
-        $sql = "SELECT * FROM shoppingcart";
-        $result = mysqli_query($conn, $sql);
-
+        //clear user shoppingcart
         $sql = "TRUNCATE TABLE user_$userID";
         $result = mysqli_query($conn, $sql);
     }

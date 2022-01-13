@@ -74,10 +74,6 @@ table tr:nth-child(even) {
     display: none;
 }
 
-#addUserView {
-    position: absolute;
-}
-
 .userView-container label {
     font-weight: bold;
 }

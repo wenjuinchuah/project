@@ -10,18 +10,21 @@
     }
 
     //Remove COOKIE Created
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
-    
-    if (isset($_COOKIE['anonymousID'])) {
-        $anonymousID = $_COOKIE['anonymousID'];
-        $sql = "DROP TABLE anonymous_$anonymousID";
-        $result = mysqli_query($conn, $sql);
-        unset($_COOKIE['anonymousID']);
-    }
-    
-    if (isset($_COOKIE['productID'])) {
-        unset($_COOKIE['productID']);
-    }
+    // $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
+    // if (!empty($_COOKIE['anonymousID'])) {
+    //     $anonymousID = $_COOKIE['anonymousID'];
+    //     $sql = "DROP TABLE anonymous_$anonymousID";
+    //     if ($result = mysqli_query($conn, $sql)) {
+    //         if (isset($_COOKIE['productID'])) {
+    //             unset($_COOKIE['anonymousID']);
+    //             setcookie('anonymousID', '', time() - 3600, '/');
+    //         }
+    //         if (isset($_COOKIE['productID'])) {
+    //             unset($_COOKIE['productID']);
+    //             setcookie('productID', '', time() - 3600, '/');
+    //         }
+    //     }        
+    // }
 
     //Direct back to index.php if role == admin
     if ($_SESSION['role'] == 'admin' || empty($_SESSION['role'])) {

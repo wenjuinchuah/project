@@ -396,7 +396,7 @@ main {
 .Achievement {
     position: relative;
     width: auto;
-    max-height: 600px;
+    height: auto;
     background: aliceblue;
     padding: 30px;
     overflow: auto;
@@ -406,8 +406,7 @@ main {
 
 .content {
     text-align: justify;
-    text-justify: inter-word;
-
+    text-justify: inter-word;   
 }
 
 .Achievement .morebutton {
@@ -434,8 +433,8 @@ main {
 .Achievement .box {
     display: inline-block;
     position: relative;
-    width: calc(300px - 15px);
-    height: calc(400px - 20px);
+    width: calc(280px - 15px);
+    height: calc(380px - 20px);
     background: #ff8a8a;
     margin: 10px;
     box-sizing: border-box;
@@ -496,21 +495,6 @@ main {
 .Achievement .box:hover .content {
     top: 100px;
     opacity: 1;
-}
-
-.Achievement::-webkit-scrollbar {
-    width: 10px;
-}
-  
-/* Track */
-.Achievement::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-
-/* Handle */
-.Achievement::-webkit-scrollbar-thumb {
-    background: #2316af; 
-    border-radius: 10px;
 }
 
 #button,

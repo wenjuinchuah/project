@@ -73,7 +73,7 @@
                     <li class="product"><a href="../products.php">Products</a></li>
                     <?php if (isset($_SESSION['isLogin'])) { ?>
                         <?php if ($_SESSION['isLogin'] === FALSE) { ?>
-                            <?php echo "<li class='product'><a href='viewCart.php'>Shopping Cart</a></li>"; ?>
+                            <?php echo "<li class='product'><a href='../user/viewCart.php'>Shopping Cart</a></li>"; ?>
                         <?php } ?>
                     <?php } ?>
                     <div class = "dropdown">

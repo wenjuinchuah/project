@@ -240,4 +240,3 @@ function isVisible(idName1, idName2, idName3) {
         document.getElementById(idName2).style.visibility = "visible";
     }
 }
-

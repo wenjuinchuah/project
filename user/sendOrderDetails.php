@@ -149,7 +149,7 @@ $message = "
     <body>
 		<table id='header-container'>
         	<tr>
-              	<td><img width='250px' src='http://aiyoyo.ddns.net/project/src/logo.png' alt='failed'/></td>
+              	<td><img width='250' src='http://aiyoyo.ddns.net/project/src/logo.png' alt='failed'/></td>
           	</tr>
           	<tr>
               	<td>
@@ -217,10 +217,10 @@ $message = "
         <table id='footer-container'>
             <tr id='icon'>
                 <td>
-                    <a href='https://www.facebook.com/GardeniaKL' title='Facebook' target=_blank><img width='25px' src='http://aiyoyo.ddns.net/project/src/facebook-square.png'/></a>
-                    <a href='https://www.instagram.com/gardenia_kl/' title='Instagram' target=_blank><img width='25px' src='http://aiyoyo.ddns.net/project/src/instagram-square.png'/></a>
-                    <a href='https://twitter.com/gardenia_kl' title='Twitter' target=_blank><img width='25px' src='http://aiyoyo.ddns.net/project/src/twitter-square.png'/></a>
-                    <a href='https://www.youtube.com/user/GardeniaKL' title='Youtube' target=_blank><img width='25px' src='http://aiyoyo.ddns.net/project/src/youtube-square.png'/></a>
+                    <a href='https://www.facebook.com/GardeniaKL' title='Facebook' target=_blank><img width='25' src='http://aiyoyo.ddns.net/project/src/facebook-square.png'/></a>
+                    <a href='https://www.instagram.com/gardenia_kl/' title='Instagram' target=_blank><img width='25' src='http://aiyoyo.ddns.net/project/src/instagram-square.png'/></a>
+                    <a href='https://twitter.com/gardenia_kl' title='Twitter' target=_blank><img width='25' src='http://aiyoyo.ddns.net/project/src/twitter-square.png'/></a>
+                    <a href='https://www.youtube.com/user/GardeniaKL' title='Youtube' target=_blank><img width='25' src='http://aiyoyo.ddns.net/project/src/youtube-square.png'/></a>
                 </td>
             </tr>
             <tr id='notice'>

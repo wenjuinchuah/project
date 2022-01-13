@@ -1,22 +1,35 @@
-<?php 
-    include 'adminHeader.php';
-    //remove anonymous cart
+<?php
+    include '../validation/connectSQL.php';
+    session_start();
+    
+    //Remove COOKIE Created
     if (isset($_SESSION['anonymousID'])) {
         $anonymousID = $_SESSION['anonymousID'];
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
-        $sql = "SELECT * FROM anonymous_$anonymousID";
-        if ($result = mysqli_query($conn, $sql)) {
-            $sql = "DROP TABLE anonymous_$anonymousID";
-            $result = mysqli_query($conn, $sql);
-            if (isset($_COOKIE['anonymousID'])) {
-                unset($_COOKIE['anonymousID']);
+        $sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES where table_schema ='gardenia_shoppingcart' and table_name='anonymous_$anonymousID'";
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
+            $row = mysqli_num_rows($result);
+            if ($row == 1) {
+                $sql = "DROP TABLE anonymous_$anonymousID";
+                $result = mysqli_query($conn, $sql);
+                if ($result) {
+                    if (isset($_COOKIE['anonymousID'])) {
+                        unset($_COOKIE['anonymousID']);
+                        setcookie('anonymousID', '', time() - 3600, '/');
+                    }
+                    
+                    if (isset($_COOKIE['productID'])) {
+                        unset($_COOKIE['productID']);
+                        setcookie('productID', '', time() - 3600, '/');
+                    }
+                }
             }
-            
-            if (isset($_COOKIE['productID'])) {
-                unset($_COOKIE['productID']);
-            }
+            unset($_SESSION['anonymousID']);
         }
     }
+
+    include 'adminHeader.php';
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +145,6 @@
         </div>
     </div>
     
-    
     <!--Edit Product View -->
     <div id="editProductView">
         <div class="userView-container">
@@ -197,7 +209,6 @@
             </form>
         </div>
     </div>
-
 
     <script src="dashboardScript.js"></script>
     <script>

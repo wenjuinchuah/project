@@ -22,11 +22,12 @@
             $sql = "SELECT * FROM anonymous_$anonymousID";
             $result = mysqli_query($conn, $sql);
             $anonymousCart = mysqli_fetch_assoc($result);
-
+            
             $userID = $_SESSION['userID'];
             $sql = "SELECT * FROM user_$userID";
-            echo $userID;
+            //echo $userID;
 
+            $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
             $sql = "SELECT pic_path FROM user WHERE Email='$loginUsername'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_row($result);

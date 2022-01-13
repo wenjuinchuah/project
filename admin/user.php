@@ -287,7 +287,7 @@
                     </select>
                 </div>
                 <div class="button">
-                    <input type="submit" id="reset" class="resetPassword" name='resetPassword' value="Reset Password"></input>
+                    <input type="submit" id="reset" class="resetPassword" name='resetPassword' value="Reset Password" onclick="alert('Password is reset! New Pasword is: Abc@123')"></input>
                     <input type="submit" id="edit" name="editUser" value="Confirm Edit"></input>
                 </div>
             </form>

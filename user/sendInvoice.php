@@ -31,7 +31,6 @@
     $subject = 'Invoice #' . $transactionID;
     $headers = 'From:' . $sender . "\r\n";
     $headers .= "Content-type: text/html";
-
 $message = "
 <!DOCTYPE html>
 <html>
@@ -77,7 +76,7 @@ $message = "
                 text-align: center;
                 width: 100%;
             }
-
+            
             #header-container img {
                 margin: 15px 0;
             }
@@ -201,7 +200,7 @@ $message = "
                             <td>
                                 <table>
                                     <tr>
-                                        <td class='width-50'><img width='150px' src='http://aiyoyo.ddns.net/project/src/gardenia.png' alt='failed'></td>
+                                        <td class='width-50'><img width='150' src='http://aiyoyo.ddns.net/project/src/gardenia.png' alt='failed'></td>
                                         <td class='width-20'>
                                             <p>INVOICE NO:</p>
                                             <p>Issue Date:</p>
@@ -303,8 +302,7 @@ $message = "
                                         <td></td>
                                         <td></td>
                                         <td>Received</td>";
-                                        $transaction = mysqli_fetch_assoc($result);
-                                        if ($transaction['PaymentMethod'] == 'CC') {
+                                        if($_SESSION['paymentMethod'] == 'CC'){
                                             $message .= "<td>RM $total</td>";
                                         } else {
                                             $message .= "<td>RM 0.00</td>";
@@ -321,14 +319,14 @@ $message = "
                                         <td></td>
                                         <td></td>
                                         <td>Amount due</td>";
-                                        if ($transaction['PaymentMethod'] == 'CC') {
-                                            $message .= "<td>RM 0.00</td>";
+                                        if($_SESSION['paymentMethod'] == 'CC'){
+                                            $message .= "<td>RM 0.00</td>"; 
                                         } else {
                                             $message .= "<td>RM $total</td>";
                                         }
                                     $message .= "
                                     </tr>
-                                </table>
+                                </table> 
                             </td>
                         </tr>
                     </table>
@@ -341,8 +339,8 @@ $message = "
                 </td>
             </tr>
         </table>        
-        <hr>              
-        <table id='footer-container'>
+        <hr>  
+        <table id='footer-container'> 
             <tr id='icon'>
                 <td>
                     <a href='https://www.facebook.com/GardeniaKL' title='Facebook' target=_blank><img width='25px' src='http://aiyoyo.ddns.net/project/src/facebook-square.png'/></a>
@@ -363,12 +361,12 @@ $message = "
 </html>
 ";
 
-if (mail($recipient, $subject, $message, $headers))
-{
-    echo "Message accepted";
-}
-else
-{
-    echo "Error: Message not accepted";
-}
+    if (mail($recipient, $subject, $message, $headers))
+    {
+        echo "Message accepted";
+    }
+    else
+    {
+        echo "Error: Message not accepted";
+    }
 ?>

@@ -136,7 +136,7 @@
         }
         
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "UPDATE user SET Password = '$password' WHERE UserID = '$userID'"; //jn i forgot to add the condition then all users password changed
+        $sql = "UPDATE user SET Password = '$password' WHERE UserID = '$userID'";
         $result = mysqli_query($conn, $sql);
     }
 

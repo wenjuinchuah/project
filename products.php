@@ -127,10 +127,14 @@ if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
                 float:right;
             }
 
-            .addtoCart-container i:hover{
-                opacity:0.7;
-                color:#CE0101;
-                cursor:pointer;
+            .addtoCart-container i:hover, .addtoCart-container #submit:hover{
+                opacity: 0.7;
+                color: #CE0101;
+                cursor: pointer;
+            }
+
+            .addtoCart-container #submit:hover {
+                color: #fff;
             }
 
             .addCart, .outStock {

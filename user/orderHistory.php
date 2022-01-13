@@ -386,12 +386,13 @@
         }
 
         function status(orderID, status) {
-            if (status == 'Received' || status == 'Return/Refund') {
+            if (status == 'Order Received' || status == 'Return/Refund') {
                 if (confirm("You are not allow to make any changes after this. Are you sure?")) {
                     const xmlhttp = new XMLHttpRequest();
                     var x = document.getElementById("status-" + orderID);
                     xmlhttp.onload = function() {
                         x.innerHTML = this.responseText;
+                        location.reload();
                     }
                     xmlhttp.open("GET", "updateStatus.php?id=" + orderID);
                     xmlhttp.send();

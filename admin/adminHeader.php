@@ -1,17 +1,20 @@
 <?php
     include '../validation/connectSQL.php';
-    session_start();
+    if (!isset($_SESSION)) {
+        session_start();
+    }
 
     //Get order amount
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_order');
-    $sql = "SELECT COUNT(*) AS orderCount FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'gardenia_order'";
+    $sql = "SELECT * FROM order_details";
     $result = mysqli_query($conn, $sql);
-    $assocResult = mysqli_fetch_assoc($result);
-    $orderCount = $assocResult['orderCount'];
+    if ($result) {
+        $orderCount = mysqli_num_rows($result);
+    } else {
+        $orderCount = 0;
+    }
     $_SESSION['orderCount'] = $orderCount;
 
     //Get user amount
-    $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia');
     $sql = "SELECT * FROM user";
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -22,7 +25,7 @@
     $_SESSION['userCount'] = $userCount;
 
     //Get transaction amount
-    $sql = "SELECT * FROM transaction";
+    $sql = "SELECT * FROM order_details WHERE Status != 'Cancelled'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
         $transactionCount = mysqli_num_rows($result);

@@ -17,18 +17,25 @@
     if ($conn) {  
         //if userType == user
         if ($userType == 'user') {
-            $sql = "CREATE TABLE user_$userID (
-                ProductID INT(11) NOT NULL,
-                ProductName VARCHAR(100) NOT NULL,
-                Price FLOAT NOT NULL,
-                Quantity INT(11) NOT NULL
-            )";
+            $sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'user_$userID'";
+            //only create table if no table
             $result = mysqli_query($conn, $sql);
+            if (empty(mysqli_fetch_row($result))){
+                $sql = "CREATE TABLE user_$userID (
+                    ProductID INT(11) NOT NULL,
+                    ProductName VARCHAR(100) NOT NULL,
+                    Price FLOAT NOT NULL,
+                    Quantity INT(11) NOT NULL
+                )";
+                $result = mysqli_query($conn, $sql);
+            }
         } else if ($userType == '') {
+            //if userType not defined
             $i = 1;
             if (isset($_COOKIE['anonymousID'])) {
                 $anonymousID = $_COOKIE['anonymousID'];
-                $sql = "SELECT * FROM anonymous_$anonymousID";
+                //$sql = "SELECT * FROM anonymous_$anonymousID";
+                $sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'anonymous_$anonymousID'";
                 if ($result = mysqli_query($conn, $sql)) {
                     $isFound = true;
                 } else {
@@ -53,7 +60,7 @@
                         )";
                         $result = mysqli_query($conn, $sql);
                         $isFound = true;
-                        setcookie("anonymousID", $i);
+                        setcookie("anonymousID", $i, time() + 3600, '/');
                         $_SESSION['anonymousID'] = $i;
                     } else {
                         $i++;

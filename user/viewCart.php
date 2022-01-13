@@ -1,8 +1,7 @@
 <?php
     //hide error_reporting
     error_reporting(0);
-    
-    include 'userHeader.php';
+     
     include '../validation/loginValidation.php';
     include '../validation/connectSQL.php';
     include '../database/createCartTable.php';
@@ -12,10 +11,9 @@
         array_push($_SESSION['navigation'], array("Shopping Cart" => date("Y-m-d H:i:s")));
     }
 
-    if (isset($_COOKIE['anonymousID'])) {
+    if (isset($_SESSION['anonymousID'])) {
         $userType = $_SESSION['role'];
-        $anonymousID = $_COOKIE['anonymousID'];
-
+        $anonymousID = $_SESSION['anonymousID'];
         //append anonymous's cart into user's cart
         if ($userType == 'user' && isset($anonymousID)) {
             $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
@@ -61,15 +59,20 @@
                 $sql = "DROP TABLE anonymous_$anonymousID";
                 $result = mysqli_query($conn, $sql);
                 if (isset($_COOKIE['anonymousID'])) {
-                    unset($_COOKIE['anonymousID']);
+                   // unset($_COOKIE['anonymousID']);
+                    setcookie('anonymousID', '', time() - 3600, '/');
+                    unset($_SESSION['anonymousID']);
                 }
                 
                 if (isset($_COOKIE['productID'])) {
-                    unset($_COOKIE['productID']);
+                    //unset($_COOKIE['productID']); #causing problem just now
+                    setcookie('productID', '', time() - 3600, '/');
                 }
             }
         }
     }
+
+    include 'userHeader.php';
 
     function result($conn, $sql, $servername, $dbUsername, $dbPassword) {
         $result = mysqli_query($conn, $sql);
@@ -399,10 +402,10 @@
             var y = document.getElementById("priceList" + id);
             xmlhttp.onload = function () {
                 x.innerHTML = this.responseText;
+                location.reload();
             }
             xmlhttp.open("GET", "editCart.php?action=add&id=" + id);
             xmlhttp.send();
-            location.reload();
         }
 
         function minusAmount(id) {
@@ -413,6 +416,7 @@
                 if (x.innerHTML == 0) {
                     document.getElementById("item" + id).deleteRow();
                 }
+                location.reload();
             }
             xmlhttp.open("GET", "editCart.php?action=minus&id=" + id);
             xmlhttp.send();
@@ -425,6 +429,7 @@
                 var x = document.getElementById("item" + id);
                 xmlhttp.onload = function () {
                     document.getElementById("item" + id).deleteRow();
+                    location.reload();
                 }
                 xmlhttp.open("GET", "editCart.php?action=remove&id=" + id);
                 xmlhttp.send();
@@ -477,7 +482,7 @@
                             $anonymousID = $_SESSION['anonymousID'];
                             $sql = "SELECT * FROM anonymous_$anonymousID ORDER BY ProductID";
                             result($conn, $sql, $servername, $dbUsername, $dbPassword);
-                        }                 
+                        }
                     }
                 ?>
             </table>
