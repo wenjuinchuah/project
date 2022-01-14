@@ -48,6 +48,10 @@
             .regform input {
                 margin: auto;
             }
+
+            .regform small{
+                visibility: <?=$showError?>
+            }
         </style>
     </head>
     <body class="w3-light-grey">
@@ -55,7 +59,7 @@
         <div style="margin-left: 15px;">
             <h5 style="display: inline-block"><b><i class="fa fa-list"></i> Products</b></h5>
             <div class="w3-right" style="margin-right: 15px">
-                <h5 class="addFunction" onclick="addProduct()"><i class="fa fa-plus"></i> Add Product</h5>
+                <h5 class="addFunction" onclick="showModal('addProductView')"><i class="fa fa-plus"></i> Add Product</h5>
             </div>
         </div>
         <div style="padding: 0 15px">
@@ -84,9 +88,9 @@
                                 <i class='fa fa-plus' class='button-quantity' onclick='addStock($column[0])'></i>
                             </td>";
                         echo "<td>$column[5]</td>";
-                        echo '<td><button type="button" class="openEdit" name="openEdit" onclick="editProduct()">
+                        echo '<td><button type="button" class="openEdit" name="openEdit" onclick="showModal(\'editProductView\')">
                               <i class="fas fa-edit"></i></button></td>';
-                        echo '<td><button type="button" class="openDelete" name="openDelete" onclick="deleteProduct()">	
+                        echo '<td><button type="button" class="openDelete" name="openDelete" onclick="showModal(\'deleteProductView\')">	
                               <i class="fa-solid fa-trash-can"></i></button></td>';
                         echo "</tr>"; 
                     ?>
@@ -107,7 +111,7 @@
     <div id="addProductView">
         <div class="userView-container">
             <form class="regform" action="" method="POST" enctype="multipart/form-data">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOff()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('addProductView')"></i>
                 <h2>Add New Product</h2>
                 <div>
                     <label>Product Name</label>
@@ -149,7 +153,7 @@
     <div id="editProductView">
         <div class="userView-container">
             <form class="regform" action="" method="POST" enctype="multipart/form-data">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffEdit()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('editProductView')"></i>
                 <h2>Edit Product</h2>
                 <input type="hidden" id="editID" name="editID">
                 <input type="hidden" id="oriPic" name="oriPic"> 
@@ -193,7 +197,7 @@
     <div id="deleteProductView">
         <div class="userView-container">
             <form class='regform' action="" method="POST">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffDelete()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('deleteProductView')"></i>
                 <input type="hidden" id="deleteID" name="deleteID">
                 <h2>Delete Product</h2>
                 <div style="text-align: center">
@@ -248,9 +252,6 @@
                 }).get();
                 //to retrieve image source
                 var img = $tr.find("img").attr('src');
-                
-                //write data to console
-                console.log(data,img);
 
                 //set the value for respective attributes
                 $('#editID').val(data[0]);
@@ -269,8 +270,6 @@
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-                //write data to console
-                console.log(data);
 
                 //set the id to delete
                 $('#deleteID').val(data[0]);

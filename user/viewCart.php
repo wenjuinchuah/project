@@ -18,12 +18,12 @@
         if ($userType == 'user' && isset($anonymousID)) {
             $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
             $sql = "SELECT * FROM anonymous_$anonymousID";
-            if ($result = mysqli_query($conn, $sql)) {
+            if ($result = mysqli_query($conn, $sql)) { //if there is anything in the anonymous's cart
                 while ($cartList = mysqli_fetch_assoc($result)) {
                     $sql = "SELECT * FROM user_$userID WHERE ProductID = '$cartList[ProductID]'";
                     $findResult = mysqli_query($conn, $sql);
                     $count = mysqli_num_rows($findResult);
-                    if ($count != 0) {
+                    if ($count != 0) { //if there is matching product (add the quantity)
                         while ($userCart = mysqli_fetch_assoc($findResult)) {
                             if ($cartList['ProductID'] == $userCart['ProductID']) {
                                 $userCart['Quantity'] += $cartList['Quantity'];

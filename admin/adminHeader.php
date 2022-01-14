@@ -45,7 +45,7 @@
     $productCount = mysqli_num_rows($productList);
     $_SESSION['productCount'] = $productCount;
 
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['addProduct'])) {
         $product = mysqli_fetch_assoc($productList);
 
         $productName = $_POST['productName'];

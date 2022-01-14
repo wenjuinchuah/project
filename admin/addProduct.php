@@ -18,12 +18,4 @@
     } else{
         echo "Sorry, there was an error uploading your file.";
     }
-
-    // $sql = "INSERT INTO products (Name, Price, Stock) VALUES ('$productName', '$productPrice','$productStock')";
-
-    // if (mysqli_query($conn, $sql) === TRUE) {
-    //     header('Location: dashboard.php');
-    // } else {
-    //     echo "Error: " . $sql . "<br>" . $conn->error;
-    // }
 ?>

@@ -1,28 +1,11 @@
-//addProduct View
-function addProduct() {
-    document.getElementById("addProductView").style.display = "block";
+//open popup window
+function showModal(id){
+    document.getElementById(id).style.display = "block";
 }
 
-function turnOff() {
-    document.getElementById("addProductView").style.display = "none";
-}
-
-//Edit product view
-function editProduct() {
-    document.getElementById("editProductView").style.display = "block";
-}
-
-function turnOffEdit(){
-    document.getElementById("editProductView").style.display = "none";
-}
-
-//Delete product view
-function deleteProduct() {
-    document.getElementById("deleteProductView").style.display = "block";
-}
-
-function turnOffDelete(){
-    document.getElementById("deleteProductView").style.display = "none";
+//close popup window
+function closeModal(id){
+    document.getElementById(id).style.display = "none";
 }
 
 //addUser View
@@ -32,10 +15,6 @@ function addUser() {
     let html = document.body.scrollHeight;
     html += 60;
     document.getElementById("addUserView").style.height = html + 'px';
-}
-
-function turnOffUserView() {
-    document.getElementById("addUserView").style.display = "none";
 }
 
 //editUser View
@@ -53,19 +32,6 @@ function editUser(userID, fname, lname, email, mobile, state, gender, userType) 
         document.getElementById("editfemale").checked = true;
     }
     document.getElementById("userType").value = userType;
-}
-
-function turnOffUserEditView() {
-    document.getElementById("editUserView").style.display = "none";
-}
-
-//deleteUser View
-function deleteUser() {
-    document.getElementById("deleteUserView").style.display = "block";
-}
-
-function turnOffUserDelete() {
-    document.getElementById("deleteUserView").style.display = "none";
 }
 
 /* successDisplay */

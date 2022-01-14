@@ -343,7 +343,7 @@
                     </div>
                     <div class="button">
                         <input type="reset" id="reset" value="Clear"></input>
-                        <input type="submit" id="submit" name="submit" value="Register" onclick="return  confirm('Do you want to register?')"></input>
+                        <input type="submit" id="submit" name="register" value="Register" onclick="return  confirm('Do you want to register?')"></input>
                     </div>
                 </form>
             </div>
@@ -371,7 +371,7 @@
             <div class="subscribe">
                 <h3 class="pacifico_normal">Subscribe</h3>
                 <form>
-                    <input type="email" id="email" name="email" placeholder="Enter your Email ">
+                    <input type="email" id="semail" name="semail" placeholder="Enter your Email ">
                     <button type="submit">Subscribe</button>
                 </form>
             </div>

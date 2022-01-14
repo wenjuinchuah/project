@@ -49,7 +49,7 @@
                                 <td>$user[UserType]</td>
                                 <td><button type='button' class='openEdit' name='openEdit' onclick=\"editUser('$user[UserID]', '$user[FirstName]', '$user[LastName]', '$user[Email]', '$mobile', '$user[State]', '$user[Gender]', '$user[UserType]')\">
                                 <i class='fas fa-edit'></i></button></td>
-                                <td><button type='button' class='openDelete' name='openDelete' onclick='deleteUser()'>	
+                                <td><button type='button' class='openDelete' name='openDelete' onclick='showModal(\"deleteUserView\")'>	
                                 <i class='fa-solid fa-trash-can'></i></button></td>
                             </tr>";
                         ?>
@@ -117,8 +117,8 @@
     <!--Add User View-->
     <div id="addUserView">
         <div class="userView-container">
-            <form class="regform" id="regform" action="../validation/formValidation.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidation()">
-            <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserView()"></i>
+            <form class="regform" id="addUser" action="../validation/formValidation.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidation()">
+            <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('addUserView')"></i>
                 <h2>Add New User</h2>
                 <div>
                     <label>First Name</label>
@@ -217,8 +217,8 @@
     <!--Edit User View-->
     <div id="editUserView">
         <div class="userView-container">
-            <form class="regform" id="editform" action="editUser.php" method="POST" enctype="multipart/form-data">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserEditView()"></i>
+            <form class="regform" id="editUser" action="editUser.php" method="POST" enctype="multipart/form-data">
+                <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('editUserView')"></i>
                 <h2>Edit User Profile</h2>
                 <div style='display: none'>
                     <label>UserID</label>
@@ -298,7 +298,7 @@
     <div id="deleteUserView">
         <div class="userView-container">
             <form class="regform" action="" method="POST">
-                <i class="fa fa-times w3-right w3-xlarge" onclick="turnOffUserDelete()"></i>
+                <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('deleteUserView')"></i>
                 <input type="hidden" id="deleteID" name="deleteID"></input>
                 <h2>Delete User</h2>
                 <div style="text-align: center">
@@ -329,8 +329,6 @@
                 var data = $tr.children("td").map(function () {
                     return $(this).text();
                 }).get();
-                //write data to console
-                console.log(data);
 
                 //set the id to delete
                 $('#deleteID').val(data[0]);

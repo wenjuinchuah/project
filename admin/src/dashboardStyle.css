@@ -115,6 +115,7 @@ table tr:nth-child(even) {
 }
 
 .userView-container {
+    height:100px;
     justify-content: center;
     align-content: center;
 }
@@ -126,6 +127,21 @@ table tr:nth-child(even) {
     padding: 10px;
     background-color: #fff;
     border-radius: 10px;
+}
+
+#addUser, #editUser {
+    width: 420px;
+    overflow:scroll;
+    overflow-x:hidden;
+    height:500px;
+}
+
+#addUser #mobile, #editUser #editmobile {
+    width: calc(100% - 50px - 2px) !important;
+}
+
+#addUser select, #editUser select {
+    background-position: 97% center !important;
 }
 
 /* Title */
@@ -227,20 +243,20 @@ table tr:nth-child(even) {
 }
 
 .regform #i-password1, .regform #i-password1-edit {
-    left: 265px;
+    left: calc(100% - 100px);
 }
 
 .regform #i-password1-slash, .regform #i-password1-slash-edit {
-    left: 243.5px;
+    left: calc(100% - 122px);
 } 
 
 .regform #i-password2, .regform #i-password2-edit {
-    left: 206px;
+    left: calc(100% - 158px);
     top: 37px;
 } 
 
 .regform #i-password2-slash, .regform #i-password2-slash-edit {
-    left: 184.5px;
+    left: calc(100% - 179.5px);
     top: 37px;
 }
 

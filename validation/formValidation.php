@@ -1,9 +1,7 @@
 <?php
-    include '../user/userHeader.php';
-
     ob_start();
     //Hide Undefine Message
-    error_reporting(0);
+    //error_reporting(0);
 
     //Hide Error Message and Success View by Default
     $showError = $successVisibility = 'hidden';
@@ -20,8 +18,12 @@
         $submit = $_POST['register'];
         $state = $_POST['state'];
         $gender = $_POST['gender'];
-        $userType = $_POST['role'];
-    }
+        if (isset($_POST['role'])) {
+            $userType = $_POST['role'];
+        } else {
+            $userType = 'user';
+        }
+    }  
 
     //Function declaration  
     function errorHandle($idName, $state) {
@@ -107,7 +109,7 @@
                 $emailError = 'Email exists, Please try another email!';
                 $showError = errorHandle('$email', $submit);
             } else {
-                $showError = '';
+                $emailError = '';
             }
         }
     };
@@ -192,7 +194,7 @@
             //Hash Password
             $password1 = password_hash($password1, PASSWORD_DEFAULT);
             //insert data into mySQL
-            $sql = "INSERT INTO user (FirstName, LastName, Email, Mobile, State, Gender, Password, UserType)
+            $sql = "INSERT INTO user(FirstName, LastName, Email, Mobile, State, Gender, Password, UserType)
                 VALUES ('$fname', '$lname', '$email', '60$mobile', '$state', '$gender', '$password1', '$userType')";
 
             if ($conn->query($sql) === TRUE) {
@@ -204,10 +206,11 @@
             echo "Username exists!";
         }
         
-        header('Location: ../index.php');
+        //header('Location: ../index.php');
         ob_end_flush();
     };
 
+    include '../user/userHeader.php';
 ?>
 
 <!DOCTYPE html>
@@ -262,7 +265,7 @@
             padding-left: 5px;
             color: red;
             position: absolute;
-            visibility: <?=$showError?>;
+            visibility: visible;
         }
 
         #regform input, #regform select {
@@ -434,7 +437,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            visibility: visible;
+            visibility: <?=$successVisibility?>;
         }
 
         .success-container {
@@ -614,7 +617,7 @@
             <div class="subscribe">
                 <h3 class="pacifico_normal">Subscribe</h3>
                 <form>
-                    <input type="email" id="email" name="email" placeholder="Enter your Email ">
+                    <input type="email" id="semail" name="semail" placeholder="Enter your Email ">
                     <button type="submit">Subscribe</button>
                 </form>
             </div>
