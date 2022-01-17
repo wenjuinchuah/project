@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
     <body class="w3-light-grey">
-
         <!--User-->
         <div style="margin-left: 15px;">
             <h5 style="display: inline-block"><b><i class="fa fa-users"></i> Users</b></h5>
@@ -200,15 +199,10 @@
                         <label for="admin">Admin</label>
                     </div>
                 </div>
-                <div class="checkbox-container">
-                    <input type="checkbox" id="t&c" name="t&c" value="value1" />
-                    <label for="t&c">I accept the above <u>Terms and Conditions</u></label>
-                    <small id="t&cError">Error message</small>
-                </div>
-                <div class="button">
+                <div class="button" style="margin-top:-5px;">
                     <input type="reset" id="reset" value="Clear"></input>
-                    <input type="submit" id="submit" name="register" value="Register"
-                        onclick="return  confirm('Do you want to register?')"></input>
+                    <input type="submit" id="submit" name="register" value="Add User"
+                        onclick="return confirm('Do you want to register?')"></input>
                 </div>
             </form>
         </div>
@@ -217,7 +211,7 @@
     <!--Edit User View-->
     <div id="editUserView">
         <div class="userView-container">
-            <form class="regform" id="editUser" action="editUser.php" method="POST" enctype="multipart/form-data">
+            <form class="regform" id="editUser" action="" method="POST" enctype="multipart/form-data">
                 <i class="fa fa-times w3-right w3-xlarge" onclick="closeModal('editUserView')"></i>
                 <h2>Edit User Profile</h2>
                 <div style='display: none'>
@@ -227,24 +221,32 @@
                 <div>
                     <label>First Name</label>
                     <input type="text" id="editfname" name="editfname" placeholder="First Name" />
-                    <small id="editfnameError"><?php echo $fnameError ?></small>
+                    <?php if (isset($editfnameError)) {?>
+                        <small id="editfnameError"><?php echo $editfnameError ?></small>
+                    <?php } ?>
                 </div>
                 <div>
                     <label>Last Name</label>
                     <input type="text" id="editlname" name="editlname" placeholder="Last Name" />
-                    <small id="editlnameError"><?php echo $lnameError ?></small>
+                    <?php if (isset($editlnameError)) {?>
+                        <small id="editlnameError"><?php echo $editlnameError ?></small>
+                    <?php } ?>
                 </div>
                 <div>
                     <label>Email</label>
                     <input type="email" id="editemail" name="editemail" placeholder="Email Address" />
-                    <small id="editemailError"><?php echo $emailError ?></small>
+                    <?php if (isset($editemailError)) {?>
+                        <small id="editemailError"><?php echo $editemailError ?></small>
+                    <?php } ?>
                 </div>
                 <div>
                     <label>Mobile</label>
                     <div class="mobile-container">
                         <input type="text" id="editcode" name="code" value="+60" disabled />
                         <input type="tel" id="editmobile" name="editmobile" placeholder="Mobile Number" maxlength="10" />
-                        <small id="editmobileError"><?php echo $mobileError ?></small>
+                        <?php if (isset($editmobileError)) {?>
+                            <small id="editmobileError"><?php echo $editmobileError ?></small>
+                        <?php } ?>
                     </div>
                 </div>
                 <div>
@@ -287,8 +289,8 @@
                     </select>
                 </div>
                 <div class="button">
-                    <input type="submit" id="reset" class="resetPassword" name='resetPassword' value="Reset Password" onclick="alert('Password is reset! New Pasword is: Abc@123')"></input>
-                    <input type="submit" id="edit" name="editUser" value="Confirm Edit"></input>
+                    <input type="button" id="reset" class="resetPassword" name='resetPassword' value="Reset Password" onclick="resetpassword()"></input>
+                    <input type="submit" id="edit" name="editUser" value="Confirm Edit" onclick="return confirm('Are you sure?')"></input>
                 </div>
             </form>
         </div>

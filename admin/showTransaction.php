@@ -75,7 +75,7 @@ if($category == 'daily'){
     $grandTotal = 0;
     $FirstDay = date("Y/m/d", strtotime('sunday last week'));  
     $LastDay = date("Y/m/d", strtotime('sunday this week'));
-    
+
     echo  "<h3 style='text-align:center; font-weight:bold;'>Transaction Record From $FirstDay to $LastDay</h3>";
 
     while($transaction = mysqli_fetch_assoc($result)){

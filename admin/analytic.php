@@ -18,16 +18,13 @@
      $sum = $dates = array();
      while($i<30){
          $dates[$i] = date("Y-m-d",strtotime("now - ".$ctr."days"));
-         $sql = "SELECT SUM(Total) AS sumValue FROM transaction WHERE CAST(TransactionDate as DATE) = '$dates[$i]' ";
+         $sql = "SELECT OrderID,SUM(Total) AS sumValue FROM transaction WHERE CAST(TransactionDate as DATE) = '$dates[$i]' ";
          $result = mysqli_query($conn,$sql);
          $run = mysqli_fetch_assoc($result);
          $sum[$i] = round($run["sumValue"],2);
-         // echo $dates[$i]."->".$sum[$i] . "<br>";
          $dates[$i] = date("M-d",strtotime("now - ".$ctr."days"));
          $i++; $ctr--;
     }  
-    $total7 = array_sum(array_slice($sum,6));
-    $total30 = array_sum($sum);
 
     //gender proportion
     $gender = ["Male","Female"];
@@ -113,8 +110,7 @@
             </div>
         </div>
         <div class="w3-half">
-            <h4 style="display:inline-block;">Past 7 Days Sales (RM
-            <?php echo number_format($total7,"2","."," ");?>)</h4>
+            <h4 style="display:inline-block;">Past 7 Days Sales</h4>
             <button class="w3-right w3-button w3-black w3-round-xxlarge"
             onclick='showModal("30days");'>30 Days</button>
             <div class="chartContainer w3-padding-16">
@@ -156,8 +152,7 @@
             <header class="w3-container w3-lightblue"> 
                 <span onclick="closeModal('30days');" 
                 class="w3-button w3-display-topright w3-xlarge">&times;</span>
-                <h2 style="text-align:center;">Past 30 Days Sales (RM
-                <?php echo number_format($total30,"2","."," ");?>)</h2>
+                <h2 style="text-align:center;">Past 30 Days Sales</h2>
             </header>
             <div class="w3-container">
                 <canvas id="chart6"></canvas>

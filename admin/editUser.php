@@ -1,6 +1,4 @@
 <?php
-    include '../validation/connectSQL.php';
-
     if (isset($_POST['editUser'])) {
         //Declaring Variables
         $userID = $_POST['userID'];
@@ -13,49 +11,35 @@
         $userType = $_POST['userType'];
         $submit = $_POST['editUser'];
 
-        //Function declaration  
-        function errorHandle($idName, $state) {
-            if (isset($state)) {
-                if (isset($idName)) {
-                    return 'visible';
-                }
-                return 'visible';
-            } else {
-                return 'hidden';
-            }
-        }
-
         //First Name Input Validation
         if (empty($fname)) {
             $editfnameError = 'First Name cannot be blank!';
-            $showError = errorHandle('$fname', $submit);
+            $showError = 'visible';
         } else {
             $fname = trim($fname);
             $firstChar_fName = $fname[0];
             
             if (!preg_match("/^[a-zA-Z-' ]*$/",$fname)) {
                 $editfnameError = 'Only Letters are allowed!';
-                $showError = errorHandle('$fname', $submit);
+                $showError = 'visible';
             } else {
                 if (!preg_match("/^[A-Z]+/", $firstChar_fName)) {
                     $editfnameError = 'First Character must be in Capital!';
-                    $showError = errorHandle('$fname', $submit);
-                } else {
-                    $editfnameError = '';
-                }
+                    $showError = 'visible';
+                } 
             }
         };
 
         //Last Name Input Validation
         if (empty($lname)) {
             $editlnameError = 'Last Name cannot be blank!';
-            $showError = errorHandle('$lname', $submit);
+            $showError = 'visible';
         } else {
             $lname = trim($lname);
 
             if (!preg_match("/^[a-zA-Z' \/]*$/",$lname)) {
                 $editlnameError = 'Only Letters and / are allowed!';
-                $showError = errorHandle('$lname', $submit);
+                $showError = 'visible';
             } else {
                 $name = explode(' ', $lname);
 
@@ -64,11 +48,9 @@
 
                     if (!preg_match("/^[A-Z]+/", $firstChar_lname[0])) {
                         $editlnameError = 'First Character of each word must be in Capital Letter!';
-                        $showError = errorHandle('$lname', $submit);
+                        $showError = 'visible';
                         break;
-                    } else {
-                        $editlnameError = '';
-                    }
+                    } 
                 }
             }
         };
@@ -77,20 +59,18 @@
         $regex = '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
         if (empty($email)) {
             $editemailError = 'Email cannot be blank!';
-            $showError = errorHandle('$email', $submit);
+            $showError = 'visible';
         } else {
             if (!preg_match($regex, $email)) {
                 $editemailError = 'Please enter a valid email!';
-                $showError = errorHandle('$email', $submit);
-            } else {
-                $showError = '';
-            }
+                $showError = 'visible';
+            } 
         };
 
         //Mobile Input Validatiom
         if (empty($mobile)) {
             $editmobileError = 'Mobile number cannot be blank!';
-            $showError = errorHandle('$mobile', $submit);
+            $showError = 'visible';
         } else {
             $mobile = trim($mobile);
                 //remove first char if it's 0
@@ -99,10 +79,8 @@
                 }
                 if (strlen($mobile) < 9 || strlen($mobile) > 10) {
                     $editmobileError = 'Please enter a valid mobile number!';
-                    $showError = errorHandle('$mobile', $submit);
-                } else {
-                    $editmobileError = '';
-                }
+                    $showError = 'visible';
+                } 
         };
 
         if (empty($editfnameError) && empty($editlnameError) && empty($editemailError) && empty($editmobileError)) {
@@ -119,10 +97,12 @@
                     WHERE UserID = '$userID'";
             $result = mysqli_query($conn, $sql);
             if ($result) {
-                echo 'success';
+                header('Location: user.php');
             } else {
                 echo 'failed';
             }
+        } else{
+            $editUserView = 'block';
         }
     } else if (isset($_POST['resetPassword'])) {
         //reset password
@@ -138,7 +118,7 @@
         $password = password_hash($password, PASSWORD_DEFAULT);
         $sql = "UPDATE user SET Password = '$password' WHERE UserID = '$userID'";
         $result = mysqli_query($conn, $sql);
+        header('Location: user.php');
     }
-
-    header('Location: user.php');
+    
 ?>

@@ -172,13 +172,15 @@
 
     //T&C Checkedbox Validation (when checkbox checked, the value is set to 'value1')
     //Hence, we check for the string $tnc == $_POST['value1']
-    if ($tnc != 'value1') {
-        $tncError = 'Please read the Terms and Conditions!';
-        $showError = errorHandle('$tnc', $submit);
-    } else {
-        $tnc = 'checked';
-        $tncError = '';
-    };
+    if (!empty($tnc)) {
+        if ($tnc != 'value1') {
+            $tncError = 'Please read the Terms and Conditions!';
+            $showError = errorHandle('$tnc', $submit);
+        } else {
+            $tnc = 'checked';
+            $tncError = '';
+        }
+    }
 
     //Change id=success visiblity to visible
     if (empty($fnameError) && empty($lnameError) && empty($emailError) && empty($mobileError) && empty($password1Error) && empty($password2Error) && empty($tncError)) {

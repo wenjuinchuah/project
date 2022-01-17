@@ -14,9 +14,11 @@
         $sql = "SELECT * FROM products WHERE ID = '$productID'";
         if ($result = mysqli_query($conn, $sql)) {
             $row = mysqli_fetch_row($result); 
-            $productName = $row[1];
-            $productPrice = $row[2];
-            $productStock = $row[3];
+            if ($row != 0) {
+                $productName = $row[1];
+                $productPrice = $row[2];
+                $productStock = $row[3];
+            }
         }
 
         $conn = mysqli_connect($servername, $dbUsername, $dbPassword, 'gardenia_shoppingcart');
@@ -41,8 +43,8 @@
                 }
             }
         } else if ($userType == '') {
-            if (isset($_COOKIE['anonymousID'])) {
-                $anonymousID = $_COOKIE['anonymousID'];
+            if (isset($_SESSION['anonymousID'])) {
+                $anonymousID = $_SESSION['anonymousID'];
 
                 $sql = "SELECT Quantity FROM anonymous_$anonymousID WHERE ProductID = '$productID'";
 

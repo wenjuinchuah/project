@@ -230,6 +230,7 @@ main {
 .products-contents button:hover {
     background-color: #ff8a8a;
     color: black;
+    cursor: pointer;
 }
 
 .products-contents a:hover {

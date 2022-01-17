@@ -175,7 +175,8 @@ if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
                 margin-left: auto;
                 margin-right: auto;
                 width:auto;
-                height:300px;
+                /* height:300px; */
+                height: max-content; 
             }
         </style>
             
@@ -239,7 +240,7 @@ if(isset($_SESSION['navigation']) && $_SESSION['role']=='user'){
                 </div>
                 <div class="subscribe">
                     <h3 class="pacifico_normal">Subscribe</h3>
-                    <form>
+                    <form method="POST">
                         <input type="email" id="email" name="email" placeholder="Enter your Email ">
                         <button type="submit">Subscribe</button>
                     </form>

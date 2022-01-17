@@ -2,7 +2,7 @@
 
 ## Steps to configure phpmyadmin
 1. Start xampp
-2. Import ***gardenia.sql*** into phpmyadmin 
+2. Import ***gardenia.sql*** into phpmyadmin
 3. Add a user account
     - User name: admin
     - Host name: localhost

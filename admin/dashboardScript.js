@@ -10,7 +10,7 @@ function closeModal(id){
 
 //addUser View
 function addUser() {
-    document.getElementById("addUserView").style.display = "block";
+    showModal('addUserView');
     //Calculate table height
     let html = document.body.scrollHeight;
     html += 60;
@@ -19,7 +19,7 @@ function addUser() {
 
 //editUser View
 function editUser(userID, fname, lname, email, mobile, state, gender, userType) {
-    document.getElementById("editUserView").style.display = "block";
+    showModal('editUserView');
     document.getElementById("userID").value = userID;
     document.getElementById("editfname").value = fname;
     document.getElementById("editlname").value = lname;
@@ -33,6 +33,18 @@ function editUser(userID, fname, lname, email, mobile, state, gender, userType) 
     }
     document.getElementById("userType").value = userType;
 }
+
+    //editUser reset Password
+    function resetpassword() {
+        if (confirm("Are you sure?") == true) {
+            if (document.getElementById("userType").value == "user") {
+                alert("Password is reset! New Pasword is: Abc@123");
+            } else if (document.getElementById("userType").value == "admin") {
+                alert("Password is reset! New Pasword is: Admin@123");
+            }
+            closeModal('editUserView')
+        }
+    }
 
 /* successDisplay */
 function successDisplay(idName) {

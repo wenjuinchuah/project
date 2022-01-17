@@ -113,7 +113,7 @@
     //delete product
     include "deleteProduct.php";
     //edit user
-
+    include "editUser.php";
     //delete user
     include "deleteUser.php";
     mysqli_free_result($result);
@@ -147,11 +147,12 @@
             display: <?=$editView?>
         }
 
-        small {
-            font-size: 12px;
-            color: red;
-            font-weight: bold;
-            visibility: <?=$showError?>;
+        #editUserView {
+            display: <?=$editUserView?>
+        }
+
+        .regform small{
+            visibility: <?=$showError?>
         }
     </style>
 </head>

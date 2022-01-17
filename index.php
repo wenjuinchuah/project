@@ -46,7 +46,7 @@
                 </div>
                 <div class="subscribe">
                     <h3 class="pacifico_normal">Subscribe</h3>
-                    <form>
+                    <form method="POST">
                         <input type="email" id="Sub-email" name="Sub-email" placeholder="Enter your Email ">
                         <button type="submit">Subscribe</button>
                     </form>
