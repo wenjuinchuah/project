@@ -18,7 +18,7 @@
      $sum = $dates = array();
      while($i<30){
          $dates[$i] = date("Y-m-d",strtotime("now - ".$ctr."days"));
-         $sql = "SELECT OrderID,SUM(Total) AS sumValue FROM transaction WHERE CAST(TransactionDate as DATE) = '$dates[$i]' ";
+         $sql = "SELECT SUM(Total) AS sumValue FROM transaction WHERE CAST(TransactionDate as DATE) = '$dates[$i]' ";
          $result = mysqli_query($conn,$sql);
          $run = mysqli_fetch_assoc($result);
          $sum[$i] = round($run["sumValue"],2);
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
      integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" 
      crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
-    <!-- Google Chart API-->
-    <script type='text/javascript'src='https://www.gstatic.com/charts/loader.js'></script>
+    <!-- Google Chart-->
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
 
     <style>
         .chartContainer {
@@ -333,7 +333,6 @@
         );
         
         //User state
-        var i = 0;
         state = <?php echo json_encode($state); ?>;
         stateUser = <?php echo json_encode($stateUser); ?>; 
         google.charts.load('visualization', '1', {'packages': ['geochart']});
@@ -365,7 +364,6 @@
                 region: 'MY',
                 displayMode: 'regions',
                 resolution: 'provinces',
-                // backgroundColor: '#81d4fa', 
                 colorAxis: {colors:['e4f8ff','#3d309c']},
                 datalessRegionColor: 'lightgrey',
             };

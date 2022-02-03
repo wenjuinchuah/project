@@ -77,7 +77,7 @@
                 if($mobile[0] == "0"){
                     $mobile = substr($mobile,1);
                 }
-                if (strlen($mobile) < 9 || strlen($mobile) > 10) {
+                if (strlen($mobile) < 9 || strlen($mobile) > 10 || !is_numeric($mobile)) {
                     $editmobileError = 'Please enter a valid mobile number!';
                     $showError = 'visible';
                 } 

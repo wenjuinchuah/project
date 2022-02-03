@@ -64,9 +64,15 @@
         if (empty($_POST['productPrice'])) {
             $productPriceError = "Price cannot be blank!";
             $showError = 'visible';
+        }else if (!is_numeric($_POST['productPrice'])){
+            $productPriceError = "Price must be a number!";
+            $showError = 'visible';
         }
-        if (empty($_POST['productPrice'])){
+        if (empty($_POST['productStock'])){
             $productStockError = "Stock cannot be blank!";
+            $showError = 'visible';
+        }else if (!is_numeric($_POST['productStock'])){
+            $productStockError = "Stock must be a number!";
             $showError = 'visible';
         }
         if(empty($_FILES["productPicture"]["name"])){

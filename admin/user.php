@@ -95,7 +95,7 @@
                                 <td>$admin[UserType]</td>
                                 <td><button type='button' class='openEdit' name='openEdit' onclick=\"editUser('$admin[UserID]', '$admin[FirstName]', '$admin[LastName]', '$admin[Email]', '$mobile', '$admin[State]', '$admin[Gender]', '$admin[UserType]')\">
                                 <i class='fas fa-edit'></i></button></td>
-                                <td><button type='button' class='openDelete' name='openDelete' onclick=\"deleteUser()\">	
+                                <td><button type='button' class='openDelete' name='openDelete' onclick='showModal(\"deleteUserView\")'>	
                                 <i class='fa-solid fa-trash-can'></i></button></td>
                             </tr>";
                         ?>
@@ -202,7 +202,7 @@
                 <div class="button" style="margin-top:-5px;">
                     <input type="reset" id="reset" value="Clear"></input>
                     <input type="submit" id="submit" name="register" value="Add User"
-                        onclick="return confirm('Do you want to register?')"></input>
+                        onclick="return confirm('Are you sure?')"></input>
                 </div>
             </form>
         </div>
